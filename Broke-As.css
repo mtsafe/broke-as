@@ -1,0 +1,36 @@
+nav {
+  margin: 8px;
+}
+footer {
+  padding-left: 60px;
+}
+p {
+  margin: 8px;
+  padding: 4px;
+}
+.tight {
+  margin: 0px;
+  padding: 0px;
+  width: fit-content;
+  height: fit-content;
+}
+.post-it {
+  border: 1px solid black;
+}
+.blockquote {
+  padding: 0px 130px;
+}
+#logo {
+  border: solid;
+}
+#hanging {
+  position:absolute;
+  transform: translateX(-3px) translateY(12px) rotate(50deg);
+}
+#intro {
+  margin: 0px 30px;
+}
+#caveat {
+  margin: 8px;
+  text-align: center;
+}
