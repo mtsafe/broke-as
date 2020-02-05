@@ -1,0 +1,100 @@
+.nav-link {
+  border-radius: 12px;
+}
+.nav-link:hover {
+  background-color: #eee;
+}
+.navbar, .jumbotron {
+  margin: 8px;
+}
+.navbar:hover, .navbar-toggler:hover, .btn:hover {
+  box-shadow: 10px 15px 25px #ccc;
+}
+footer {
+  padding-left: 60px;
+}
+p {
+  margin: 8px;
+  padding: 4px;
+}
+#header-image {
+  display: inline-block;
+  width: auto;
+  height: 70px;
+}
+#header-text {
+  display: inline-block;
+}
+.tight {
+  margin: 0px;
+  padding: 0px;
+  width: fit-content;
+  height: fit-content;
+}
+.post-it {
+  border: 1px solid black;
+  background-color: yellow;
+}
+.blockquote {
+  padding: 0px 30px;
+}
+.text-muted {
+  white-space: nowrap;
+}
+#logo {
+  margin-right: 3em;
+  padding: 0px;
+  width: fit-content;
+  height: fit-content;
+  border: solid;
+}
+#hanging {
+  position:absolute;
+  transform: translateX(-3px) translateY(12px) rotate(50deg);
+}
+#intro {
+  margin: 0px 30px;
+}
+#caveat {
+  margin: 8px 30px;
+  text-align: center;
+}
+/* Strong Warning Flash Effect */
+#caveat h2 {
+  color: red;
+}
+#caveat h2:hover {
+	animation: animate .2s linear infinite;
+}
+@keyframes animate {
+	0% {
+    color: red;
+	}
+	10% {
+    color: red;
+	}
+	20% {
+    color: black;
+	}
+	30% {
+    color: red;
+	}
+	40% {
+    color: purple;
+	}
+	50% {
+    color: red;
+	}
+	60% {
+    color: black;
+	}
+	70% {
+    color: purple;
+	}
+	80% {
+    color: red;
+	}
+	100% {
+    color: red;
+	}
+}
