@@ -2,16 +2,15 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Broke-As</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap 4.4.1 : Bootswatch : Sketchy -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/sketchy/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/Broke-As.css">
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
       <a class="navbar-brand" href="#">
         <div id="logo">
           <h1><span class="tight">Broke-</span><span id="hanging" class="tight post-it">As</span></h1>
@@ -36,7 +35,8 @@
             <a class="nav-link" href="./wtf.html">WTF</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./about.html">About</a>
+            <a class="nav-link disabled" href="./about.html">About
+              <span class="sr-only">(current)</span></a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -45,44 +45,16 @@
         </form>
       </div>
     </nav>
-    <!-- Header -->
-    <header>
-      <blockquote class="blockquote">
-        <img id="header-image" class="tight" src="./assets/img/masks2.jpg"
-          alt="Laughing/crying theater masks">
-        <div id="header-text" class="tight">
-          <p class="mb-0">"It's a tragedy."</p>
-          <footer class="blockquote-footer">William Shakespeare,
-            <cite title="Source Title">Once Upon A Time</cite></footer>
-        </div>
-      </blockquote>
-    </header>
-    <!-- Main -->
     <main>
-      <div id="intro">
-        <p class="">
-          Let us start by saying, <span class="text-warning">"We are sorry."</span>
-          It's a sad situtation that you need this app for your finances. You have
-          fallen on hard times, and you are desperate for help. Your accounts are
-          getting down to the wire. You are too ashamed to ask for help. You are
-          not even sure anyone can help.
-        </p><p>
-          <span class="text-info">"It's going to be okay."</span>
-          Of course we don't actually know if it will be okay, but repeating this
-          may help you feel better. This is important, because you need some
-          confidence to face your situtation otherwise you just can't even.
+      <div class="jumbotron">
+        <h1 class="display-3">About Broke-As</h1>
+        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+        <hr class="my-4">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <p class="lead">
+          <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
         </p>
       </div>
-      <div id="caveat" class="alert alert-dismissible alert-danger">
-        <h2>STRONG WARNING!</h2>
-        <p>
-          Look, we are not accountants, lawyers, financial coaches, etc; we are just
-          software engineers with a dumb app. We have no formal training in
-          finances. <span class="text-muted">(We are not even good at math!)</span>
-          Nonetheless, you have turned here for help...
-        </p>
-      </div>
-      <button type="button" class="btn btn-link"><a href="./home.html">Click to Next Page</a></button>
     </main>
     <footer>
       Copyright &copy; 2020 Tarsha.Tech . All rights reserved.
