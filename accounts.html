@@ -53,27 +53,28 @@
           <!-- Form Card -->
           <div class="card">
             <div class="card-content">
-              <span class="card-title">Add Meal / Food Item</span>
+              <span class="card-title">Add New Money Location</span>
               <form action="" class="col">
                 <div class="row">
                   <div class="input-field col-sm-6">
-                    <input type="text" placeholder="Add Item" id="item-name">
-                    <label for="item-name">Meal</label>
+                    <input type="text" placeholder="Enter Location" id="item-name">
+                    <label for="item-name">Location</label>
                   </div>
                   <div class="input-field col-sm-6">
-                    <input type="number" placeholder="Add Calories" id="item-calories">
-                    <label for="item-calories">Calories</label>
+                    $<input type="number" placeholder="Add Amount" id="item-amount">
+                    <label for="item-amount">Amount</label>
                   </div>
-                    <button class="add-btn btn btn-outline-info">
-                    <i class="fa fa-plus"></i> Add Meal
+                  
+                  <button id="add-btn" class="btn btn-outline-info">
+                    <i class="fa fa-plus"></i> Add Money Location
                   </button>
-                  <button class="update-btn btn btn-outline-warning">
-                    <i class="fa fa-pencil-square-o"></i> Update Meal
+                  <button id="update-btn" class="btn btn-outline-warning">
+                    <i class="fa fa-pencil-square-o"></i> Update Money
                   </button>
-                  <button class="delete-btn btn btn-outline-danger">
-                    <i class="fa fa-remove"></i> Delete Meal
+                  <button id="delete-btn" class="btn btn-outline-danger">
+                    <i class="fa fa-remove"></i> Delete Money Location
                   </button>
-                  <button class="back-btn btn btn-outline-secondary right">
+                  <button id="back-btn" class="btn btn-outline-secondary right">
                     <i class="fa fa-chevron-circle-left"></i> Back
                   </button>
                 </div>
@@ -81,44 +82,75 @@
             </div>
           </div>
       
-        <hr class="my-4">
-        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-            <!-- Calorie Count-->
-    <h3 class="center-align">Total Calories:
-      <span class="total-calories">0</span></h3>
-    
-    <!-- Item List -->
-    <ul id="item-list" class="collection">
-  <!--
-      <li class="collection-item" id="item-0">
-        <strong>Steak Dinner: </strong> <em>1200 Calories</em>
-        <a href="#" class="secondary-content">
-          <i class="edit-item fa fa-pencil"></i>
-        </a>
-      </li>
-      <li class="collection-item" id="item-0">
-        <strong>Cookie: </strong> <em>1200 Calories</em>
-        <a href="#" class="secondary-content">
-          <i class="edit-item fa fa-pencil"></i>
-        </a>
-      </li>
-      <li class="collection-item" id="item-0">
-        <strong>Eggs: </strong> <em>300 Calories</em>
-        <a href="#" class="secondary-content">
-          <i class="edit-item fa fa-pencil"></i>
-        </a>
-      </li>
-    -->
-    </ul>
-  </div>
+          <hr class="my-4">
+        
+          <!-- Item List -->
+          <ul id="item-list" class="collection">
+        <!--
+            <li class="collection-item" id="item-0">
+              <strong>Steak Dinner: </strong> <em>1200 Amount</em>
+              <a href="#" class="secondary-content">
+                <i class="edit-item fa fa-pencil"></i>
+              </a>
+            </li>
+            <li class="collection-item" id="item-0">
+              <strong>Cookie: </strong> <em>1200 Amount</em>
+              <a href="#" class="secondary-content">
+                <i class="edit-item fa fa-pencil"></i>
+              </a>
+            </li>
+            <li class="collection-item" id="item-0">
+              <strong>Eggs: </strong> <em>300 Amount</em>
+              <a href="#" class="secondary-content">
+                <i class="edit-item fa fa-pencil"></i>
+              </a>
+            </li>
+          -->
+          </ul>
+        </div>
 
-  <h2 class="white-text">replaced via javascript</h2>
+        <div id="cash-table-header">
+          <h2 class="white-text float-left">Cash Accounts</h2>
+          <h3 class="center-align float-right">Cash on Hand:
+            $<span id="total-amount">0.00</span></h3>
+        </div>
 
-  <ul class="right">
-    <li>
-      <a href="#" class="clear-btn btn blue lighten-3">Clear All</a>
-    </li>
-  </ul>
+        <!-- Cash Table -->
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th class="lead" scope="col">Where</th>
+                <th class="lead" scope="col">Amount</th>
+                <th class="lead" scope="col">Recorded</th>
+              </tr>
+            </thead>
+            <tbody id="cash-account-table">
+          <!--
+            <tr class="table-secondary" id="item-0">
+              <th scope="row">Wallet</th>
+              <td>$20.00</td>
+              <td>02/03/2020 12:34:43
+                <a href="#" class="secondary-content">
+                  <i class="edit-item fa fa-pencil"></i></a>
+              </td>
+            </tr>
+            <tr class="">
+              <th scope="row">Shoe id="item-1"</th>
+              <td>$80.00</td>
+              <td>02/03/2020 12:35:53
+                <a href="#" class="secondary-content">
+                  <i class="edit-item fa fa-pencil"></i></a>
+              </td>
+            </tr>
+          -->
+            </tbody>
+          </table>
+          <ul class="right">
+            <li>
+              <a href="#" id="clear-btn" class="btn text-danger">Clear All</a>
+            </li>
+          </ul>  
+        </div>
 
         <p class="lead">
           <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
