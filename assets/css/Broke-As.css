@@ -25,6 +25,15 @@ p {
 #header-text {
   display: inline-block;
 }
+#table-headers {
+  display: flexbox;
+}
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
 .tight {
   margin: 0px;
   padding: 0px;
