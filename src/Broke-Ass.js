@@ -1,6 +1,4 @@
 // This project uses the Module Pattern
-
-// The Module pattern and the Revealing Module pattern
 // This pattern was being used in ES5.
 // ES6 introduced actual modules in javascript.
 // This means that you can use separate files to export modules
@@ -25,7 +23,7 @@
   // Public Methods
   // // storeItem, getItemsFromStorage, updateItemStorage,
   // // deleteItemFromStorage, clearItemsFromStorage
-// Item CONTROLLER :: const ItemCtrl
+// Item CONTROLLER :: const DataCtrl
   // Public Methods
   // // getItems, addItem, getItemById, updateItem, deleteItem,
   // // clearAllItems, setCurrentItem, getCurrentItem, getTotalCents, logData
@@ -34,7 +32,7 @@
   // // populateItemList, getItemInput, addListItem, deleteListItem,
   // // updateListItem, clearInput, addItemToForm, removeItems, hideList,
   // // showTotalAmount, clearEditState, showEditState, getSelectors
-// App CONTROLLER :: const App = (function(ItemCtrl, StorageCtrl, UICtrl) {
+// App CONTROLLER :: const App = (function(DataCtrl, StorageCtrl, UICtrl) {
   // Public Methods
   // // init
 
@@ -45,6 +43,9 @@ const StorageCtrl = (function() {
   // // storeItem, getItemsFromStorage, updateItemStorage
   // // deleteItemFromStorage, clearItemsFromStorage
   return {
+    flush: function(items){
+      localStorage.setItem('items', JSON.stringify(items));
+    },
     storeItem: function(item) {
       let items;
       if (localStorage.getItem('items') === null) {
@@ -72,28 +73,29 @@ const StorageCtrl = (function() {
         }
       });
       localStorage.setItem('items', JSON.stringify(items));
-    },
-    deleteItemFromStorage: function(id) {
-      let items = JSON.parse(localStorage.getItem('items'));
-      items.forEach(function(item, index) {
-        if (id === item.id) {
-          items.splice(index, 1);
-        }
-      });
-      localStorage.setItem('items', JSON.stringify(items));
-    },
-    clearItemsFromStorage: function() {
-      localStorage.removeItem('items');
+    // },
+    // deleteItemFromStorage: function(id) {
+    //   let items = JSON.parse(localStorage.getItem('items'));
+    //   items.forEach(function(item, index) {
+    //     if (id === item.id) {
+    //       items.splice(index, 1);
+    //     }
+    //   });
+    //   localStorage.setItem('items', JSON.stringify(items));
+    // },
+    // clearItemsFromStorage: function() {
+    //   localStorage.removeItem('items');
     }
   }
 })();
 
 // Item CONTROLLER //
-const ItemCtrl = (function() {
-  const Item = function(id, name, amount){
+const DataCtrl = (function(StorageCtrl) {
+  const Item = function(id, name, amount, dateTime){
     this.id = id;
     this.name = name;
     this.amount = amount;
+    this.dateTime = dateTime;
   };
 
   // Data Structure / State
@@ -110,14 +112,24 @@ const ItemCtrl = (function() {
     getItems: function() {
       return data.items;
     },
+    enumerateItems: function() {
+      let id = 0;
+      data.items.forEach(function(item) {
+        item.id = id;
+        id++;
+      });
+      StorageCtrl.flush(data.items);
+    },
     addItem: function(name, amount) {
-      let ID = 0;
+      let ID = 0, dateTime="";
       if (data.items.length > 0) {          // Create ID
         ID = data.items[data.items.length - 1].id + 1;
       }
       amount = parseInt(amount);        // Amount to number
-      newItem = new Item(ID, name, amount); // Create new item
+      dateTime = timeConverter(Date.now());
+      newItem = new Item(ID, name, amount, dateTime); // Create new item
       data.items.push(newItem);             // Add to items array
+      StorageCtrl.storeItem(newItem);
       return newItem;
     },
     getItemById: function(idNum) {
@@ -127,6 +139,8 @@ const ItemCtrl = (function() {
       const item = data.items[data.currentItem.id];
       item.name = name;
       item.amount = parseInt(amount);
+      item.dateTime = timeConverter(Date.now());
+      StorageCtrl.updateItemStorage(item);
       return item;
     },
     deleteItem: function(id) {
@@ -135,9 +149,11 @@ const ItemCtrl = (function() {
       });
       const index = ids.indexOf(id);
       data.items.splice(index, 1);
+      DataCtrl.enumerateItems();
     },
     clearAllItems: function() {
       data.items = [];
+      StorageCtrl.flush(data.items);
     },
     setCurrentItem: function(item) {
       data.currentItem = item;
@@ -157,15 +173,15 @@ const ItemCtrl = (function() {
       return data;
     }
   }
-})();
+})(StorageCtrl);
 
 // UI CONTROLLER //
 const UICtrl = (function() {
   const UISelectors = {
-    itemList: '#item-list',
-    listItems: '#item-list li',
-    trList: '#cash-account-table',
-    trItems: '#cash-account-table tr',
+    // itemList: '#item-list',
+    // listItems: '#item-list li',
+    trList: '#cash-tbody',
+    trItems: '#cash-tbody tr',
     addBtn: '#add-btn',
     backBtn: '#back-btn',
     clearBtn: '#clear-btn',
@@ -181,32 +197,39 @@ const UICtrl = (function() {
   // // updateListItem, clearInput, addItemToForm, removeItems, hideList,
   // // showTotalAmount, clearEditState, showEditState, getSelectors
   return {
-    populateItemList: function(items) {
-      let html = '', amt = 0;
-      items.forEach(function(item) {
-        amt = item.amount / 100;
-        html += `<li class="collection-item" id="item-${item.id}">
-          <strong>${item.name}: </strong>
-          $<em>${amt.formatInt(2, 3, ',', '.')}</em>
-          <a href="#" class="secondary-content">
-            <i class="edit-item fa fa-pencil"></i>
-          </a>
-        </li>`;
-      });
-      // Insert list Items
-      document.querySelector(UISelectors.itemList).innerHTML = html;
-    },
+    // populateItemList: function(items) {
+    //   let html = '', amt = 0;
+    //   items.forEach(function(item) {
+    //     amt = item.amount / 100;
+    //     html += `<li class="collection-item" id="item-${item.id}">
+    //       <strong>${item.name}: </strong>
+    //       $<em>${amt.formatInt(2, 3, ',', '.')}</em>
+    //       ${item.dateTime}
+    //       <a href="#" class="secondary-content">
+    //         <i class="edit-item fa fa-pencil"></i>
+    //       </a>
+    //     </li>`;
+    //   });
+    //   // Insert list Items
+    //   document.querySelector(UISelectors.itemList).innerHTML = html;
+    // },
     populateTrList: function(items) {
-      let html = '', amt = 0;
+      let html = '', amt = 0, className='', id=0;
       items.forEach(function(item) {
         amt = item.amount / 100;
-        html += `<tr class="table-secondary" id="tr-${item.id}">
+        if (id % 2 == 0) {
+          className = 'table-secondary';
+        } else {
+          className = '';
+        }
+        html += `<tr class="${className}" id="tr-${id}">
         <th scope="row">${item.name}</th>
         <td>$<em>${amt.formatInt(2, 3, ',', '.')}</em></td>
-        <td>Column content
+        <td>${item.dateTime}
         <a href="#" class="secondary-content">
           <i class="edit-item fa fa-pencil"></i>
         </a></td></tr>`;
+        id++;
       });
       // Insert list Items
       document.querySelector(UISelectors.trList).innerHTML = html;
@@ -218,54 +241,87 @@ const UICtrl = (function() {
         amount: amt.unformatInt(),
       }
     },
-    addListItem: function(item) {
-      document.querySelector(UISelectors.itemList).style.display = 'block';
-      // Insert list item element
-      const li = document.createElement('li');  // Create li element
-      li.className = 'collection-item';
-      li.id = `item-${item.id}`;
-      let amt = item.amount / 100;
-      li.innerHTML = `<strong>${item.name}: </strong>
-      $<em>${amt.formatInt(2, 3, ',', '.')}</em>
-      <a href="#" class="secondary-content">
-        <i class="edit-item fa fa-pencil"></i>
-      </a>`;
-      document.querySelector(UISelectors.itemList).insertAdjacentElement(
-        'beforeend', li);                 // Insert li element
-      // document.querySelector(UISelectors.trList).style.display = 'block';
+    // addListItem: function(item) {
+    //   document.querySelector(UISelectors.itemList).style.display = 'block';
+    //   // Insert list item element
+    //   const li = document.createElement('li');  // Create li element
+    //   li.className = 'collection-item';
+    //   li.id = `item-${item.id}`;
+    //   let amt = item.amount / 100;
+    //   li.innerHTML = `<strong>${item.name}: </strong>
+    //   $<em>${amt.formatInt(2, 3, ',', '.')}</em>
+    //   ${item.dateTime}
+    //   <a href="#" class="secondary-content">
+    //     <i class="edit-item fa fa-pencil"></i>
+    //   </a>`;
+    //   document.querySelector(UISelectors.itemList).insertAdjacentElement(
+    //     'beforeend', li);                 // Insert li element
+    // },
+    addTrItem: function(item) {
       // Insert table row element
-      const tr = document.createElement('tr');  // Create tr element
-      tr.className = 'table-secondary';
+      let tr = document.querySelector(UISelectors.trList).insertRow(0);
+      if (item.id % 2 == 0) {
+        tr.classList.add("table-secondary");
+      }
       tr.id = `tr-${item.id}`;
-      // let
-              amt = item.amount / 100;
+      let amt = item.amount / 100;
       tr.innerHTML = `<th scope="row">${item.name}</th>
         <td>$<em>${amt.formatInt(2, 3, ',', '.')}</em></td>
-        <td>Column content
-        <a href="#" class="secondary-content">
-          <i class="edit-item fa fa-pencil"></i>
-        </a></td>`;
-      document.querySelector(UISelectors.trList).insertAdjacentElement(
-        'beforeend', tr);                 // Insert tr element
-    },
-    deleteListItem: function(id) {
-      const itemID = `#item-${id}`;
-      const item = document.querySelector(itemID);
-      item.remove();
-    },
-    updateListItem: function(item) {
-      let listItems = document.querySelectorAll(UISelectors.listItems);
-      listItems = Array.from(listItems);  // Turn node list into array
-      listItems.forEach(function(listItem) {
-        const itemID = listItem.getAttribute('id');
-        if (itemID === `item-${item.id}`) {
-          let amt = item.amount / 100;
-          document.querySelector(`#${itemID}`).innerHTML =
-          `<strong>${item.name}: </strong>
-          $<em>${amt.formatInt(2, 3, ',', '.')} </em>
+        <td>${item.dateTime}
           <a href="#" class="secondary-content">
             <i class="edit-item fa fa-pencil"></i>
-          </a>`;
+          </a></td>`;
+    },
+    // deleteListItem: function(id) {
+    //   const itemID = `#item-${id}`;
+    //   const item = document.querySelector(itemID);
+    //   item.remove();
+    // },
+    deleteTrItem: function(id) {
+      const trID = `#tr-${id}`;
+      document.querySelector(trID).remove();
+      let trItems = document.querySelectorAll(UISelectors.trItems);
+      trItems = Array.from(trItems);
+      trItems.forEach(function(trItem) {
+        if (trItem.id % 2 == 0) {
+          trItem.classList.add("table-secondary");
+        } else {
+          trItem.classList.remove("table-secondary");
+        }
+      });
+    },
+    // updateListItem: function(item) {
+    //   let listItems = document.querySelectorAll(UISelectors.listItems);
+    //   listItems = Array.from(listItems);  // Turn node list into array
+    //   listItems.forEach(function(listItem) {
+    //     const itemID = listItem.getAttribute('id');
+    //     if (itemID === `item-${item.id}`) {
+    //       let amt = item.amount / 100;
+    //       document.querySelector(`#${itemID}`).innerHTML =
+    //       `<strong>${item.name}: </strong>
+    //       $<em>${amt.formatInt(2, 3, ',', '.')} </em>
+    //       ${item.dateTime}
+    //       <a href="#" class="secondary-content">
+    //         <i class="edit-item fa fa-pencil"></i>
+    //       </a>`;
+    //     }
+    //   });
+    // },
+    updateTrItem: function(item) {
+      let trItems = document.querySelectorAll(UISelectors.trItems);
+      trItems = Array.from(trItems);
+      trItems.forEach(function(trItem) {
+        const trID = trItem.getAttribute('id');
+        if (trID === `tr-${item.id}`) {
+          let amt = item.amount / 100;
+          document.querySelector(`#${trID}`).innerHTML =
+          `<th scope="row">${item.name}</th>
+          <td>$<em>${amt.formatInt(2, 3, ',', '.')}</em></td>
+          <td>${item.dateTime}
+            <a href="#" class="secondary-content">
+              <i class="edit-item fa fa-pencil"></i>
+            </a></td>`;  
+          return;
         }
       });
     },
@@ -275,23 +331,26 @@ const UICtrl = (function() {
     },
     addItemToForm: function() {
       document.querySelector(UISelectors.itemNameInput).value =
-        ItemCtrl.getCurrentItem().name;
-      let amt = ItemCtrl.getCurrentItem().amount / 100;
+        DataCtrl.getCurrentItem().name;
+      let amt = DataCtrl.getCurrentItem().amount / 100;
       document.querySelector(UISelectors.itemAmountInput).value =
         amt.formatInt(2, 3, ',', '.');
       UICtrl.showEditState();
     },
-    removeItems: function() {
-      let listItems = document.querySelectorAll(UISelectors.listItems);
-      listItems = Array.from(listItems);
-      listItems.forEach(function(item) {
-        item.remove();
-      });
+    emptyTableBody: function() {
+      document.querySelector(UISelectors.trList).innerHTML = "";
     },
-    hideList: function() {
-      document.querySelector(UISelectors.itemList).style.display = 'none';
-      document.querySelector(UISelectors.trList).style.display = 'none';
-    },
+    // removeItems: function() {
+    //   let listItems = document.querySelectorAll(UISelectors.listItems);
+    //   listItems = Array.from(listItems);
+    //   listItems.forEach(function(item) {
+    //     item.remove();
+    //   });
+    // },
+    // hideList: function() {
+    //   document.querySelector(UISelectors.itemList).style.display = 'none';
+    //   document.querySelector(UISelectors.trList).style.display = 'none';
+    // },
     showTotalAmount: function(totalCents) {
       const amt = totalCents / 100;
       document.querySelector(UISelectors.totalAmount).textContent =
@@ -317,7 +376,7 @@ const UICtrl = (function() {
 })();
 
 // App CONTROLLER //
-const App = (function(ItemCtrl, StorageCtrl, UICtrl) {
+const App = (function(DataCtrl, UICtrl) {
   // Load event listeners
   const loadEventListeners = function() {
     const UISelectors = UICtrl.getSelectors();
@@ -335,10 +394,12 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl) {
       'click', clearAllItemsClick);   // Clear items event
     document.querySelector(UISelectors.deleteBtn).addEventListener(
       'click', itemDeleteSubmit);     // Delete item event
-    document.querySelector(UISelectors.itemList).addEventListener(
+    // document.querySelector(UISelectors.itemList).addEventListener(
+    //   'click', itemEditClick);        // Edit item click event
+    document.querySelector(UISelectors.trList).addEventListener(
       'click', itemEditClick);        // Edit item click event
     document.querySelector(UISelectors.updateBtn).addEventListener(
-      'click', itemUpdateSubmit);     // Update item event
+    'click', itemUpdateSubmit);     // Update item event
   };
 
   // Add item submit
@@ -346,10 +407,11 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl) {
     const input = UICtrl.getItemInput();  // Get form input form UI Controller
     if (input.name !== '' && input.amount !== '') {
       const newItem =
-        ItemCtrl.addItem(input.name, input.amount); // Add item
-      UICtrl.addListItem(newItem);
-      UICtrl.showTotalAmount(ItemCtrl.getTotalCents());
-      StorageCtrl.storeItem(newItem);
+        DataCtrl.addItem(input.name, input.amount); // Add item
+      // UICtrl.addListItem(newItem);
+      UICtrl.addTrItem(newItem);
+      UICtrl.populateTrList(DataCtrl.getItems());
+      UICtrl.showTotalAmount(DataCtrl.getTotalCents());
       UICtrl.clearInput();
     }                           // Check for name and calorie input
     e.preventDefault();
@@ -357,11 +419,12 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl) {
 
   // Delete item submit
   const itemDeleteSubmit = function(e) {
-    const currentItem = ItemCtrl.getCurrentItem();
-    ItemCtrl.deleteItem(currentItem.id);
-    UICtrl.deleteListItem(currentItem.id);
-    UICtrl.showTotalAmount(ItemCtrl.getTotalCents());
-    StorageCtrl.deleteItemFromStorage(currentItem.id);
+    const currentItem = DataCtrl.getCurrentItem();
+    DataCtrl.deleteItem(currentItem.id);
+//    UICtrl.deleteListItem(currentItem.id);
+    UICtrl.deleteTrItem(currentItem.id);
+    UICtrl.populateTrList(DataCtrl.getItems());
+    UICtrl.showTotalAmount(DataCtrl.getTotalCents());
     UICtrl.clearEditState();
     e.preventDefault();
   };
@@ -369,10 +432,10 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl) {
   // Update item submit
   const itemUpdateSubmit = function(e) {
     const input = UICtrl.getItemInput();
-    const updatedItem = ItemCtrl.updateItem(input.name, input.amount);
-    UICtrl.updateListItem(updatedItem);
-    UICtrl.showTotalAmount(ItemCtrl.getTotalCents());
-    StorageCtrl.updateItemStorage(updatedItem);
+    const updatedItem = DataCtrl.updateItem(input.name, input.amount);
+    // UICtrl.updateListItem(updatedItem);
+    UICtrl.updateTrItem(updatedItem);
+    UICtrl.showTotalAmount(DataCtrl.getTotalCents());
     UICtrl.clearEditState();
     e.preventDefault();
   };
@@ -380,11 +443,11 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl) {
   // Click edit item
   const itemEditClick = function(e) {
     if (e.target.classList.contains('edit-item')) {
-      const listId = e.target.parentNode.parentNode.id;  // Get list item id
+      const listId = e.target.parentNode.parentNode.parentNode.id;  // Get list item id
       const listIdArr = listId.split('-');    // Break into an array
       const id = parseInt(listIdArr[1]);      // Get id number
-      const itemToEdit = ItemCtrl.getItemById(id);  // Get item
-      ItemCtrl.setCurrentItem(itemToEdit);    // Set current item
+      const itemToEdit = DataCtrl.getItemById(id);  // Get item
+      DataCtrl.setCurrentItem(itemToEdit);    // Set current item
       UICtrl.addItemToForm();                 // Add item to form
     }
 
@@ -393,11 +456,11 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl) {
 
   // Clear Items event
   const clearAllItemsClick = function() {
-    ItemCtrl.clearAllItems();
-    UICtrl.showTotalAmount(ItemCtrl.getTotalCents());    
-    UICtrl.removeItems();
-    StorageCtrl.clearItemsFromStorage();
-    UICtrl.hideList();
+    DataCtrl.clearAllItems();
+    UICtrl.showTotalAmount(DataCtrl.getTotalCents());
+    UICtrl.emptyTableBody();
+    // UICtrl.removeItems();
+    // UICtrl.hideList();
   }
 
   // Public Methods
@@ -405,19 +468,19 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl) {
   return {
     init: function() {
       UICtrl.clearEditState();              // Clear edit state
-      const items = ItemCtrl.getItems();    // Fetch Items from data struc
+      const items = DataCtrl.getItems();    // Fetch Items from data struc
       if (items.length === 0) {
-        UICtrl.hideList();
+        // UICtrl.hideList();
       } else {
-        UICtrl.populateItemList(items);
+        // UICtrl.populateItemList(items);
         UICtrl.populateTrList(items);
       }
       // Check if any items
-      UICtrl.showTotalAmount(ItemCtrl.getTotalCents());
+      UICtrl.showTotalAmount(DataCtrl.getTotalCents());
       loadEventListeners();                 // Load event listeners
     }
   }
-})(ItemCtrl, StorageCtrl, UICtrl);
+})(DataCtrl, UICtrl, StorageCtrl);
 
 /**
  * Number.prototype.format(n, x, s, c)
@@ -433,7 +496,7 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl) {
  * 12345678.9.formatInt(0, 3, '-');       // "12-345-679"
  */
 Number.prototype.formatInt = function(n, x, s, c) {
-  var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
+  const re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
       num = this.toFixed(Math.max(0, ~~n));
 
   return (c ? num.replace('.', c) : num).replace(
@@ -446,5 +509,19 @@ String.prototype.unformatInt = function() {
   str = str.match(/\d/g).join("");
   return str
 };
+
+function timeConverter(timestamp){
+  const a = new Date(timestamp);
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  // const year = a.getFullYear();
+  // const month = months[a.getMonth()];
+  // const date = a.getDate();
+  // const hour = a.getHours();
+  // const min = a.getMinutes();
+  // const sec = a.getSeconds();
+  fullDate = a.getDate() + ' ' + months[a.getMonth()] + ' ' + a.getFullYear();
+  fullTime = a.getHours() + ':' + a.getMinutes() + ':' + a.getSeconds();
+  return fullDate + ' ' + fullTime;
+}
 
 App.init();
