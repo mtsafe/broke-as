@@ -174,9 +174,8 @@ const UICtrl = (function() {
   // // showTotalAmount, clearEditState, showEditState, getSelectors
   return {
     populateTrList: function(items) {
-      let html = '', amt = 0, className='', id=0;
+      let html = '', className='', id=0;
       items.forEach(function(item) {
-        amt = item.amount / 100;
         if (id % 2 == 0) {
           className = 'table-secondary';
         } else {
@@ -184,7 +183,7 @@ const UICtrl = (function() {
         }
         html += `<tr class="${className}" id="tr-${id}">
         <th scope="row">${item.name}</th>
-        <td>$<em>${amt.formatNum(2, 3, ',', '.')}</em></td>
+        <td>$<em>${centsToDollars(item.amount)}</em></td>
         <td>${item.dateTime}
         <a href="#" class="secondary-content">
           <i class="edit-item fa fa-pencil"></i>
@@ -197,7 +196,7 @@ const UICtrl = (function() {
       const amt = document.querySelector(UISelectors.itemAmountInput).value;
       return {
         name: document.querySelector(UISelectors.itemNameInput).value,
-        amount: amt.unformatInt(),
+        amount: dollarsToCents(amt),
       }
     },
     addTrItem: function(item) {
@@ -206,9 +205,8 @@ const UICtrl = (function() {
         tr.classList.add("table-secondary");
       }
       tr.id = `tr-${item.id}`;
-      let amt = item.amount / 100;
       tr.innerHTML = `<th scope="row">${item.name}</th>
-        <td>$<em>${amt.formatNum(2, 3, ',', '.')}</em></td>
+        <td>$<em>${centsToDollars(item.amount)}</em></td>
         <td>${item.dateTime}
           <a href="#" class="secondary-content">
             <i class="edit-item fa fa-pencil"></i>
@@ -233,10 +231,9 @@ const UICtrl = (function() {
       trItems.forEach(function(trItem) {
         const trID = trItem.getAttribute('id');
         if (trID === `tr-${item.id}`) {
-          let amt = item.amount / 100;
           document.querySelector(`#${trID}`).innerHTML =
           `<th scope="row">${item.name}</th>
-          <td>$<em>${amt.formatNum(2, 3, ',', '.')}</em></td>
+          <td>$<em>${centsToDollars(item.amount)}</em></td>
           <td>${item.dateTime}
             <a href="#" class="secondary-content">
               <i class="edit-item fa fa-pencil"></i>
@@ -252,18 +249,16 @@ const UICtrl = (function() {
     addItemToForm: function() {
       document.querySelector(UISelectors.itemNameInput).value =
         DataCtrl.getCurrentItem().name;
-      let amt = DataCtrl.getCurrentItem().amount / 100;
-      document.querySelector(UISelectors.itemAmountInput).value =
-        amt.formatNum(2, 3, ',', '.');
+      const amt = centsToDollars(DataCtrl.getCurrentItem().amount);
+      document.querySelector(UISelectors.itemAmountInput).value = amt;
       UICtrl.showEditState();
     },
     emptyTableBody: function() {
       document.querySelector(UISelectors.trList).innerHTML = "";
     },
     showTotalAmount: function(totalCents) {
-      const amt = totalCents / 100;
       document.querySelector(UISelectors.totalAmount).textContent =
-        amt.formatNum(2, 3, ',', '.');
+        centsToDollars(totalCents);
     },
     clearEditState: function() {
       UICtrl.clearInput();
@@ -395,24 +390,46 @@ Number.prototype.formatNum = function(n, x, s, c) {
     new RegExp(re, 'g'), '$&' + (s || ','));
 };
 
-// Converts a string representation of float
-// to number representation of minimum hundredths
-// then times 100 and
-// and returned as string representation of int
-String.prototype.unformatInt = function() {
-  let str = this.match(/\d+\.?\d*/);
+// Converts a number representation of int cents
+// to a string representation of float dollars.
+function centsToDollars(amt) {
+  let x = amt / 100;
+  return x.formatNum(2, 3, ',', '.');
+};
+
+// Converts a string representation of float dollars
+// to a string representation of int cents.
+function dollarsToCents(amt) {
+  let str = amt.match(/\d+\.?\d*/);
   str = Number(str).toFixed(2);
-  str = str.match(/\d/g).join("");
-  return str
+  return str.match(/\d/g).join("");
 };
 
 function timeConverter(timestamp){
   const a = new Date(timestamp);
   const months = ['Jan','Feb','Mar','Apr','May','Jun',
     'Jul','Aug','Sep','Oct','Nov','Dec'];
-  fullDate = a.getDate() + ' ' + months[a.getMonth()] + ' ' + a.getFullYear();
-  fullTime = a.getHours() + ':' + a.getMinutes() + ':' + a.getSeconds();
-  return fullDate + ' ' + fullTime;
+  fullDate = `${a.getDate()} ${months[a.getMonth()]} ${a.getFullYear()}`;
+  let hr = a.getHours(), am_pm = "";
+  if (hr > 12) {
+    hr -= 12;
+    am_pm = "pm";
+  } else if (hr == 12) {
+    am_pm = "pm";
+  } else if (hr > 0) {
+    am_pm = "am";
+  } else {
+    hr = 12;
+    am_pm = "am";
+  }
+  hr = leadingZero(hr);
+  const mn = leadingZero(a.getMinutes());
+  const sc = leadingZero(a.getSeconds());
+  return `${fullDate} ${hr}:${mn}:${sc} ${am_pm}`;
+}
+
+function leadingZero(n) {
+  return (n < 10 ? '0' : '') + n.toString();
 }
 
 App.init();
