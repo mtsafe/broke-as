@@ -21,16 +21,17 @@
 // UI CONTROLLER :: const UICtrl
   // Public Methods
   // // populateTrList, getItemInput, addTrItem, deleteTrItem,
-  // // updateTrItem, clearInput, addItemToForm, emptyTableBody,
-  // // showTotalAmount, clearEditState, showEditState, getSelectors
+  // // updateTrItem, clearInput, putCurrentItemToForm, emptyTableBody,
+  // // showTotalAmount, editStateAddCash, editStateModCash, getSelectors
 // App CONTROLLER :: const App = (function(DataCtrl, StorageCtrl, UICtrl) {
   // Public Methods
   // // init
 
 
 // Storage CONTROLLER //
+// controls localStorage in the browser
 const StorageCtrl = (function() {
-  // Public Methods
+  // StorageCtrl Public Methods
   // // flush, storeItem, getItemsFromStorage, updateItemStorage
   return {
     flush: function(items){
@@ -68,6 +69,7 @@ const StorageCtrl = (function() {
 })();
 
 // Item CONTROLLER //
+// acts like a middleware to localStorage
 const DataCtrl = (function(StorageCtrl) {
   const Item = function(id, name, amount, dateTime){
     this.id = id;
@@ -76,7 +78,7 @@ const DataCtrl = (function(StorageCtrl) {
     this.dateTime = dateTime;
   };
 
-  // Data Structure / State data
+  // Data Structure / State data in browser memory for the page
   const data = {
     items: StorageCtrl.getItemsFromStorage(),
     currentItem: null,
@@ -154,24 +156,28 @@ const DataCtrl = (function(StorageCtrl) {
 })(StorageCtrl);
 
 // UI CONTROLLER //
+// controls the UI
 const UICtrl = (function() {
   const UISelectors = {
+    editor: '#form-container',
     trList: '#cash-tbody',
     trItems: '#cash-tbody tr',
     addBtn: '#add-btn',
     backBtn: '#back-btn',
-    clearBtn: '#clear-btn',
     deleteBtn: '#delete-btn',
     updateBtn: '#update-btn',
+    addTrBtn: '#add-tr-btn',
+    clearBtn: '#clear-all-btn',
     itemNameInput: '#item-name',
     itemAmountInput: '#item-amount',
     totalAmount: '#total-amount'
   }
 
-  // Public Methods
+  // UICtrl Public Methods
   // // populateTrList, getItemInput, addTrItem, deleteTrItem,
-  // // updateTrItem, clearInput, addItemToForm, emptyTableBody,
-  // // showTotalAmount, clearEditState, showEditState, getSelectors
+  // // updateTrItem, clearInput, putCurrentItemToForm, emptyTableBody,
+  // // showTotalAmount, editStateOff, editStateAddCash, editStateModCash,
+  // // getSelectors
   return {
     populateTrList: function(items) {
       let html = '', className='', id=0;
@@ -246,12 +252,11 @@ const UICtrl = (function() {
       document.querySelector(UISelectors.itemNameInput).value = '';
       document.querySelector(UISelectors.itemAmountInput).value = '';
     },
-    addItemToForm: function() {
+    putCurrentItemToForm: function() {
       document.querySelector(UISelectors.itemNameInput).value =
         DataCtrl.getCurrentItem().name;
       const amt = centsToDollars(DataCtrl.getCurrentItem().amount);
       document.querySelector(UISelectors.itemAmountInput).value = amt;
-      UICtrl.showEditState();
     },
     emptyTableBody: function() {
       document.querySelector(UISelectors.trList).innerHTML = "";
@@ -260,15 +265,27 @@ const UICtrl = (function() {
       document.querySelector(UISelectors.totalAmount).textContent =
         centsToDollars(totalCents);
     },
-    clearEditState: function() {
+    editStateOff: function() {
       UICtrl.clearInput();
+      document.querySelector(UISelectors.addBtn).style.display = 'none';
+      document.querySelector(UISelectors.addTrBtn).style.display = 'inline';
+      document.querySelector(UISelectors.backBtn).style.display = 'none';
+      document.querySelector(UISelectors.deleteBtn).style.display = 'none';
+      document.querySelector(UISelectors.updateBtn).style.display = 'none';
+      document.querySelector(UISelectors.editor).style.display = 'none';
+    },
+    editStateAddCash: function() {
+      document.querySelector(UISelectors.editor).style.display = 'block';
       document.querySelector(UISelectors.addBtn).style.display = 'inline';
+      document.querySelector(UISelectors.addTrBtn).style.display = 'none';
       document.querySelector(UISelectors.backBtn).style.display = 'none';
       document.querySelector(UISelectors.deleteBtn).style.display = 'none';
       document.querySelector(UISelectors.updateBtn).style.display = 'none';
     },
-    showEditState: function() {
+    editStateModCash: function() {
+      document.querySelector(UISelectors.editor).style.display = 'block';
       document.querySelector(UISelectors.addBtn).style.display = 'none';
+      document.querySelector(UISelectors.addTrBtn).style.display = 'none';
       document.querySelector(UISelectors.backBtn).style.display = 'inline';
       document.querySelector(UISelectors.deleteBtn).style.display = 'inline';
       document.querySelector(UISelectors.updateBtn).style.display = 'inline';
@@ -283,27 +300,29 @@ const UICtrl = (function() {
 const App = (function(DataCtrl, UICtrl) {
   const loadEventListeners = function() {
     const UISelectors = UICtrl.getSelectors();
-    document.querySelector(UISelectors.addBtn).addEventListener(
-      'click', itemAddSubmit);
     document.addEventListener('keypress', function(e) {
       if (e.keyCode === 13 || e.which === 13) {
         e.preventDefault();
         return false;
       }
     });
+    document.querySelector(UISelectors.addBtn).addEventListener(
+      'click', addBtnClick);
+    document.querySelector(UISelectors.addTrBtn).addEventListener(
+      'click', addTrBtnClick);
     document.querySelector(UISelectors.backBtn).addEventListener(
-      'click', UICtrl.clearEditState);
+      'click', backBtnClick);
     document.querySelector(UISelectors.clearBtn).addEventListener(
-      'click', clearAllItemsClick);
+      'click', clearAllItemsBtnClick);
     document.querySelector(UISelectors.deleteBtn).addEventListener(
-      'click', itemDeleteSubmit);
+      'click', deleteBtnClick);
     document.querySelector(UISelectors.trList).addEventListener(
-      'click', itemEditClick);
+      'click', editTrBtnClick);
     document.querySelector(UISelectors.updateBtn).addEventListener(
-      'click', itemUpdateSubmit);
+      'click', updateBtnClick);
   };
 
-  const itemAddSubmit = function(e) {
+  const addBtnClick = function(e) {
     const input = UICtrl.getItemInput();
     if (input.name !== '' && input.amount !== '') {
       const newItem =
@@ -312,56 +331,74 @@ const App = (function(DataCtrl, UICtrl) {
       UICtrl.populateTrList(DataCtrl.getItems());
       UICtrl.showTotalAmount(DataCtrl.getTotalCents());
       UICtrl.clearInput();
+      UICtrl.editStateOff();
+      DataCtrl.setCurrentItem(null);
     }
     e.preventDefault();
   };
 
-  const itemDeleteSubmit = function(e) {
+  const addTrBtnClick = function(e) {
+    UICtrl.editStateAddCash();
+    UICtrl.putCurrentItemToForm();
+  };
+
+  const backBtnClick = function(e) {
+    UICtrl.editStateOff();
+    DataCtrl.setCurrentItem(null);
+  };
+
+  const deleteBtnClick = function(e) {
     const currentItem = DataCtrl.getCurrentItem();
     DataCtrl.deleteItem(currentItem.id);
     UICtrl.deleteTrItem(currentItem.id);
     UICtrl.populateTrList(DataCtrl.getItems());
     UICtrl.showTotalAmount(DataCtrl.getTotalCents());
-    UICtrl.clearEditState();
+    UICtrl.editStateOff();
+    DataCtrl.setCurrentItem(null);
     e.preventDefault();
   };
 
-  const itemUpdateSubmit = function(e) {
+  const updateBtnClick = function(e) {
     const input = UICtrl.getItemInput();
     const updatedItem = DataCtrl.updateItem(input.name, input.amount);
     UICtrl.updateTrItem(updatedItem);
     UICtrl.showTotalAmount(DataCtrl.getTotalCents());
-    UICtrl.clearEditState();
+    UICtrl.editStateOff();
+    DataCtrl.setCurrentItem(null);
     e.preventDefault();
   };
 
-  const itemEditClick = function(e) {
+  const editTrBtnClick = function(e) {
     if (e.target.classList.contains('edit-item')) {
       const listId = e.target.parentNode.parentNode.parentNode.id;
       const listIdArr = listId.split('-');
       const id = parseInt(listIdArr[1]);
       const itemToEdit = DataCtrl.getItemById(id);
       DataCtrl.setCurrentItem(itemToEdit);
-      UICtrl.addItemToForm();
+      UICtrl.putCurrentItemToForm();
+      UICtrl.editStateModCash();
     }
-
     e.preventDefault();
   };
 
-  const clearAllItemsClick = function() {
+  const clearAllItemsBtnClick = function() {
     DataCtrl.clearAllItems();
     UICtrl.showTotalAmount(DataCtrl.getTotalCents());
     UICtrl.emptyTableBody();
+    UICtrl.editStateAddCash();
   }
 
-  // Public Methods
+  // App Public Methods
   // // init
   return {
     init: function() {
-      UICtrl.clearEditState();
       const items = DataCtrl.getItems();
       if (items.length !== 0) {
         UICtrl.populateTrList(items);
+        UICtrl.editStateOff();
+        DataCtrl.setCurrentItem(null);
+      } else {
+        UICtrl.editStateAddCash();
       }
       UICtrl.showTotalAmount(DataCtrl.getTotalCents());
       loadEventListeners();
@@ -369,6 +406,7 @@ const App = (function(DataCtrl, UICtrl) {
   }
 })(DataCtrl, UICtrl);
 
+// :: GLOBAL FUNCTIONS ::
 /**
  * Number.prototype.formatNum(n, x, s, c)
  *  (converts a number to a string)
@@ -432,4 +470,5 @@ function leadingZero(n) {
   return (n < 10 ? '0' : '') + n.toString();
 }
 
+// :: BEGIN EXECUTION ::
 App.init();
