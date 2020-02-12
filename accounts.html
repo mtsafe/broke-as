@@ -47,15 +47,16 @@
     </nav>
     <main>
       <div class="jumbotron">
-        <h1 class="display-3">My Financial Accounts</h1>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-        <div class="container">
+        <h1 class="display-3">Cash Accounts</h1>
+        <p id="cash-form-instructions" class="lead"></p>
+        <div id="form-container" class="container">
           <!-- Form Card -->
           <div class="card">
             <div class="card-content">
               <span class="card-title">Add New Money Location</span>
               <form action="" class="col">
                 <div class="row">
+                  <!-- Form Fields -->
                   <div class="input-field col-sm-6">
                     <input type="text" placeholder="Enter Location" id="item-name">
                     <label for="item-name">Location</label>
@@ -64,56 +65,30 @@
                     $<input type="number" placeholder="Add Amount" id="item-amount">
                     <label for="item-amount">Amount</label>
                   </div>
-                  
+                  <!-- Form Buttons -->
                   <button id="add-btn" class="btn btn-outline-info">
-                    <i class="fa fa-plus"></i> Add Money Location
-                  </button>
+                    <i class="fa fa-plus"></i> Add Money Location</button>
                   <button id="update-btn" class="btn btn-outline-warning">
-                    <i class="fa fa-pencil-square-o"></i> Update Money
-                  </button>
+                    <i class="fa fa-pencil-square-o"></i> Update Money</button>
                   <button id="delete-btn" class="btn btn-outline-danger">
-                    <i class="fa fa-remove"></i> Delete Money Location
-                  </button>
+                    <i class="fa fa-remove"></i> Delete Money Location</button>
                   <button id="back-btn" class="btn btn-outline-secondary right">
-                    <i class="fa fa-chevron-circle-left"></i> Back
-                  </button>
+                    <i class="fa fa-chevron-circle-left"></i> Back</button>
                 </div>
               </form>
             </div>
           </div>
-      
           <hr class="my-4">
-        
-          <!-- Item List -->
-          <ul id="item-list" class="collection">
-        <!--
-            <li class="collection-item" id="item-0">
-              <strong>Steak Dinner: </strong> <em>1200 Amount</em>
-              <a href="#" class="secondary-content">
-                <i class="edit-item fa fa-pencil"></i>
-              </a>
-            </li>
-            <li class="collection-item" id="item-0">
-              <strong>Cookie: </strong> <em>1200 Amount</em>
-              <a href="#" class="secondary-content">
-                <i class="edit-item fa fa-pencil"></i>
-              </a>
-            </li>
-            <li class="collection-item" id="item-0">
-              <strong>Eggs: </strong> <em>300 Amount</em>
-              <a href="#" class="secondary-content">
-                <i class="edit-item fa fa-pencil"></i>
-              </a>
-            </li>
-          -->
-          </ul>
         </div>
 
         <div id="cash-table-header">
           <h2 class="white-text float-left">Cash Accounts</h2>
           <h3 class="center-align float-right">Cash on Hand:
             $<span id="total-amount">0.00</span></h3>
-        </div>
+          <button id="cash-badge"
+            class="badge badge-pill badge-primary float-right"><small>Set
+            Warning Limits</small></button>
+          </div>
 
         <!-- Cash Table -->
           <table class="table table-hover">
@@ -127,15 +102,17 @@
             <tbody id="cash-tbody">
             </tbody>
           </table>
-          <ul class="right">
-            <li>
-              <a href="#" id="clear-btn" class="btn text-danger">Clear All</a>
-            </li>
-          </ul>  
+          <div id="lower-cash-ctrl">
+            <button id="add-tr-btn" class="btn btn-outline-success float-left">
+              <i class="fa fa-plus"></i> Add a Money Row to Table</button>
+            <button id="clear-all-btn" type="button"
+              class="btn btn-outline-danger float-right">Purge Cash Accounts</button>
+          </div>
         </div>
 
         <p class="lead">
-          <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+          <a class="btn btn-primary btn-lg"
+            href="#" role="button">Learn more</a>
         </p>
       </div>
     </main>
