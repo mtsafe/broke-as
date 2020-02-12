@@ -17,7 +17,7 @@
 // Item CONTROLLER :: const DataCtrl
   // Public Methods
   // // getItems, addItem, getItemById, updateItem, deleteItem,
-  // // clearAllItems, setCurrentItem, getCurrentItem, getTotalCents, logData
+  // // clearAllItems, setCurrentItem, getCurrentItem, getTotalCents
 // UI CONTROLLER :: const UICtrl
   // Public Methods
   // // populateTrList, getItemInput, addTrItem, deleteTrItem,
@@ -34,42 +34,42 @@ const StorageCtrl = (function() {
   // StorageCtrl Public Methods
   // // flush, storeItem, getItemsFromStorage, updateItemStorage
   return {
-    flush: function(items){
-      localStorage.setItem('items', JSON.stringify(items));
+    flush: function(itemListName, itemList){
+      localStorage.setItem(itemListName, JSON.stringify(itemList));
     },
-    storeItem: function(item) {
-      let items;
-      if (localStorage.getItem('items') === null) {
-        items = [];
+    storeItem: function(itemListName, item) {
+      let itemList;
+      if (localStorage.getItem(itemListName) === null) {
+        itemList = [];
       } else {
-        items = JSON.parse(localStorage.getItem('items'));
+        itemList = JSON.parse(localStorage.getItem(itemListName));
       }
-      items.push(item);
-      localStorage.setItem('items', JSON.stringify(items));
+      itemList.push(item);
+      localStorage.setItem(itemListName, JSON.stringify(itemList));
     },
-    getItemsFromStorage: function() {
-      let items;
-      if (localStorage.getItem('items') === null) {
-        items = [];
+    getItemsFromStorage: function(itemListName) {
+      let itemList;
+      if (localStorage.getItem(itemListName) === null) {
+        itemList = [];
       } else {
-        items = JSON.parse(localStorage.getItem('items'));
+        itemList = JSON.parse(localStorage.getItem(itemListName));
       }
-      return items;
+      return itemList;
     },
-    updateItemStorage: function(updatedItem) {
-      let items = JSON.parse(localStorage.getItem('items'));
-      items.forEach(function(item, index) {
-        if (updatedItem.id === item.id) {
-          items.splice(index, 1, updatedItem);
+    updateItemStorage: function(itemListName, updateItem) {
+      let itemList = JSON.parse(localStorage.getItem(itemListName));
+      itemList.forEach(function(item, index) {
+        if (updateItem.id === item.id) {
+          itemList.splice(index, 1, updateItem);
         }
       });
-      localStorage.setItem('items', JSON.stringify(items));
+      localStorage.setItem(itemListName, JSON.stringify(itemList));
     }
   }
 })();
 
 // Item CONTROLLER //
-// acts like a middleware to localStorage
+// acts like a middleware interface to localStorage and/or other storage
 const DataCtrl = (function(StorageCtrl) {
   const Item = function(id, name, amount, dateTime){
     this.id = id;
@@ -80,77 +80,74 @@ const DataCtrl = (function(StorageCtrl) {
 
   // Data Structure / State data in browser memory for the page
   const data = {
-    items: StorageCtrl.getItemsFromStorage(),
-    currentItem: null,
+    Cash: StorageCtrl.getItemsFromStorage('Cash'),
+    currentItem: { Cash: null },
     totalAmount: 0
   };
 
   // Public Methods
   // // getItems, enumerateItems, addItem, getItemById, updateItem, deleteItem,
-  // // clearAllItems, setCurrentItem, getCurrentItem, getTotalCents, logData
+  // // clearAllItems, setCurrentItem, getCurrentItem, getTotalCents
   return {
-    getItems: function() {
-      return data.items;
+    getItems: function(dataStore) {
+      return data[dataStore];
     },
-    enumerateItems: function() {
+    enumerateItems: function(dataStore) {
       let id = 0;
-      data.items.forEach(function(item) {
+      data[dataStore].forEach(function(item) {
         item.id = id;
         id++;
       });
-      StorageCtrl.flush(data.items);
+      StorageCtrl.flush(dataStore, data[dataStore]);
     },
-    addItem: function(name, amount) {
+    addItem: function(dataStore, name, amount) {
       let ID = 0, dateTime="";
-      if (data.items.length > 0) {
-        ID = data.items[data.items.length - 1].id + 1;
+      if (data[dataStore].length > 0) {
+        ID = data[dataStore][data[dataStore].length - 1].id + 1;
       }
       amount = parseInt(amount);
       dateTime = timeConverter(Date.now());
       newItem = new Item(ID, name, amount, dateTime);
-      data.items.push(newItem);
-      StorageCtrl.storeItem(newItem);
+      data[dataStore].push(newItem);
+      StorageCtrl.storeItem(dataStore, newItem);
       return newItem;
     },
-    getItemById: function(idNum) {
-      return data.items[idNum];
+    getItemById: function(dataStore, idNum) {
+      return data[dataStore][idNum];
     },
-    updateItem: function(name, amount) {
-      const item = data.items[data.currentItem.id];
+    updateItem: function(dataStore, name, amount) {
+      const item = data[dataStore][data.currentItem[dataStore].id];
       item.name = name;
       item.amount = parseInt(amount);
       item.dateTime = timeConverter(Date.now());
-      StorageCtrl.updateItemStorage(item);
+      StorageCtrl.updateItemStorage(dataStore, item);
       return item;
     },
-    deleteItem: function(id) {
-      const ids = data.items.map(function(item) {
+    deleteItem: function(dataStore, id) {
+      const ids = data[dataStore].map(function(item) {
         return item.id;
       });
       const index = ids.indexOf(id);
-      data.items.splice(index, 1);
-      DataCtrl.enumerateItems();
+      data[dataStore].splice(index, 1);
+      DataCtrl.enumerateItems(dataStore);
     },
-    clearAllItems: function() {
-      data.items = [];
-      StorageCtrl.flush(data.items);
+    clearAllItems: function(dataStore) {
+      data[dataStore] = [];
+      StorageCtrl.flush(dataStore, data[dataStore]);
     },
-    setCurrentItem: function(item) {
-      data.currentItem = item;
+    setCurrentItem: function(dataStore, item) {
+      data.currentItem[dataStore] = item;
     },
-    getCurrentItem: function() {
-      return data.currentItem;
+    getCurrentItem: function(dataStore) {
+      return data.currentItem[dataStore];
     },
-    getTotalCents: function() {
+    getTotalCents: function(dataStore) {
       let total = 0;
-      data.items.forEach(function(item) {
+      data[dataStore].forEach(function(item) {
         total += item.amount;
       });
       data.totalAmount = total;
       return data.totalAmount;
-    },
-    logData: function() {
-      return data;
     }
   }
 })(StorageCtrl);
@@ -168,10 +165,12 @@ const UICtrl = (function() {
     updateBtn: '#update-btn',
     addTrBtn: '#add-tr-btn',
     clearBtn: '#clear-all-btn',
+    cashBadge: '#cash-badge',
     itemNameInput: '#item-name',
     itemAmountInput: '#item-amount',
     totalAmount: '#total-amount'
   }
+
 
   // UICtrl Public Methods
   // // populateTrList, getItemInput, addTrItem, deleteTrItem,
@@ -254,8 +253,8 @@ const UICtrl = (function() {
     },
     putCurrentItemToForm: function() {
       document.querySelector(UISelectors.itemNameInput).value =
-        DataCtrl.getCurrentItem().name;
-      const amt = centsToDollars(DataCtrl.getCurrentItem().amount);
+        DataCtrl.getCurrentItem('Cash').name;
+      const amt = centsToDollars(DataCtrl.getCurrentItem('Cash').amount);
       document.querySelector(UISelectors.itemAmountInput).value = amt;
     },
     emptyTableBody: function() {
@@ -264,6 +263,19 @@ const UICtrl = (function() {
     showTotalAmount: function(totalCents) {
       document.querySelector(UISelectors.totalAmount).textContent =
         centsToDollars(totalCents);
+      badge = document.querySelector(UISelectors.cashBadge);
+      if (totalCents < 1000) {
+        badge.className = 'badge badge-pill badge-danger float-right';
+        badge.textContent = 'Need Cash';
+      } else if (totalCents < 2000) {
+        document.querySelector(UISelectors.cashBadge).className =
+        badge.className = 'badge badge-pill badge-warning float-right';
+        badge.textContent = 'Low Cash';
+      } else if (totalCents < 5000) {
+        document.querySelector(UISelectors.cashBadge).className =
+        badge.className = 'badge badge-pill badge-success float-right';
+        badge.textContent = 'Okay';
+      }
     },
     editStateOff: function() {
       UICtrl.clearInput();
@@ -326,13 +338,12 @@ const App = (function(DataCtrl, UICtrl) {
     const input = UICtrl.getItemInput();
     if (input.name !== '' && input.amount !== '') {
       const newItem =
-        DataCtrl.addItem(input.name, input.amount);
+        DataCtrl.addItem('Cash', input.name, input.amount);
       UICtrl.addTrItem(newItem);
-      UICtrl.populateTrList(DataCtrl.getItems());
-      UICtrl.showTotalAmount(DataCtrl.getTotalCents());
+      UICtrl.populateTrList(DataCtrl.getItems('Cash'));
+      UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
       UICtrl.clearInput();
-      UICtrl.editStateOff();
-      DataCtrl.setCurrentItem(null);
+      setAppState("display");
     }
     e.preventDefault();
   };
@@ -343,28 +354,25 @@ const App = (function(DataCtrl, UICtrl) {
   };
 
   const backBtnClick = function(e) {
-    UICtrl.editStateOff();
-    DataCtrl.setCurrentItem(null);
+    setAppState("display");
   };
 
   const deleteBtnClick = function(e) {
-    const currentItem = DataCtrl.getCurrentItem();
-    DataCtrl.deleteItem(currentItem.id);
+    const currentItem = DataCtrl.getCurrentItem('Cash');
+    DataCtrl.deleteItem('Cash', currentItem.id);
     UICtrl.deleteTrItem(currentItem.id);
-    UICtrl.populateTrList(DataCtrl.getItems());
-    UICtrl.showTotalAmount(DataCtrl.getTotalCents());
-    UICtrl.editStateOff();
-    DataCtrl.setCurrentItem(null);
+    UICtrl.populateTrList(DataCtrl.getItems('Cash'));
+    UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
+    setAppState("display");
     e.preventDefault();
   };
 
   const updateBtnClick = function(e) {
     const input = UICtrl.getItemInput();
-    const updatedItem = DataCtrl.updateItem(input.name, input.amount);
+    const updatedItem = DataCtrl.updateItem('Cash', input.name, input.amount);
     UICtrl.updateTrItem(updatedItem);
-    UICtrl.showTotalAmount(DataCtrl.getTotalCents());
-    UICtrl.editStateOff();
-    DataCtrl.setCurrentItem(null);
+    UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
+    setAppState("display");
     e.preventDefault();
   };
 
@@ -373,8 +381,8 @@ const App = (function(DataCtrl, UICtrl) {
       const listId = e.target.parentNode.parentNode.parentNode.id;
       const listIdArr = listId.split('-');
       const id = parseInt(listIdArr[1]);
-      const itemToEdit = DataCtrl.getItemById(id);
-      DataCtrl.setCurrentItem(itemToEdit);
+      const itemToEdit = DataCtrl.getItemById('Cash', id);
+      DataCtrl.setCurrentItem('Cash', itemToEdit);
       UICtrl.putCurrentItemToForm();
       UICtrl.editStateModCash();
     }
@@ -382,25 +390,33 @@ const App = (function(DataCtrl, UICtrl) {
   };
 
   const clearAllItemsBtnClick = function() {
-    DataCtrl.clearAllItems();
-    UICtrl.showTotalAmount(DataCtrl.getTotalCents());
+    DataCtrl.clearAllItems('Cash');
+    UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
     UICtrl.emptyTableBody();
     UICtrl.editStateAddCash();
-  }
+  };
+
+  const setAppState = function(state) {
+    switch (state) {
+      case "display":
+        UICtrl.editStateOff();
+        DataCtrl.setCurrentItem('Cash', null);
+        break;
+    }
+  };
 
   // App Public Methods
   // // init
   return {
     init: function() {
-      const items = DataCtrl.getItems();
+      const items = DataCtrl.getItems('Cash');
       if (items.length !== 0) {
         UICtrl.populateTrList(items);
-        UICtrl.editStateOff();
-        DataCtrl.setCurrentItem(null);
+        setAppState("display");
       } else {
         UICtrl.editStateAddCash();
       }
-      UICtrl.showTotalAmount(DataCtrl.getTotalCents());
+      UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
       loadEventListeners();
     }
   }
