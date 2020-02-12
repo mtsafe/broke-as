@@ -271,7 +271,7 @@ const UICtrl = (function() {
         document.querySelector(UISelectors.cashBadge).className =
         badge.className = 'badge badge-pill badge-warning float-right';
         badge.textContent = 'Low Cash';
-      } else if (totalCents < 5000) {
+      } else {
         document.querySelector(UISelectors.cashBadge).className =
         badge.className = 'badge badge-pill badge-success float-right';
         badge.textContent = 'Okay';
