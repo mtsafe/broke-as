@@ -71,17 +71,18 @@ const StorageCtrl = (function() {
 // Item CONTROLLER //
 // acts like a middleware interface to localStorage and/or other storage
 const DataCtrl = (function(StorageCtrl) {
-  const Item = function(id, name, amount, dateTime){
+  const Item = function(id, name, value, dateTime){
     this.id = id;
     this.name = name;
-    this.amount = amount;
+    this.value = value;
     this.dateTime = dateTime;
   };
 
   // Data Structure / State data in browser memory for the page
   const data = {
     Cash: StorageCtrl.getItemsFromStorage('Cash'),
-    currentItem: { Cash: null },
+    Config: StorageCtrl.getItemsFromStorage('Config'),
+    currentItem: { Cash: null, Config: null },
     totalAmount: 0
   };
 
@@ -100,14 +101,14 @@ const DataCtrl = (function(StorageCtrl) {
       });
       StorageCtrl.flush(dataStore, data[dataStore]);
     },
-    addItem: function(dataStore, name, amount) {
+    addItem: function(dataStore, name, value) {
       let ID = 0, dateTime="";
       if (data[dataStore].length > 0) {
         ID = data[dataStore][data[dataStore].length - 1].id + 1;
       }
-      amount = parseInt(amount);
+      value = parseInt(value);
       dateTime = timeConverter(Date.now());
-      newItem = new Item(ID, name, amount, dateTime);
+      newItem = new Item(ID, name, value, dateTime);
       data[dataStore].push(newItem);
       StorageCtrl.storeItem(dataStore, newItem);
       return newItem;
@@ -115,10 +116,15 @@ const DataCtrl = (function(StorageCtrl) {
     getItemById: function(dataStore, idNum) {
       return data[dataStore][idNum];
     },
-    updateItem: function(dataStore, name, amount) {
+    getItemByName: function(dataStore, matchName) {
+      return data[dataStore].find((item) => {
+        return item.name === matchName;
+      });
+    },
+    updateItem: function(dataStore, name, value) {
       const item = data[dataStore][data.currentItem[dataStore].id];
       item.name = name;
-      item.amount = parseInt(amount);
+      item.value = parseInt(value);
       item.dateTime = timeConverter(Date.now());
       StorageCtrl.updateItemStorage(dataStore, item);
       return item;
@@ -144,7 +150,7 @@ const DataCtrl = (function(StorageCtrl) {
     getTotalCents: function(dataStore) {
       let total = 0;
       data[dataStore].forEach(function(item) {
-        total += item.amount;
+        total += item.value;
       });
       data.totalAmount = total;
       return data.totalAmount;
@@ -165,12 +171,16 @@ const UICtrl = (function() {
     updateBtn: '#update-btn',
     addTrBtn: '#add-tr-btn',
     clearBtn: '#clear-all-btn',
+    locationSelect: '#location-select',
     cashBadge: '#cash-badge',
-    itemNameInput: '#item-name',
-    itemAmountInput: '#item-amount',
-    totalAmount: '#total-amount'
-  }
-
+    cashNameInput: '#cash-name',
+    cashAmountInput: '#cash-amount',
+    totalAmount: '#total-amount',
+    cashAssessmentModal: '#cash-assessment-modal',
+    cashModalAlert: '#cash-modal-alert',
+    modalOkay: '#modal-okay',
+    modalNeed: '#modal-need'
+}
 
   // UICtrl Public Methods
   // // populateTrList, getItemInput, addTrItem, deleteTrItem,
@@ -188,7 +198,7 @@ const UICtrl = (function() {
         }
         html += `<tr class="${className}" id="tr-${id}">
         <th scope="row">${item.name}</th>
-        <td>$<em>${centsToDollars(item.amount)}</em></td>
+        <td>$<em>${centsToDollars(item.value)}</em></td>
         <td>${item.dateTime}
         <a href="#" class="secondary-content">
           <i class="edit-item fa fa-pencil"></i>
@@ -198,10 +208,10 @@ const UICtrl = (function() {
       document.querySelector(UISelectors.trList).innerHTML = html;
     },
     getItemInput: function() {
-      const amt = document.querySelector(UISelectors.itemAmountInput).value;
+      const amt = document.querySelector(UISelectors.cashAmountInput).value;
       return {
-        name: document.querySelector(UISelectors.itemNameInput).value,
-        amount: dollarsToCents(amt),
+        name: document.querySelector(UISelectors.cashNameInput).value,
+        value: dollarsToCents(amt),
       }
     },
     addTrItem: function(item) {
@@ -211,7 +221,7 @@ const UICtrl = (function() {
       }
       tr.id = `tr-${item.id}`;
       tr.innerHTML = `<th scope="row">${item.name}</th>
-        <td>$<em>${centsToDollars(item.amount)}</em></td>
+        <td>$<em>${centsToDollars(item.value)}</em></td>
         <td>${item.dateTime}
           <a href="#" class="secondary-content">
             <i class="edit-item fa fa-pencil"></i>
@@ -238,7 +248,7 @@ const UICtrl = (function() {
         if (trID === `tr-${item.id}`) {
           document.querySelector(`#${trID}`).innerHTML =
           `<th scope="row">${item.name}</th>
-          <td>$<em>${centsToDollars(item.amount)}</em></td>
+          <td>$<em>${centsToDollars(item.value)}</em></td>
           <td>${item.dateTime}
             <a href="#" class="secondary-content">
               <i class="edit-item fa fa-pencil"></i>
@@ -248,14 +258,14 @@ const UICtrl = (function() {
       });
     },
     clearInput: function() {
-      document.querySelector(UISelectors.itemNameInput).value = '';
-      document.querySelector(UISelectors.itemAmountInput).value = '';
+      document.querySelector(UISelectors.cashNameInput).value = '';
+      document.querySelector(UISelectors.cashAmountInput).value = '';
     },
     putCurrentItemToForm: function() {
-      document.querySelector(UISelectors.itemNameInput).value =
+      document.querySelector(UISelectors.cashNameInput).value =
         DataCtrl.getCurrentItem('Cash').name;
-      const amt = centsToDollars(DataCtrl.getCurrentItem('Cash').amount);
-      document.querySelector(UISelectors.itemAmountInput).value = amt;
+      const amt = centsToDollars(DataCtrl.getCurrentItem('Cash').value);
+      document.querySelector(UISelectors.cashAmountInput).value = amt;
     },
     emptyTableBody: function() {
       document.querySelector(UISelectors.trList).innerHTML = "";
@@ -263,14 +273,19 @@ const UICtrl = (function() {
     showTotalAmount: function(totalCents) {
       document.querySelector(UISelectors.totalAmount).textContent =
         centsToDollars(totalCents);
-      badge = document.querySelector(UISelectors.cashBadge);
-      if (totalCents < 1000) {
+      const badge = document.querySelector(UISelectors.cashBadge);
+      const cashNeed = DataCtrl.getItemByName('Config',
+        'cash-onhand-need').value;
+      const cashOkay = DataCtrl.getItemByName('Config',
+        'cash-onhand-okay').value;
+
+      if (totalCents < cashNeed) {
         badge.className = 'badge badge-pill badge-danger float-right';
-        badge.textContent = 'Need Cash';
-      } else if (totalCents < 2000) {
+        badge.textContent = 'Serious';
+      } else if (totalCents < cashOkay) {
         document.querySelector(UISelectors.cashBadge).className =
         badge.className = 'badge badge-pill badge-warning float-right';
-        badge.textContent = 'Low Cash';
+        badge.textContent = 'Need Cash';
       } else {
         document.querySelector(UISelectors.cashBadge).className =
         badge.className = 'badge badge-pill badge-success float-right';
@@ -332,13 +347,69 @@ const App = (function(DataCtrl, UICtrl) {
       'click', editTrBtnClick);
     document.querySelector(UISelectors.updateBtn).addEventListener(
       'click', updateBtnClick);
+    document.querySelector(UISelectors.locationSelect).addEventListener(
+      'change', locationSelectChange);
+    $(UISelectors.cashAssessmentModal).on('show.bs.modal', function (e) {
+      let amt;
+      amt = parseInt(DataCtrl.getItemByName('Config',
+        'cash-onhand-need').value / 100);
+      document.querySelector(UISelectors.modalNeed).value = amt;
+      amt = parseInt(DataCtrl.getItemByName('Config',
+        'cash-onhand-okay').value / 100);
+      document.querySelector(UISelectors.modalOkay).value = amt;
+    });
+    $(UISelectors.cashAssessmentModal).on('hide.bs.modal', function (e) {
+      let param, itemToEdit, amtNeed, amtOkay;
+      const dataStore = 'Config';
+
+      amtNeed = document.querySelector(UISelectors.modalNeed).value;
+      if (parseInt(amtNeed) < 0) {
+        const modalAlert = document.querySelector(UISelectors.cashModalAlert);
+        modalAlert.classList = "alert alert-dismissible alert-danger";
+        modalAlert.innerHTML = `<button type="button" class="close" data-dismiss="alert">&times;</button>The minimum needed [<strong>$${amtNeed}</strong>] must be greater or equal to than zero.`;
+        e.preventDefault();
+        return;
+      }
+      param = 'cash-onhand-need';
+      itemToEdit = DataCtrl.getItemByName(dataStore, param);
+      DataCtrl.setCurrentItem(dataStore, itemToEdit);
+      DataCtrl.updateItem(dataStore, param, amtNeed + '00');
+
+      amtOkay = document.querySelector(UISelectors.modalOkay).value;
+      if (parseInt(amtOkay) < parseInt(amtNeed)) {
+        const modalAlert = document.querySelector(UISelectors.cashModalAlert);
+        modalAlert.classList = "alert alert-dismissible alert-danger";
+        modalAlert.innerHTML = `<button type="button" class="close" data-dismiss="alert">&times;</button>The minimum okay [<strong>$${amtOkay}</strong>] must be greater or equal to than the minimum needed [<strong>$${amtNeed}</strong>].`;
+        e.preventDefault();
+        return;
+      }
+      param = 'cash-onhand-okay';
+      itemToEdit = DataCtrl.getItemByName(dataStore, param);
+      DataCtrl.setCurrentItem(dataStore, itemToEdit);
+      DataCtrl.updateItem(dataStore, param, amtOkay + '00');
+
+      UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
+    });
+    $(UISelectors.cashModalAlert).on('close.bs.alert', function (e) {
+      // const newAlert = document.createElement('div');
+      // newAlert.id = 'cash-modal-alert';
+      // const parentDiv = document.getElementById('cash-modal-content');
+      // const cashModalBody = document.getElementById('cash-modal-body');
+      // console.log('BEFORE ', parentDiv.childNodes);
+      // parentDiv.insertBefore(newAlert, cashModalBody);
+      // console.log('AFTER  ', parentDiv.childNodes);
+      const modalAlert = document.querySelector(UISelectors.cashModalAlert);
+      modalAlert.classList = "";
+      modalAlert.innerHTML = "";
+      e.preventDefault();
+    });
   };
 
   const addBtnClick = function(e) {
     const input = UICtrl.getItemInput();
-    if (input.name !== '' && input.amount !== '') {
+    if (input.name !== '' && input.value !== '') {
       const newItem =
-        DataCtrl.addItem('Cash', input.name, input.amount);
+        DataCtrl.addItem('Cash', input.name, input.value);
       UICtrl.addTrItem(newItem);
       UICtrl.populateTrList(DataCtrl.getItems('Cash'));
       UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
@@ -350,7 +421,7 @@ const App = (function(DataCtrl, UICtrl) {
 
   const addTrBtnClick = function(e) {
     UICtrl.editStateAddCash();
-    UICtrl.putCurrentItemToForm();
+//    UICtrl.putCurrentItemToForm();
   };
 
   const backBtnClick = function(e) {
@@ -369,7 +440,7 @@ const App = (function(DataCtrl, UICtrl) {
 
   const updateBtnClick = function(e) {
     const input = UICtrl.getItemInput();
-    const updatedItem = DataCtrl.updateItem('Cash', input.name, input.amount);
+    const updatedItem = DataCtrl.updateItem('Cash', input.name, input.value);
     UICtrl.updateTrItem(updatedItem);
     UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
     setAppState("display");
@@ -396,6 +467,11 @@ const App = (function(DataCtrl, UICtrl) {
     UICtrl.editStateAddCash();
   };
 
+  const locationSelectChange = function() {
+    document.querySelector('#cash-name').value =
+    document.querySelector('#location-select').value;
+  };
+
   const setAppState = function(state) {
     switch (state) {
       case "display":
@@ -405,10 +481,21 @@ const App = (function(DataCtrl, UICtrl) {
     }
   };
 
+  const initConfig = function() {
+    DataCtrl.addItem('Config', 'cash-onhand-need', 1000);
+    DataCtrl.addItem('Config', 'cash-onhand-okay', 2500);
+  };
+
   // App Public Methods
   // // init
   return {
     init: function() {
+      let config;
+      config = DataCtrl.getItems('Config');
+      if (config.length === 0) {
+        initConfig();
+        config = DataCtrl.getItems('Config');
+      }
       const items = DataCtrl.getItems('Cash');
       if (items.length !== 0) {
         UICtrl.populateTrList(items);
