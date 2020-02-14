@@ -11,12 +11,15 @@
   <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="index.html">
         <div id="logo">
-          <h1><span class="tight">Broke-</span><span id="hanging" class="tight post-it">As</span></h1>
+          <h1><span class="tight">Broke-</span><span id="hanging"
+            class="tight post-it">As</span></h1>
         </div>
       </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse"
+        data-target="#navbarColor03" aria-controls="navbarColor03"
+        aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -41,7 +44,8 @@
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="text" placeholder="Search">
-          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+          <button class="btn btn-secondary my-2 my-sm-0"
+            type="submit">Search</button>
         </form>
       </div>
     </nav>
@@ -58,12 +62,25 @@
                 <div class="row">
                   <!-- Form Fields -->
                   <div class="input-field col-sm-6">
-                    <input type="text" placeholder="Enter Location" id="item-name">
-                    <label for="item-name">Location</label>
+                    <input type="text"
+                      placeholder="Enter Location" id="cash-name">
+                    <label for="cash-name">Location</label>
                   </div>
                   <div class="input-field col-sm-6">
-                    $<input type="number" placeholder="Add Amount" id="item-amount">
-                    <label for="item-amount">Amount</label>
+                    $<input type="number"
+                      placeholder="Add Amount" id="cash-amount">
+                    <label for="cash-amount">Amount</label>
+                  </div>
+                  <!-- Form Selector -->
+                  <div class="form-group">
+                    <select id="location-select" class="custom-select">
+                      <option value="" selected="">Or Select A Location</option>
+                      <option>Wallet</option>
+                      <option>Pocket</option>
+                      <option>Stash Box</option>
+                      <option>Sock Drawer</option>
+                      <option>Mattress</option>
+                    </select>
                   </div>
                   <!-- Form Buttons -->
                   <button id="add-btn" class="btn btn-outline-info">
@@ -81,11 +98,78 @@
           <hr class="my-4">
         </div>
 
+        <div id="cash-assessment-modal" class="modal fade">
+          <div class="modal-dialog">
+            <div id="cash-modal-content" class="modal-content">
+              <div class="modal-header">
+                <h1>Cash on Hand Comfort Levels</h1>
+                <p>Select the ranges for cash on hand that are comfortable
+                  for you.</p>
+              </div>
+              <div id="cash-modal-alert"></div>
+              <div id="cash-modal-body" class="modal-body">
+                <div class="form-group">
+                  <label class="control-label text-success">Minimum
+                    "Okay" Level</label>
+                  <div class="form-group">
+                    <div class="input-group mb-3 text-success">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <input id="modal-okay" type="number" class="form-control"
+                        aria-label="Amount (to the nearest dollar)">
+                      <div class="input-group-append">
+                        <span class="input-group-text">.00</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <label class="control-label text-warning">Minimum
+                    "Need Cash" Level</label>
+                  <div class="form-group">
+                    <div class="input-group mb-3 text-warning">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <input id="modal-need" type="number" class="form-control"
+                        aria-label="Amount (to the nearest dollar)">
+                      <div class="input-group-append">
+                        <span class="input-group-text">.00</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <label class="control-label text-danger">Minimum
+                    "Serious" Level</label>
+                  <div class="form-group">
+                    <div class="input-group mb-3 text-danger">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <div><span
+                        class="input-group-text">
+                        <canvas width='50' height='1'></canvas>0</span></div>
+                      <div class="input-group-append">
+                        <span class="input-group-text">.00</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-default"
+                  data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div id="cash-table-header">
           <h2 class="white-text float-left">Cash Accounts</h2>
           <h3 class="center-align float-right">Cash on Hand:
             $<span id="total-amount">0.00</span></h3>
           <button id="cash-badge"
+            data-toggle="modal" data-target="#cash-assessment-modal"
             class="badge badge-pill badge-primary float-right"><small>Set
             Warning Limits</small></button>
           </div>
@@ -106,7 +190,8 @@
             <button id="add-tr-btn" class="btn btn-outline-success float-left">
               <i class="fa fa-plus"></i> Add a Money Row to Table</button>
             <button id="clear-all-btn" type="button"
-              class="btn btn-outline-danger float-right">Purge Cash Accounts</button>
+              class="btn btn-outline-danger float-right"
+                >Purge Cash Accounts</button>
           </div>
         </div>
 
