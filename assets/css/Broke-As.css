@@ -50,6 +50,12 @@ p {
 .text-muted {
   white-space: nowrap;
 }
+.card-content {
+  margin: 12px;
+}
+.btn, .form-group {
+  margin: 4px;
+}
 #logo {
   margin-right: 3em;
   padding: 0px;
@@ -64,11 +70,14 @@ p {
 #intro {
   margin: 0px 30px;
 }
+#lower-cash-ctrl {
+  display: flexbox;
+}
+/* Strong Warning Flash Effect */
 #caveat {
   margin: 8px 30px;
   text-align: center;
 }
-/* Strong Warning Flash Effect */
 #caveat h2 {
   color: red;
 }
