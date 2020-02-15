@@ -197,7 +197,7 @@ const UICtrl = (function() {
           className = '';
         }
         html += `<tr class="${className}" id="tr-${id}">
-        <th scope="row">${item.name}</th>
+        <th class="tr-th-name" scope="row">${item.name}</th>
         <td>$<em>${centsToDollars(item.value)}</em></td>
         <td>${item.dateTime}
         <a href="#" class="secondary-content">
@@ -220,7 +220,7 @@ const UICtrl = (function() {
         tr.classList.add("table-secondary");
       }
       tr.id = `tr-${item.id}`;
-      tr.innerHTML = `<th scope="row">${item.name}</th>
+      tr.innerHTML = `<th class="tr-th-name" scope="row">${item.name}</th>
         <td>$<em>${centsToDollars(item.value)}</em></td>
         <td>${item.dateTime}
           <a href="#" class="secondary-content">
@@ -247,7 +247,7 @@ const UICtrl = (function() {
         const trID = trItem.getAttribute('id');
         if (trID === `tr-${item.id}`) {
           document.querySelector(`#${trID}`).innerHTML =
-          `<th scope="row">${item.name}</th>
+          `<th class="tr-th-name" scope="row">${item.name}</th>
           <td>$<em>${centsToDollars(item.value)}</em></td>
           <td>${item.dateTime}
             <a href="#" class="secondary-content">
@@ -260,6 +260,28 @@ const UICtrl = (function() {
     clearInput: function() {
       document.querySelector(UISelectors.cashNameInput).value = '';
       document.querySelector(UISelectors.cashAmountInput).value = '';
+    },
+    setCashLocationSelector: function() {
+    //  for each option in the selector,
+    //  as it matches a tr in the table body,
+    //  set the disable (true/false).
+      const thList = 
+        Object.values(document.getElementsByClassName("tr-th-name"));
+      const selectorOptions =
+        Object.values(document.querySelector('#location-select').options);
+
+      selectorOptions.forEach(option => { option.disabled = false; });
+
+      selectorOptions.forEach((option, index) => {
+        thList.forEach( th => {
+          if (index === 0) {
+            return;
+          }
+          if (option.value.toUpperCase() === th.innerHTML.toUpperCase()) {
+            option.disabled = true;
+          }
+        });
+      });
     },
     putCurrentItemToForm: function() {
       document.querySelector(UISelectors.cashNameInput).value =
@@ -302,6 +324,7 @@ const UICtrl = (function() {
       document.querySelector(UISelectors.editor).style.display = 'none';
     },
     editStateAddCash: function() {
+      UICtrl.setCashLocationSelector();
       document.querySelector(UISelectors.editor).style.display = 'block';
       document.querySelector(UISelectors.addBtn).style.display = 'inline';
       document.querySelector(UISelectors.addTrBtn).style.display = 'none';
@@ -310,6 +333,7 @@ const UICtrl = (function() {
       document.querySelector(UISelectors.updateBtn).style.display = 'none';
     },
     editStateModCash: function() {
+      UICtrl.setCashLocationSelector();
       document.querySelector(UISelectors.editor).style.display = 'block';
       document.querySelector(UISelectors.addBtn).style.display = 'none';
       document.querySelector(UISelectors.addTrBtn).style.display = 'none';
@@ -391,13 +415,6 @@ const App = (function(DataCtrl, UICtrl) {
       UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
     });
     $(UISelectors.cashModalAlert).on('close.bs.alert', function (e) {
-      // const newAlert = document.createElement('div');
-      // newAlert.id = 'cash-modal-alert';
-      // const parentDiv = document.getElementById('cash-modal-content');
-      // const cashModalBody = document.getElementById('cash-modal-body');
-      // console.log('BEFORE ', parentDiv.childNodes);
-      // parentDiv.insertBefore(newAlert, cashModalBody);
-      // console.log('AFTER  ', parentDiv.childNodes);
       const modalAlert = document.querySelector(UISelectors.cashModalAlert);
       modalAlert.classList = "";
       modalAlert.innerHTML = "";
@@ -413,19 +430,17 @@ const App = (function(DataCtrl, UICtrl) {
       UICtrl.addTrItem(newItem);
       UICtrl.populateTrList(DataCtrl.getItems('Cash'));
       UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
-      UICtrl.clearInput();
-      setAppState("display");
+      setAppState("hide-cash-editor");
     }
     e.preventDefault();
   };
 
   const addTrBtnClick = function(e) {
-    UICtrl.editStateAddCash();
-//    UICtrl.putCurrentItemToForm();
+    setAppState("display-new-cash-editor");
   };
 
   const backBtnClick = function(e) {
-    setAppState("display");
+    setAppState("hide-cash-editor");
   };
 
   const deleteBtnClick = function(e) {
@@ -434,7 +449,7 @@ const App = (function(DataCtrl, UICtrl) {
     UICtrl.deleteTrItem(currentItem.id);
     UICtrl.populateTrList(DataCtrl.getItems('Cash'));
     UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
-    setAppState("display");
+    setAppState("hide-cash-editor");
     e.preventDefault();
   };
 
@@ -443,7 +458,7 @@ const App = (function(DataCtrl, UICtrl) {
     const updatedItem = DataCtrl.updateItem('Cash', input.name, input.value);
     UICtrl.updateTrItem(updatedItem);
     UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
-    setAppState("display");
+    setAppState("hide-cash-editor");
     e.preventDefault();
   };
 
@@ -455,7 +470,7 @@ const App = (function(DataCtrl, UICtrl) {
       const itemToEdit = DataCtrl.getItemById('Cash', id);
       DataCtrl.setCurrentItem('Cash', itemToEdit);
       UICtrl.putCurrentItemToForm();
-      UICtrl.editStateModCash();
+      setAppState("display-mod-cash-editor");
     }
     e.preventDefault();
   };
@@ -464,7 +479,7 @@ const App = (function(DataCtrl, UICtrl) {
     DataCtrl.clearAllItems('Cash');
     UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
     UICtrl.emptyTableBody();
-    UICtrl.editStateAddCash();
+    setAppState("display-new-cash-editor");
   };
 
   const locationSelectChange = function() {
@@ -474,9 +489,15 @@ const App = (function(DataCtrl, UICtrl) {
 
   const setAppState = function(state) {
     switch (state) {
-      case "display":
+      case "hide-cash-editor":
         UICtrl.editStateOff();
         DataCtrl.setCurrentItem('Cash', null);
+        break;
+      case "display-new-cash-editor":
+        UICtrl.editStateAddCash();
+        break;
+      case "display-mod-cash-editor":
+        UICtrl.editStateModCash();
         break;
     }
   };
@@ -497,11 +518,11 @@ const App = (function(DataCtrl, UICtrl) {
         config = DataCtrl.getItems('Config');
       }
       const items = DataCtrl.getItems('Cash');
-      if (items.length !== 0) {
-        UICtrl.populateTrList(items);
-        setAppState("display");
+      if (items.length === 0) {
+        setAppState("display-new-cash-editor");
       } else {
-        UICtrl.editStateAddCash();
+        UICtrl.populateTrList(items);
+        setAppState("hide-cash-editor");
       }
       UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
       loadEventListeners();
