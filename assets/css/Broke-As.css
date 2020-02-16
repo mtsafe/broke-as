@@ -6,9 +6,13 @@
 }
 .navbar, .jumbotron {
   margin: 8px;
+  padding: 2rem;
 }
 .navbar:hover, .navbar-toggler:hover, .btn:hover {
   box-shadow: 10px 15px 25px #ccc;
+}
+section {
+  padding-bottom: 2.5rem;    /* footer height */
 }
 footer {
   padding-left: 60px;
@@ -70,10 +74,65 @@ p {
 #intro {
   margin: 0px 30px;
 }
-#lower-cash-ctrl {
+#cash-table-footer {
   display: flexbox;
 }
-/* Strong Warning Flash Effect */
+/*
+* Borrowed HR styles from https://css-tricks.com/examples/hrs/
+*/
+hr.style-2 {/* Gradient transparent - color - transparent */
+  border: 1;
+  border-style: solid;
+  height: 8px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+  margin-top: 2rem;
+}
+hr.style-2:before { /* Not really supposed to work, but does */
+  display: block;
+  content: "";
+  height: 30px;
+  margin-top: -31px;
+  border-style: solid;
+  border-color: black;
+  border-width: 0 0 1px 0;
+  /* border-radius: 20px; */
+}
+hr.style-7 {/* Flaired edges, by Tomas Theunissen */
+  overflow: visible; /* For IE */
+  height: 30px;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px 0 0 0;
+  border-radius: 20px;
+}
+hr.style-7:before { /* Not really supposed to work, but does */
+  display: block;
+  content: "";
+  height: 30px;
+  margin-top: -31px;
+  border-style: solid;
+  border-color: black;
+  border-width: 0 0 1px 0;
+  border-radius: 20px;
+}
+hr.style-15 {
+	border-top: 4px double #8c8b8b;
+	text-align: center;
+}
+/* hr.style-15:after {
+	content: '\002665';
+	display: inline-block;
+	position: relative;
+	top: -15px;
+	padding: 0 10px;
+	background: #f0f0f0;
+	color: #8c8b8b;
+	font-size: 18px;
+} */
+
+/*
+* Strong Warning Flash Effect
+*/
 #caveat {
   margin: 8px 30px;
   text-align: center;
@@ -115,4 +174,10 @@ p {
 	100% {
     color: red;
 	}
+}
+
+@media (max-width: 500px) {
+  section {
+    padding-bottom: 5rem;    /* double footer height */
+  }
 }
