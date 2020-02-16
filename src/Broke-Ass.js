@@ -162,7 +162,7 @@ const DataCtrl = (function(StorageCtrl) {
 // controls the UI
 const UICtrl = (function() {
   const UISelectors = {
-    editor: '#form-container',
+    editor: '#cash-form-container',
     trList: '#cash-tbody',
     trItems: '#cash-tbody tr',
     addBtn: '#add-btn',
