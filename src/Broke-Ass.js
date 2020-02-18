@@ -180,7 +180,7 @@ const UICtrl = (function() {
     cashModalAlert: '#cash-modal-alert',
     modalOkay: '#modal-okay',
     modalNeed: '#modal-need'
-}
+  }
 
   // UICtrl Public Methods
   // // populateTrList, getItemInput, addTrItem, deleteTrItem,
@@ -317,7 +317,7 @@ const UICtrl = (function() {
     editStateOff: function() {
       UICtrl.clearInput();
       document.querySelector(UISelectors.addBtn).style.display = 'none';
-      document.querySelector(UISelectors.addTrBtn).style.display = 'inline';
+      document.querySelector(UISelectors.addTrBtn).style.display = 'inline-block';
       document.querySelector(UISelectors.backBtn).style.display = 'none';
       document.querySelector(UISelectors.deleteBtn).style.display = 'none';
       document.querySelector(UISelectors.updateBtn).style.display = 'none';
@@ -326,9 +326,9 @@ const UICtrl = (function() {
     editStateAddCash: function() {
       UICtrl.setCashLocationSelector();
       document.querySelector(UISelectors.editor).style.display = 'block';
-      document.querySelector(UISelectors.addBtn).style.display = 'inline';
+      document.querySelector(UISelectors.addBtn).style.display = 'inline-block';
       document.querySelector(UISelectors.addTrBtn).style.display = 'none';
-      document.querySelector(UISelectors.backBtn).style.display = 'none';
+      document.querySelector(UISelectors.backBtn).style.display = 'inline-block';
       document.querySelector(UISelectors.deleteBtn).style.display = 'none';
       document.querySelector(UISelectors.updateBtn).style.display = 'none';
     },
@@ -337,9 +337,9 @@ const UICtrl = (function() {
       document.querySelector(UISelectors.editor).style.display = 'block';
       document.querySelector(UISelectors.addBtn).style.display = 'none';
       document.querySelector(UISelectors.addTrBtn).style.display = 'none';
-      document.querySelector(UISelectors.backBtn).style.display = 'inline';
-      document.querySelector(UISelectors.deleteBtn).style.display = 'inline';
-      document.querySelector(UISelectors.updateBtn).style.display = 'inline';
+      document.querySelector(UISelectors.backBtn).style.display = 'inline-block';
+      document.querySelector(UISelectors.deleteBtn).style.display = 'inline-block';
+      document.querySelector(UISelectors.updateBtn).style.display = 'inline-block';
     },
     getSelectors: function() {
       return UISelectors;
