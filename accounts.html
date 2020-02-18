@@ -52,17 +52,14 @@
       </div>
     </nav>
     <main>
-      <div id="cash-jumbotron" class="jumbotron">
+      <div id="jumbotron" class="jumbotron">
         <header>
           <h1 class="display-3">Cash Accounts</h1>
         </header>
         <hr class="style-2">
         <!-- Cash Accounts Section -->
         <section id="cash-accounts">
-          <p id="cash-form-instructions" class="lead">
-            Where is your cash and liquids accounts such as
-            checking and savings accounts?
-          </p>
+          <h2 class="white-text">Cash Accounts</h2>
           <div id="cash-form-container" class="container">
             <!-- Form Card -->
             <div class="card">
@@ -82,25 +79,29 @@
                       <label for="cash-amount">Amount</label>
                     </div>
                     <!-- Form Selector -->
-                    <div class="form-group">
-                      <select id="location-select" class="custom-select">
-                        <option value="" selected>Or Select A Location</option>
-                        <option>Wallet</option>
-                        <option>Pocket</option>
-                        <option>Stash Box</option>
-                        <option>Sock Drawer</option>
-                        <option>Mattress</option>
-                      </select>
-                    </div>
-                    <!-- Form Buttons -->
-                    <button id="add-btn" class="btn btn-outline-info">
-                      <i class="fa fa-plus"></i> Add Money Location</button>
-                    <button id="update-btn" class="btn btn-outline-warning">
-                      <i class="fa fa-pencil-square-o"></i> Update Money</button>
-                    <button id="delete-btn" class="btn btn-outline-danger">
-                      <i class="fa fa-remove"></i> Delete Money Location</button>
-                    <button id="back-btn" class="btn btn-outline-secondary right">
-                      <i class="fa fa-chevron-circle-left"></i> Back</button>
+                    <footer id="cash-form-footer">
+                      <div id="cash-location-selector" class="form-group float-left">
+                        <select id="location-select" class="custom-select">
+                          <option value="" selected>Or Select A Location</option>
+                          <option>Wallet</option>
+                          <option>Pocket</option>
+                          <option>Stash Box</option>
+                          <option>Sock Drawer</option>
+                          <option>Mattress</option>
+                        </select>
+                      </div>
+                      <!-- Form Buttons -->
+                      <div id="cash-submit-buttons" class="float-left">
+                        <button id="add-btn" class="btn btn-outline-info">
+                          <i class="fa fa-plus"></i> Add Money Location</button>
+                        <button id="update-btn" class="btn btn-outline-warning">
+                          <i class="fa fa-pencil-square-o"></i> Update Money</button>
+                        <button id="delete-btn" class="btn btn-outline-danger">
+                          <i class="fa fa-remove"></i> Delete Money Location</button>
+                      </div>
+                      <button id="back-btn" class="btn btn-outline-secondary float-right">
+                        <i class="fa fa-chevron-circle-left"></i> Back</button>
+                    </footer>
                   </div>
                 </form>
               </div>
@@ -174,7 +175,10 @@
           </div> <!-- End of cash-assessment-modal -->
 
           <header id="cash-table-header">
-            <h2 class="white-text float-left">Cash Accounts</h2>
+            <span id="cash-form-instructions" class="lead">
+              Where is your cash and liquids accounts such as
+              checking and savings accounts?
+            </span>
             <h3 class="center-align float-right">Cash on Hand:
               $<span id="total-amount">0.00</span></h3>
             <button id="cash-badge"
@@ -208,9 +212,7 @@
         
         <!-- Receivable Accounts Section -->
         <section id="receivable-accounts">
-          <p id="receivable-form-instructions" class="lead">
-            What money do you have coming?
-          </p>
+          <h2 class="white-text">Receivables</h2>
           <div id="receivable-form-container" class="container">
             <!-- Form Card -->
             <div class="card">
@@ -229,23 +231,28 @@
                         placeholder="Add Amount" id="receivable-amount">
                       <label for="receivable-amount">Amount</label>
                     </div>
+
                     <!-- Form Selector -->
-                    <div class="form-group">
-                      <select id="receivable-location-select" class="custom-select">
-                        <option value="" selected>Or Select A Location</option>
-                        <option>Salary</option>
-                        <option>IOUs</option>
-                      </select>
-                    </div>
-                    <!-- Form Buttons -->
-                    <button id="receivable-add-btn" class="btn btn-outline-info">
-                      <i class="fa fa-plus"></i> Add Money Location</button>
-                    <button id="receivable-update-btn" class="btn btn-outline-warning">
-                      <i class="fa fa-pencil-square-o"></i> Update Money</button>
-                    <button id="receivable-delete-btn" class="btn btn-outline-danger">
-                      <i class="fa fa-remove"></i> Delete Money Location</button>
-                    <button id="receivable-back-btn" class="btn btn-outline-secondary right">
-                      <i class="fa fa-chevron-circle-left"></i> Back</button>
+                    <footer id="receivable-form-footer">
+                      <div id="receivable-location-selector" class="form-group float-left">
+                        <select id="receivable-location-select" class="custom-select">
+                          <option value="" selected>Or Select A Location</option>
+                          <option>Salary</option>
+                          <option>IOUs</option>
+                        </select>
+                      </div>
+                      <!-- Form Buttons -->
+                      <div id="receivable-submit-buttons" class="float-left">
+                        <button id="receivable-add-btn" class="btn btn-outline-info">
+                          <i class="fa fa-plus"></i> Add Money Location</button>
+                        <button id="receivable-update-btn" class="btn btn-outline-warning">
+                          <i class="fa fa-pencil-square-o"></i> Update Money</button>
+                        <button id="receivable-delete-btn" class="btn btn-outline-danger">
+                          <i class="fa fa-remove"></i> Delete Money Location</button>
+                      </div>
+                      <button id="receivable-back-btn" class="btn btn-outline-secondary float-right">
+                        <i class="fa fa-chevron-circle-left"></i> Back</button>
+                    </footer>
                   </div>
                 </form>
               </div>
@@ -319,7 +326,9 @@
           </div> <!-- End of receivable-assessment-modal -->
 
           <header id="receivable-table-header">
-            <h2 class="white-text float-left">Receivables</h2>
+            <span id="receivable-form-instructions" class="lead">
+              What money do you have coming?
+            </span>
             <h3 class="center-align float-right">Cash on Hand:
               $<span id="receivable-total-amount">0.00</span></h3>
             <button id="receivable-badge"
@@ -341,22 +350,22 @@
           </table>
           <footer id="receivable-table-footer">
             <button id="receivable-add-tr-btn" class="btn btn-outline-success float-left">
-              <i class="fa fa-plus"></i> Add a Money Row to Table</button>
+              <i class="fa fa-plus"></i> Add a Receivable Row to Table</button>
             <button id="receivable-clear-all-btn" type="button"
               class="btn btn-outline-danger float-right"
-                >Purge Cash Accounts</button>
+                >Purge Receivable Accounts</button>
           </footer>
-        </section><!-- End of Cash Accounts Section -->
+        </section><!-- End of Receivable Accounts Section -->
 
         <hr class="style-2">
 
-        <footer id="receivable-jumbotron-footer">
+        <footer id="jumbotron-footer">
         <p class="lead">
           <a class="btn btn-primary btn-lg"
             href="#" role="button">Learn more</a>
         </p>
         </footer>
-      </div>      <!-- End of cash-jumbotron -->
+      </div>      <!-- End of jumbotron -->
     </main>
     <footer>
       alpha version
