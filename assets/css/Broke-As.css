@@ -14,8 +14,8 @@
 section {
   padding-bottom: 2.5rem;    /* footer height */
 }
-footer {
-  padding-left: 60px;
+h2 {
+  display: block;
 }
 p {
   margin: 8px;
@@ -31,12 +31,6 @@ p {
 }
 #table-headers {
   display: flexbox;
-}
-.float-left {
-  float: left;
-}
-.float-right {
-  float: right;
 }
 .tight {
   margin: 0px;
@@ -68,14 +62,20 @@ p {
   border: solid;
 }
 #hanging {
-  position:absolute;
+  position: absolute;
   transform: translateX(-3px) translateY(12px) rotate(50deg);
 }
 #intro {
   margin: 0px 30px;
 }
-#cash-table-footer {
+#cash-table-footer, #cash-form-footer,
+#receivable-table-footer, #receivable-form-footer {
   display: flexbox;
+  width: 100%;
+}
+#cash-submit-buttons, #receivable-submit-buttons {
+  padding-left: 60px;
+  padding-right: 60px;
 }
 /*
 * Borrowed HR styles from https://css-tricks.com/examples/hrs/
