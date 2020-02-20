@@ -56,11 +56,11 @@ const StorageCtrl = (function() {
       }
       return itemList;
     },
-    updateItemStorage: function(itemListName, updateItem) {
+    updateItemStorage: function(itemListName, updatedItem) {
       let itemList = JSON.parse(localStorage.getItem(itemListName));
       itemList.forEach(function(item, index) {
-        if (updateItem.id === item.id) {
-          itemList.splice(index, 1, updateItem);
+        if (updatedItem.id === item.id) {
+          itemList.splice(index, 1, updatedItem);
         }
       });
       localStorage.setItem(itemListName, JSON.stringify(itemList));
@@ -71,10 +71,16 @@ const StorageCtrl = (function() {
 // Item CONTROLLER //
 // acts like a middleware interface to localStorage and/or other storage
 const DataCtrl = (function(StorageCtrl) {
-  const Item = function(id, name, value, dateTime){
+  // const Item = function(id, name, value, dateTime){
+  //   this.id = id;
+  //   this.name = name;
+  //   this.value = value;
+  //   this.dateTime = dateTime;
+  // };
+  const Item = function(id, name, obj, dateTime){
     this.id = id;
     this.name = name;
-    this.value = value;
+    this.obj = obj;
     this.dateTime = dateTime;
   };
 
@@ -101,14 +107,25 @@ const DataCtrl = (function(StorageCtrl) {
       });
       StorageCtrl.flush(dataStore, data[dataStore]);
     },
-    addItem: function(dataStore, name, value) {
-      let ID = 0, dateTime="";
+    // addItem: function(dataStore, name, value) {
+    //   let ID = 0, dateTime="";
+    //   if (data[dataStore].length > 0) {
+    //     ID = data[dataStore][data[dataStore].length - 1].id + 1;
+    //   }
+    //   value = parseInt(value);
+    //   dateTime = timeConverter(Date.now());
+    //   newItem = new Item(ID, name, value, dateTime);
+    //   data[dataStore].push(newItem);
+    //   StorageCtrl.storeItem(dataStore, newItem);
+    //   return newItem;
+    // },
+    addItem: function(dataStore, name, obj) {
+      let ID = 0, dateTime="", newItem=null;
       if (data[dataStore].length > 0) {
         ID = data[dataStore][data[dataStore].length - 1].id + 1;
       }
-      value = parseInt(value);
       dateTime = timeConverter(Date.now());
-      newItem = new Item(ID, name, value, dateTime);
+      newItem = new Item(ID, name, obj, dateTime);
       data[dataStore].push(newItem);
       StorageCtrl.storeItem(dataStore, newItem);
       return newItem;
@@ -121,10 +138,18 @@ const DataCtrl = (function(StorageCtrl) {
         return item.name === matchName;
       });
     },
-    updateItem: function(dataStore, name, value) {
+    // updateItem: function(dataStore, name, value) {
+    //   const item = data[dataStore][data.currentItem[dataStore].id];
+    //   item.name = name;
+    //   item.value = parseInt(value);
+    //   item.dateTime = timeConverter(Date.now());
+    //   StorageCtrl.updateItemStorage(dataStore, item);
+    //   return item;
+    // },
+    updateItem: function(dataStore, name, obj) {
       const item = data[dataStore][data.currentItem[dataStore].id];
       item.name = name;
-      item.value = parseInt(value);
+      item.obj = obj;
       item.dateTime = timeConverter(Date.now());
       StorageCtrl.updateItemStorage(dataStore, item);
       return item;
@@ -150,7 +175,7 @@ const DataCtrl = (function(StorageCtrl) {
     getTotalCents: function(dataStore) {
       let total = 0;
       data[dataStore].forEach(function(item) {
-        total += item.value;
+        total += item.obj.pennies;
       });
       data.totalAmount = total;
       return data.totalAmount;
@@ -198,7 +223,7 @@ const UICtrl = (function() {
         }
         html += `<tr class="${className}" id="tr-${id}">
         <th class="tr-th-name" scope="row">${item.name}</th>
-        <td>$<em>${centsToDollars(item.value)}</em></td>
+        <td>$<em>${centsToDollars(item.obj.pennies)}</em></td>
         <td>${item.dateTime}
         <a href="#" class="secondary-content">
           <i class="edit-item fa fa-pencil"></i>
@@ -211,7 +236,7 @@ const UICtrl = (function() {
       const amt = document.querySelector(UISelectors.cashAmountInput).value;
       return {
         name: document.querySelector(UISelectors.cashNameInput).value,
-        value: dollarsToCents(amt),
+        pennies: parseInt(dollarsToCents(amt))
       }
     },
     addTrItem: function(item) {
@@ -221,7 +246,7 @@ const UICtrl = (function() {
       }
       tr.id = `tr-${item.id}`;
       tr.innerHTML = `<th class="tr-th-name" scope="row">${item.name}</th>
-        <td>$<em>${centsToDollars(item.value)}</em></td>
+        <td>$<em>${centsToDollars(item.obj.pennies)}</em></td>
         <td>${item.dateTime}
           <a href="#" class="secondary-content">
             <i class="edit-item fa fa-pencil"></i>
@@ -248,7 +273,7 @@ const UICtrl = (function() {
         if (trID === `tr-${item.id}`) {
           document.querySelector(`#${trID}`).innerHTML =
           `<th class="tr-th-name" scope="row">${item.name}</th>
-          <td>$<em>${centsToDollars(item.value)}</em></td>
+          <td>$<em>${centsToDollars(item.obj.pennies)}</em></td>
           <td>${item.dateTime}
             <a href="#" class="secondary-content">
               <i class="edit-item fa fa-pencil"></i>
@@ -286,7 +311,7 @@ const UICtrl = (function() {
     putCurrentItemToForm: function() {
       document.querySelector(UISelectors.cashNameInput).value =
         DataCtrl.getCurrentItem('Cash').name;
-      const amt = centsToDollars(DataCtrl.getCurrentItem('Cash').value);
+      const amt = centsToDollars(DataCtrl.getCurrentItem('Cash').obj.pennies);
       document.querySelector(UISelectors.cashAmountInput).value = amt;
     },
     emptyTableBody: function() {
@@ -297,9 +322,9 @@ const UICtrl = (function() {
         centsToDollars(totalCents);
       const badge = document.querySelector(UISelectors.cashBadge);
       const cashNeed = DataCtrl.getItemByName('Config',
-        'cash-onhand-need').value;
+        'cash-onhand-need').obj.pennies;
       const cashOkay = DataCtrl.getItemByName('Config',
-        'cash-onhand-okay').value;
+        'cash-onhand-okay').obj.pennies;
 
       if (totalCents < cashNeed) {
         badge.className = 'badge badge-pill badge-danger float-right';
@@ -376,10 +401,10 @@ const App = (function(DataCtrl, UICtrl) {
     $(UISelectors.cashAssessmentModal).on('show.bs.modal', function (e) {
       let amt;
       amt = parseInt(DataCtrl.getItemByName('Config',
-        'cash-onhand-need').value / 100);
+        'cash-onhand-need').obj.pennies / 100);
       document.querySelector(UISelectors.modalNeed).value = amt;
       amt = parseInt(DataCtrl.getItemByName('Config',
-        'cash-onhand-okay').value / 100);
+        'cash-onhand-okay').obj.pennies / 100);
       document.querySelector(UISelectors.modalOkay).value = amt;
     });
     $(UISelectors.cashAssessmentModal).on('hide.bs.modal', function (e) {
@@ -397,7 +422,7 @@ const App = (function(DataCtrl, UICtrl) {
       param = 'cash-onhand-need';
       itemToEdit = DataCtrl.getItemByName(dataStore, param);
       DataCtrl.setCurrentItem(dataStore, itemToEdit);
-      DataCtrl.updateItem(dataStore, param, amtNeed + '00');
+      DataCtrl.updateItem(dataStore, param, { pennies: parseInt(amtNeed + '00') } );
 
       amtOkay = document.querySelector(UISelectors.modalOkay).value;
       if (parseInt(amtOkay) < parseInt(amtNeed)) {
@@ -410,7 +435,7 @@ const App = (function(DataCtrl, UICtrl) {
       param = 'cash-onhand-okay';
       itemToEdit = DataCtrl.getItemByName(dataStore, param);
       DataCtrl.setCurrentItem(dataStore, itemToEdit);
-      DataCtrl.updateItem(dataStore, param, amtOkay + '00');
+      DataCtrl.updateItem(dataStore, param, { pennies: parseInt(amtOkay + '00') } );
 
       UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
     });
@@ -422,11 +447,24 @@ const App = (function(DataCtrl, UICtrl) {
     });
   };
 
+  // const addBtnClick = function(e) {
+  //   const input = UICtrl.getItemInput();
+  //   if (input.name !== '' && input.value !== '') {
+  //     const newItem =
+  //       DataCtrl.addItem('Cash', input.name, { pennies: parseInt(input.value) } );
+  //     UICtrl.addTrItem(newItem);
+  //     UICtrl.populateTrList(DataCtrl.getItems('Cash'));
+  //     UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
+  //     setAppState("hide-cash-editor");
+  //   }
+  //   e.preventDefault();
+  // };
+
   const addBtnClick = function(e) {
-    const input = UICtrl.getItemInput();
-    if (input.name !== '' && input.value !== '') {
+    const { name, pennies } = UICtrl.getItemInput();
+    if (name !== '' && pennies !== '') {
       const newItem =
-        DataCtrl.addItem('Cash', input.name, input.value);
+        DataCtrl.addItem('Cash', name, { pennies } );
       UICtrl.addTrItem(newItem);
       UICtrl.populateTrList(DataCtrl.getItems('Cash'));
       UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
@@ -454,8 +492,9 @@ const App = (function(DataCtrl, UICtrl) {
   };
 
   const updateBtnClick = function(e) {
-    const input = UICtrl.getItemInput();
-    const updatedItem = DataCtrl.updateItem('Cash', input.name, input.value);
+    // const input = UICtrl.getItemInput();
+    const { name, pennies } = UICtrl.getItemInput();
+    const updatedItem = DataCtrl.updateItem('Cash', name, { pennies });
     UICtrl.updateTrItem(updatedItem);
     UICtrl.showTotalAmount(DataCtrl.getTotalCents('Cash'));
     setAppState("hide-cash-editor");
@@ -503,8 +542,8 @@ const App = (function(DataCtrl, UICtrl) {
   };
 
   const initConfig = function() {
-    DataCtrl.addItem('Config', 'cash-onhand-need', 1000);
-    DataCtrl.addItem('Config', 'cash-onhand-okay', 2500);
+    DataCtrl.addItem('Config', 'cash-onhand-need', { pennies: 1000 });
+    DataCtrl.addItem('Config', 'cash-onhand-okay', { pennies: 2500 });
   };
 
   // App Public Methods
