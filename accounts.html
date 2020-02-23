@@ -213,9 +213,9 @@
         <hr class="style-2">
         
         <!-- Receivable Accounts Section -->
-        <section id="receivable-accounts">
+        <section id="recv-accounts">
           <h2 class="white-text">Receivables</h2>
-          <div id="receivable-form-container" class="container">
+          <div id="recv-form-container" class="container">
             <!-- Form Card -->
             <div class="card">
               <div class="card-content">
@@ -225,52 +225,52 @@
                     <!-- Form Fields -->
                     <div class="input-field col-sm-6">
                       <input type="text"
-                        placeholder="Enter Source" id="receivable-name">
-                      <label for="receivable-name">From</label>
+                        placeholder="Enter Source" id="recv-name">
+                      <label for="recv-name">From</label>
                     </div>
                     <div class="input-field col-sm-6">
                       $<input type="number"
-                        placeholder="Add Amount" id="receivable-amount">
-                      <label for="receivable-amount">Amount</label>
+                        placeholder="Add Amount" id="recv-amount">
+                      <label for="recv-amount">Amount</label>
                     </div>
 
                     <!-- Form Selector -->
-                    <footer id="receivable-form-footer">
-                      <div id="receivable-location-selector" class="form-group float-left">
-                        <select id="receivable-location-select" class="custom-select">
+                    <footer id="recv-form-footer">
+                      <div id="recv-location-selector" class="form-group float-left">
+                        <select id="recv-location-select" class="custom-select">
                           <option value="" selected>Or Select A Location</option>
                           <option>Salary</option>
                           <option>IOU</option>
                         </select>
                       </div>
                       <!-- Form Buttons -->
-                      <div id="receivable-submit-buttons" class="float-left">
-                        <button id="receivable-add-btn" class="btn btn-outline-info">
+                      <div id="recv-submit-buttons" class="float-left">
+                        <button id="recv-add-btn" class="btn btn-outline-info">
                           <i class="fa fa-plus"></i> Add Money Location</button>
-                        <button id="receivable-update-btn" class="btn btn-outline-warning">
+                        <button id="recv-update-btn" class="btn btn-outline-warning">
                           <i class="fa fa-pencil-square-o"></i> Update Money</button>
-                        <button id="receivable-delete-btn" class="btn btn-outline-danger">
+                        <button id="recv-delete-btn" class="btn btn-outline-danger">
                           <i class="fa fa-remove"></i> Delete Money Location</button>
                       </div>
-                      <button id="receivable-back-btn" class="btn btn-outline-secondary float-right">
+                      <button id="recv-back-btn" class="btn btn-outline-secondary float-right">
                         <i class="fa fa-chevron-circle-left"></i> Back</button>
                     </footer>
                   </div>
                 </form>
               </div>
             </div>
-          </div>  <!-- End of receivable-form-container -->
+          </div>  <!-- End of recv-form-container -->
 
-          <div id="receivable-assessment-modal" class="modal fade">
+          <div id="recv-assessment-modal" class="modal fade">
             <div class="modal-dialog">
-              <div id="receivable-modal-content" class="modal-content">
+              <div id="recv-modal-content" class="modal-content">
                 <div class="modal-header">
                   <h1>Cash on Hand Comfort Levels</h1>
                   <p>Select the ranges for cash on hand that are comfortable
                     for you.</p>
                 </div>
-                <div id="receivable-modal-alert"></div>
-                <div id="receivable-modal-body" class="modal-body">
+                <div id="recv-modal-alert"></div>
+                <div id="recv-modal-body" class="modal-body">
                   <div class="form-group">
                     <label class="control-label text-success">Minimum
                       "Okay" Level</label>
@@ -279,7 +279,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
                         </div>
-                        <input id="receivable-modal-okay" type="number" class="form-control"
+                        <input id="recv-modal-okay" type="number" class="form-control"
                           aria-label="Amount (to the nearest dollar)">
                         <div class="input-group-append">
                           <span class="input-group-text">.00</span>
@@ -294,7 +294,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
                         </div>
-                        <input id="receivable-modal-need" type="number" class="form-control"
+                        <input id="recv-modal-need" type="number" class="form-control"
                           aria-label="Amount (to the nearest dollar)">
                         <div class="input-group-append">
                           <span class="input-group-text">.00</span>
@@ -325,21 +325,21 @@
                 </div>
               </div>
             </div>
-          </div> <!-- End of receivable-assessment-modal -->
+          </div> <!-- End of recv-assessment-modal -->
 
-          <header id="receivable-table-header">
-            <span id="receivable-form-instructions" class="lead">
+          <header id="recv-table-header">
+            <span id="recv-form-instructions" class="lead">
               What money do you have coming?
             </span>
             <h3 class="center-align float-right">Cash on Hand:
-              $<span id="receivable-total-amount">0.00</span></h3>
-            <button id="receivable-badge"
+              $<span id="recv-total-amount">0.00</span></h3>
+            <button id="recv-badge"
               data-toggle="modal" data-target="#cash-assessment-modal"
               class="badge badge-pill badge-primary float-right"><small>Set
               Warning Limits</small></button>
           </header>
 
-          <table id="receivable-table" class="table table-hover">
+          <table id="recv-table" class="table table-hover">
             <thead>
               <tr>
                 <th class="lead" scope="col">Where</th>
@@ -347,13 +347,13 @@
                 <th class="lead" scope="col">Recorded</th>
               </tr>
             </thead>
-            <tbody id="receivable-tbody">
+            <tbody id="recv-tbody">
             </tbody>
           </table>
-          <footer id="receivable-table-footer">
-            <button id="receivable-add-tr-btn" class="btn btn-outline-success float-left">
+          <footer id="recv-table-footer">
+            <button id="recv-add-tr-btn" class="btn btn-outline-success float-left">
               <i class="fa fa-plus"></i> Add a Receivable Row to Table</button>
-            <button id="receivable-clear-all-btn" type="button"
+            <button id="recv-clear-all-btn" type="button"
               class="btn btn-outline-danger float-right"
                 >Purge Receivable Accounts</button>
           </footer>
@@ -383,6 +383,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <!-- End Bootstrap 4.4.1 -->
   <!-- Our Code -->
-  <script src="./src/Broke-Ass.js"></script>
+  <script type="module" src="./src/main.mjs"></script>
   </body>
 </html>
