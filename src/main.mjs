@@ -31,10 +31,13 @@ import { AcctUICtrl } from './UI.mjs';
   // // init
 
 // App CONTROLLER //
-const App = (function(DataCtrl, AcctUICtrl) {
-  let CashComp;
+const App = (function(DataCtrl, AcctUICtrl, appName) {
+  const onHand = {
+    need: `${appName}-onhand-need`,
+    okay: `${appName}-onhand-okay`
+  };
+  let CashComp, UIIds;
   const loadEventListeners = function() {
-    const UIIds = CashComp.getSelectors();
     document.addEventListener('keypress', function(e) {
       if (e.keyCode === 13 || e.which === 13) {
         e.preventDefault();
@@ -57,56 +60,61 @@ const App = (function(DataCtrl, AcctUICtrl) {
       'click', updateBtnClick);
     document.querySelector(UIIds.locationSelect).addEventListener(
       'change', locationSelectChange);
-    $(UIIds.cashAssessmentModal).on('show.bs.modal', function (e) {
-      let amt;
-      amt = parseInt(DataCtrl.getItemByName('Config',
-        'cash-onhand-need').obj.pennies / 100);
-      document.querySelector(UIIds.modalNeed).value = amt;
-      amt = parseInt(DataCtrl.getItemByName('Config',
-        'cash-onhand-okay').obj.pennies / 100);
-      document.querySelector(UIIds.modalOkay).value = amt;
-    });
-    $(UIIds.cashAssessmentModal).on('hide.bs.modal', function (e) {
-      let param, itemToEdit, amtNeed, amtOkay;
-      const dataStore = 'Config';
+    $(UIIds.assessmentModal).on('show.bs.modal', badgeModalOnDisplay);
+    $(UIIds.assessmentModal).on('hide.bs.modal', badgeModalOnHide);
+    $(UIIds.modalAlert).on('close.bs.alert', badgeModalOnClose);
+  };
 
-      amtNeed = document.querySelector(UIIds.modalNeed).value;
-      if (parseInt(amtNeed) < 0) {
-        const modalAlert = document.querySelector(UIIds.ModalAlert);
-        modalAlert.classList = "alert alert-dismissible alert-danger";
-        modalAlert.innerHTML = `<button type="button" class="close" data-dismiss="alert">&times;</button>The minimum needed [<strong>$${amtNeed}</strong>] must be greater or equal to than zero.`;
-        e.preventDefault();
-        return;
-      }
-      param = 'cash-onhand-need';
-      itemToEdit = DataCtrl.getItemByName(dataStore, param);
-      DataCtrl.setCurrentItem(dataStore, itemToEdit);
-      DataCtrl.updateItem(dataStore, param, { pennies: parseInt(amtNeed + '00') } );
+  const badgeModalOnDisplay = function(e) {
+    let amt;
+    console.log('badgeModalOnDisplay()');
+//    console.log('UIIds.modalNeed ', UIIds.modalNeed);
+    amt = parseInt(DataCtrl.getItemByName('Config',
+      onHand.need).obj.pennies / 100);
+    document.querySelector(UIIds.modalNeed).value = amt;
+    amt = parseInt(DataCtrl.getItemByName('Config',
+      onHand.okay).obj.pennies / 100);
+    document.querySelector(UIIds.modalOkay).value = amt;
+  };
 
-      amtOkay = document.querySelector(UIIds.modalOkay).value;
-      if (parseInt(amtOkay) < parseInt(amtNeed)) {
-        const modalAlert = document.querySelector(UIIds.modalAlert);
-        modalAlert.classList = "alert alert-dismissible alert-danger";
-        modalAlert.innerHTML = `<button type="button" class="close" data-dismiss="alert">&times;</button>The minimum okay [<strong>$${amtOkay}</strong>] must be greater or equal to than the minimum needed [<strong>$${amtNeed}</strong>].`;
-        e.preventDefault();
-        return;
-      }
-      param = 'cash-onhand-okay';
-      itemToEdit = DataCtrl.getItemByName(dataStore, param);
-      DataCtrl.setCurrentItem(dataStore, itemToEdit);
-      DataCtrl.updateItem(dataStore, param, { pennies: parseInt(amtOkay + '00') } );
-
-      CashComp.showTotalAmount(
-        DataCtrl.getTotalCents('Cash'),
-        DataCtrl.getItemByName('Config', 'cash-onhand-need').obj.pennies,
-        DataCtrl.getItemByName('Config', 'cash-onhand-okay').obj.pennies);
-    });
-    $(UIIds.cashModalAlert).on('close.bs.alert', function (e) {
-      const modalAlert = document.querySelector(UIIds.modalAlert);
-      modalAlert.classList = "";
-      modalAlert.innerHTML = "";
+  const badgeModalOnHide = function(e) {
+    let itemToEdit, amtNeed, amtOkay;
+    const dataStore = 'Config';
+    amtNeed = document.querySelector(UIIds.modalNeed).value;
+    if (parseInt(amtNeed) < 0) {
+      const modalAlert = document.querySelector(UIIds.ModalAlert);
+      modalAlert.classList = "alert alert-dismissible alert-danger";
+      modalAlert.innerHTML = `<button type="button" class="close" data-dismiss="alert">&times;</button>The minimum needed [<strong>$${amtNeed}</strong>] must be greater or equal to than zero.`;
       e.preventDefault();
-    });
+      return;
+    }
+    amtOkay = document.querySelector(UIIds.modalOkay).value;
+    if (parseInt(amtOkay) < parseInt(amtNeed)) {
+      const modalAlert = document.querySelector(UIIds.modalAlert);
+      modalAlert.classList = "alert alert-dismissible alert-danger";
+      modalAlert.innerHTML = `<button type="button" class="close" data-dismiss="alert">&times;</button>The minimum okay [<strong>$${amtOkay}</strong>] must be greater or equal to than the minimum needed [<strong>$${amtNeed}</strong>].`;
+      e.preventDefault();
+      return;
+    }
+    itemToEdit = DataCtrl.getItemByName(dataStore, onHand.need);
+    DataCtrl.setCurrentItem(dataStore, itemToEdit);
+    DataCtrl.updateItem(dataStore, onHand.need,
+      { pennies: parseInt(amtNeed + '00') } );
+    itemToEdit = DataCtrl.getItemByName(dataStore, onHand.okay);
+    DataCtrl.setCurrentItem(dataStore, itemToEdit);
+    DataCtrl.updateItem(dataStore, onHand.okay,
+      { pennies: parseInt(amtOkay + '00') } );
+    CashComp.showTotalAmount(
+      DataCtrl.getTotalCents('Cash'),
+      DataCtrl.getItemByName('Config', onHand.need).obj.pennies,
+      DataCtrl.getItemByName('Config', onHand.okay).obj.pennies);
+  };
+
+  const badgeModalOnClose = function(e) {
+    const modalAlert = document.querySelector(UIIds.modalAlert);
+    modalAlert.classList = "";
+    modalAlert.innerHTML = "";
+    e.preventDefault();
   };
 
   const addBtnClick = function(e) {
@@ -118,8 +126,8 @@ const App = (function(DataCtrl, AcctUICtrl) {
       CashComp.populateTrList(DataCtrl.getItems('Cash'));
       CashComp.showTotalAmount(
         DataCtrl.getTotalCents('Cash'),
-        DataCtrl.getItemByName('Config', 'cash-onhand-need').obj.pennies,
-        DataCtrl.getItemByName('Config', 'cash-onhand-okay').obj.pennies);
+        DataCtrl.getItemByName('Config', onHand.need).obj.pennies,
+        DataCtrl.getItemByName('Config', onHand.okay).obj.pennies);
       setAppState("hide-cash-editor");
     }
     e.preventDefault();
@@ -140,8 +148,8 @@ const App = (function(DataCtrl, AcctUICtrl) {
     CashComp.populateTrList(DataCtrl.getItems('Cash'));
     CashComp.showTotalAmount(
       DataCtrl.getTotalCents('Cash'),
-      DataCtrl.getItemByName('Config', 'cash-onhand-need').obj.pennies,
-      DataCtrl.getItemByName('Config', 'cash-onhand-okay').obj.pennies);
+      DataCtrl.getItemByName('Config', onHand.need).obj.pennies,
+      DataCtrl.getItemByName('Config', onHand.okay).obj.pennies);
     setAppState("hide-cash-editor");
     e.preventDefault();
   };
@@ -152,8 +160,8 @@ const App = (function(DataCtrl, AcctUICtrl) {
     CashComp.updateTrItem(updatedItem);
     CashComp.showTotalAmount(
       DataCtrl.getTotalCents('Cash'),
-      DataCtrl.getItemByName('Config', 'cash-onhand-need').obj.pennies,
-      DataCtrl.getItemByName('Config', 'cash-onhand-okay').obj.pennies);
+      DataCtrl.getItemByName('Config', onHand.need).obj.pennies,
+      DataCtrl.getItemByName('Config', onHand.okay).obj.pennies);
     setAppState("hide-cash-editor");
     e.preventDefault();
   };
@@ -175,8 +183,8 @@ const App = (function(DataCtrl, AcctUICtrl) {
     DataCtrl.clearAllItems('Cash');
     CashComp.showTotalAmount(
       DataCtrl.getTotalCents('Cash'),
-      DataCtrl.getItemByName('Config', 'cash-onhand-need').obj.pennies,
-      DataCtrl.getItemByName('Config', 'cash-onhand-okay').obj.pennies);
+      DataCtrl.getItemByName('Config', onHand.need).obj.pennies,
+      DataCtrl.getItemByName('Config', onHand.okay).obj.pennies);
     CashComp.emptyTableBody();
     setAppState("display-new-cash-editor");
   };
@@ -202,8 +210,8 @@ const App = (function(DataCtrl, AcctUICtrl) {
   };
 
   const initConfig = function() {
-    DataCtrl.addItem('Config', 'cash-onhand-need', { pennies: 1000 });
-    DataCtrl.addItem('Config', 'cash-onhand-okay', { pennies: 2500 });
+    DataCtrl.addItem('Config', onHand.need, { pennies: 1000 });
+    DataCtrl.addItem('Config', onHand.okay, { pennies: 2500 });
   };
 
   // App Public Methods
@@ -218,7 +226,7 @@ const App = (function(DataCtrl, AcctUICtrl) {
       }
       const items = DataCtrl.getItems('Cash');
       CashComp = new AcctUICtrl('cash');
-//      CashComp = CashComp.AcctUICtrl;
+      UIIds = CashComp.getSelectors();
       if (items.length === 0) {
         setAppState("display-new-cash-editor");
       } else {
@@ -227,12 +235,12 @@ const App = (function(DataCtrl, AcctUICtrl) {
       }
       CashComp.showTotalAmount(
         DataCtrl.getTotalCents('Cash'),
-        DataCtrl.getItemByName('Config', 'cash-onhand-need').obj.pennies,
-        DataCtrl.getItemByName('Config', 'cash-onhand-okay').obj.pennies);
+        DataCtrl.getItemByName('Config', onHand.need).obj.pennies,
+        DataCtrl.getItemByName('Config', onHand.okay).obj.pennies);
       loadEventListeners();
     }
   }
-})(DataCtrl, AcctUICtrl);
+})(DataCtrl, AcctUICtrl, 'cash');
 
 // :: BEGIN EXECUTION ::
 App.init();

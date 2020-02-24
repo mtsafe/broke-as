@@ -25,6 +25,8 @@ class AcctUICtrl {
     nameInput: 'name',
     amountInput: 'amount',
     totalAmount: 'total-amount',
+    assessmentModal: 'assessment-modal',
+    modalAlert: 'modal-alert',
     modalOkay: 'modal-okay',
     modalNeed: 'modal-need'
     // Receivable Accounts
