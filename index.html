@@ -1,140 +1,99 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
   <head>
-    <title>Albir Tarsha Portfolio</title>
-    <meta charset="utf-8" />
-    <meta name="viewport"
-      content="width=device-width, initial-scale=1, user-scalable=no" />
-    <!-- Bootstrap 4.4.1 : Bootswatch : Superhero -->
-    <link rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/superhero/bootstrap.min.css">
-    <style>
-      main {margin: 4vw; }
-      #left-container { float: left; height:auto; max-width:45vw; 
-        background-color: brown;}
-      #right-container { float: right; display: block;
-        background-color: brown;}
-      img { height: auto; max-width: 35vw; display: block; }
-      .btn { margin-left: 12px; }
-      .container {
-        display: grid;
-        grid-template-columns: 45vw auto 35vw;
-        grid-template-rows: auto;
-        grid-template-areas: 
-          "heading heading heading"
-          "project1-text . project1-img"
-          "project1-text . project1-img"
-          "project2-text . project2-img"
-          "project2-text . project2-img"
-          "footing footing footing";
-      }
-      .portfolio-heading { grid-area: heading; }
-      #portfolio-text1 { grid-area: project1-text; }
-      #portfolio-text2 { grid-area: project2-text; }
-      #portfolio-img1 { grid-area: project1-img; }
-      #portfolio-img2 { grid-area: project2-img; }
-      .portfolio-footing { grid-area: footing; }
-      img.portfolio-img:hover {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(2);
-      }
-      @media (max-width: 550px) {
-        img { height: auto; max-width: 65vw;}
-        .container {
-          grid-template-areas: 
-            "heading heading heading"
-            "project1-img project1-img project1-img"
-            "project1-text project1-text project1-text"
-            "project2-img project2-img project2-img"
-            "project2-text project2-text project2-text"
-            "footing footing footing";
-        }
-        img.portfolio-img:hover {
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          /* bring your own prefixes */
-          transform: translate(-50%, -50%) scale(1.5);
-        }
-      }
-    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Broke-As</title>
+    <!-- Bootstrap 4.4.1 : Bootswatch : Sketchy -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/sketchy/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/Broke-As.css">
   </head>
   <body>
-    <main>
-      <div class="container">
-        <div class="portfolio-heading">
-          <h2>Albir Tarsha</h2>
-          <p>Portfolio Page</p>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <div id="logo">
+          <h1><span class="tight">Broke-</span><span id="hanging" class="tight post-it">As</span></h1>
         </div>
-        <div id="portfolio-text1" class="portfolio-text">
-          <ol>
-            <li><h4 class="text-primary"
-              >freeCodeCamp Projects: Responsive Web Design Certification</h4
-              ></li>
-            <div id="fcc-links">
-              <a href="https://github.com/mtsafe/FCC_Projects"><button
-                type="button" class="btn btn-outline-info"
-                ><i class="fab fa-github"></i> The Code</button></a>
-              <a href="https://mtsafe.github.io/FCC_Projects/"><button
-                type="button" class="btn btn-outline-success"
-                ><i class="fab fa-free-code-camp"></i> The Project</button></a>
-            </div>
-            <ul>
-              <li>Developer Portfolio</li>
-              <li>Tribute Page</li>
-              <li>Landing Page</li>
-              <li>Form Page</li>
-              <li>Technical Page</li>
-            </ul>
-          </ol>
-        </div>
-        <div id="portfolio-text2" class="portfolio-text">
-          <ol start="2">
-            <li><h4 class="text-primary"
-              >Broke-As: Cash Poor Cash Management</h4></li>
-            <div id="fcc-links">
-              <a href="https://github.com/mtsafe/Broke-As"><button
-                type="button" class="btn btn-outline-info"
-                ><i class="fab fa-github"></i> The Code</button></a>
-              <a href="https://mtsafe.github.io/Broke-As/"><button
-                type="button" class="btn btn-outline-success"
-                ><i class="fab fa-free-code-camp"></i> The Project</button></a>
-            </div>
-          </ol>
-          <dl>
-            <dt class="text-warning">Problem</dt>
-            <dd>Many people are "cash poor" or simply on a tight budget.
-              As tempting as it may be to use credit this can end badly.
-            </dd>
-            <dt class="text-warning">Action</dt>
-            <dd>Developed this app to manage cash.
-            </dd>
-            <dt class="text-warning">Result</dt>
-            <dd>In progress...
-            </dd>
-          </dl>
-        </div>
-        <div id="portfolio-img1">
-          <a href="https://mtsafe.github.io/FCC_Projects/">
-            <img src="https://mtsafe.github.io/FCC_ScreenShot.png"
-              class="portfolio-img"
-              alt="freeCodeCamp 1st Projects"></a>
-        </div>
-        <div id="portfolio-img2">
-          <a href="https://mtsafe.github.io/Broke-As/">
-            <img src="https://mtsafe.github.io/Broke-As_ScreenShot.png"
-              class="portfolio-img"
-              alt="Broke-As Cash Management Project"></a>
-        </div>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarColor03">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="./home.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./dashboard.html">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./accounts.html">Accounts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./wtf.html">WTF</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./about.html">About</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search">
+          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
       </div>
+    </nav>
+    <!-- Header -->
+    <header>
+      <blockquote class="blockquote">
+        <img id="header-image" class="tight" src="./assets/img/masks2.jpg"
+          alt="Laughing/crying theater masks">
+        <div id="header-text" class="tight">
+          <p class="mb-0">"It's a tragedy."</p>
+          <footer class="blockquote-footer">William Shakespeare,
+            <cite title="Source Title">Once Upon A Time</cite></footer>
+        </div>
+      </blockquote>
+    </header>
+    <!-- Main -->
+    <main>
+      <div id="intro">
+        <p class="">
+          Let us start by saying, <span class="text-warning">"We are sorry."</span>
+          It's a sad situtation that you need this app for your finances. You have
+          fallen on hard times, and you are desperate for help. Your accounts are
+          getting down to the wire. You are too ashamed to ask for help. You are
+          not even sure anyone can help.
+        </p><p>
+          <span class="text-info">"It's going to be okay."</span>
+          Of course we don't actually know if it will be okay, but repeating this
+          may help you feel better. This is important, because you need some
+          confidence to face your situtation otherwise you just can't even.
+        </p>
+      </div>
+      <div id="caveat" class="alert alert-dismissible alert-danger">
+        <h2>STRONG WARNING!</h2>
+        <p>
+          Look, we are not accountants, lawyers, financial coaches, etc; we are just
+          software engineers with a dumb app. We have no formal training in
+          finances. <span class="text-muted">(We are not even good at math!)</span>
+          Nonetheless, you have turned here for help...
+        </p>
+      </div>
+      <button type="button" class="btn btn-link btn-lg btn-outline-success"
+        ><a href="./home.html">Click to Next Page</a></button>
     </main>
-    <footer class="portfolio-footing">
-      <code>Copyright &copy; 2020 Tarsha.Tech . All rights reserved.</code>
+    <footer>
+      alpha version
+      <span id="CR">Copyright &copy; 2020 Tarsha.Tech .
+        All rights reserved.</span>
     </footer>
-    <!-- Font Awesome 5.12.1 : cdn : brands -->
-    <script src="https://kit.fontawesome.com/7a5ace3fc0.js"
-      crossorigin="anonymous"></script>
+    <!-- Bootstrap 4.4.1 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!-- End Bootstrap 4.4.1 -->
   </body>
 </html>
