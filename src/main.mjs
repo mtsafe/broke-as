@@ -1,7 +1,7 @@
 // This project uses the Module Pattern
 
 import { DataCtrl } from './Data.mjs';
-import { UICtrl } from './UI.mjs';
+import { AcctUICtrl } from './UI.mjs';
 
 // Basic Structure
 // Start with an IIFY - immediately invoked function expression
@@ -31,47 +31,48 @@ import { UICtrl } from './UI.mjs';
   // // init
 
 // App CONTROLLER //
-const App = (function(DataCtrl, UICtrl) {
+const App = (function(DataCtrl, AcctUICtrl) {
+  let CashComp;
   const loadEventListeners = function() {
-    const UISelectors = UICtrl.getSelectors();
+    const UIIds = CashComp.getSelectors();
     document.addEventListener('keypress', function(e) {
       if (e.keyCode === 13 || e.which === 13) {
         e.preventDefault();
         return false;
       }
     });
-    document.querySelector(UISelectors.addBtn).addEventListener(
+    document.querySelector(UIIds.addBtn).addEventListener(
       'click', addBtnClick);
-    document.querySelector(UISelectors.addTrBtn).addEventListener(
+    document.querySelector(UIIds.addTrBtn).addEventListener(
       'click', addTrBtnClick);
-    document.querySelector(UISelectors.backBtn).addEventListener(
+    document.querySelector(UIIds.backBtn).addEventListener(
       'click', backBtnClick);
-    document.querySelector(UISelectors.clearBtn).addEventListener(
+    document.querySelector(UIIds.clearBtn).addEventListener(
       'click', clearAllItemsBtnClick);
-    document.querySelector(UISelectors.deleteBtn).addEventListener(
+    document.querySelector(UIIds.deleteBtn).addEventListener(
       'click', deleteBtnClick);
-    document.querySelector(UISelectors.trList).addEventListener(
+    document.querySelector(UIIds.trList).addEventListener(
       'click', editTrBtnClick);
-    document.querySelector(UISelectors.updateBtn).addEventListener(
+    document.querySelector(UIIds.updateBtn).addEventListener(
       'click', updateBtnClick);
-    document.querySelector(UISelectors.locationSelect).addEventListener(
+    document.querySelector(UIIds.locationSelect).addEventListener(
       'change', locationSelectChange);
-    $(UISelectors.cashAssessmentModal).on('show.bs.modal', function (e) {
+    $(UIIds.cashAssessmentModal).on('show.bs.modal', function (e) {
       let amt;
       amt = parseInt(DataCtrl.getItemByName('Config',
         'cash-onhand-need').obj.pennies / 100);
-      document.querySelector(UISelectors.modalNeed).value = amt;
+      document.querySelector(UIIds.modalNeed).value = amt;
       amt = parseInt(DataCtrl.getItemByName('Config',
         'cash-onhand-okay').obj.pennies / 100);
-      document.querySelector(UISelectors.modalOkay).value = amt;
+      document.querySelector(UIIds.modalOkay).value = amt;
     });
-    $(UISelectors.cashAssessmentModal).on('hide.bs.modal', function (e) {
+    $(UIIds.cashAssessmentModal).on('hide.bs.modal', function (e) {
       let param, itemToEdit, amtNeed, amtOkay;
       const dataStore = 'Config';
 
-      amtNeed = document.querySelector(UISelectors.modalNeed).value;
+      amtNeed = document.querySelector(UIIds.modalNeed).value;
       if (parseInt(amtNeed) < 0) {
-        const modalAlert = document.querySelector(UISelectors.cashModalAlert);
+        const modalAlert = document.querySelector(UIIds.ModalAlert);
         modalAlert.classList = "alert alert-dismissible alert-danger";
         modalAlert.innerHTML = `<button type="button" class="close" data-dismiss="alert">&times;</button>The minimum needed [<strong>$${amtNeed}</strong>] must be greater or equal to than zero.`;
         e.preventDefault();
@@ -82,9 +83,9 @@ const App = (function(DataCtrl, UICtrl) {
       DataCtrl.setCurrentItem(dataStore, itemToEdit);
       DataCtrl.updateItem(dataStore, param, { pennies: parseInt(amtNeed + '00') } );
 
-      amtOkay = document.querySelector(UISelectors.modalOkay).value;
+      amtOkay = document.querySelector(UIIds.modalOkay).value;
       if (parseInt(amtOkay) < parseInt(amtNeed)) {
-        const modalAlert = document.querySelector(UISelectors.cashModalAlert);
+        const modalAlert = document.querySelector(UIIds.modalAlert);
         modalAlert.classList = "alert alert-dismissible alert-danger";
         modalAlert.innerHTML = `<button type="button" class="close" data-dismiss="alert">&times;</button>The minimum okay [<strong>$${amtOkay}</strong>] must be greater or equal to than the minimum needed [<strong>$${amtNeed}</strong>].`;
         e.preventDefault();
@@ -95,13 +96,13 @@ const App = (function(DataCtrl, UICtrl) {
       DataCtrl.setCurrentItem(dataStore, itemToEdit);
       DataCtrl.updateItem(dataStore, param, { pennies: parseInt(amtOkay + '00') } );
 
-      UICtrl.showTotalAmount(
+      CashComp.showTotalAmount(
         DataCtrl.getTotalCents('Cash'),
         DataCtrl.getItemByName('Config', 'cash-onhand-need').obj.pennies,
         DataCtrl.getItemByName('Config', 'cash-onhand-okay').obj.pennies);
     });
-    $(UISelectors.cashModalAlert).on('close.bs.alert', function (e) {
-      const modalAlert = document.querySelector(UISelectors.cashModalAlert);
+    $(UIIds.cashModalAlert).on('close.bs.alert', function (e) {
+      const modalAlert = document.querySelector(UIIds.modalAlert);
       modalAlert.classList = "";
       modalAlert.innerHTML = "";
       e.preventDefault();
@@ -109,13 +110,13 @@ const App = (function(DataCtrl, UICtrl) {
   };
 
   const addBtnClick = function(e) {
-    const { name, pennies } = UICtrl.getItemInput();
+    const { name, pennies } = CashComp.getItemInput();
     if (name !== '' && pennies !== '') {
       const newItem =
         DataCtrl.addItem('Cash', name, { pennies } );
-      UICtrl.addTrItem(newItem);
-      UICtrl.populateTrList(DataCtrl.getItems('Cash'));
-      UICtrl.showTotalAmount(
+      CashComp.addTrItem(newItem);
+      CashComp.populateTrList(DataCtrl.getItems('Cash'));
+      CashComp.showTotalAmount(
         DataCtrl.getTotalCents('Cash'),
         DataCtrl.getItemByName('Config', 'cash-onhand-need').obj.pennies,
         DataCtrl.getItemByName('Config', 'cash-onhand-okay').obj.pennies);
@@ -135,9 +136,9 @@ const App = (function(DataCtrl, UICtrl) {
   const deleteBtnClick = function(e) {
     const currentItem = DataCtrl.getCurrentItem('Cash');
     DataCtrl.deleteItem('Cash', currentItem.id);
-    UICtrl.deleteTrItem(currentItem.id);
-    UICtrl.populateTrList(DataCtrl.getItems('Cash'));
-    UICtrl.showTotalAmount(
+    CashComp.deleteTrItem(currentItem.id);
+    CashComp.populateTrList(DataCtrl.getItems('Cash'));
+    CashComp.showTotalAmount(
       DataCtrl.getTotalCents('Cash'),
       DataCtrl.getItemByName('Config', 'cash-onhand-need').obj.pennies,
       DataCtrl.getItemByName('Config', 'cash-onhand-okay').obj.pennies);
@@ -146,10 +147,10 @@ const App = (function(DataCtrl, UICtrl) {
   };
 
   const updateBtnClick = function(e) {
-    const { name, pennies } = UICtrl.getItemInput();
+    const { name, pennies } = CashComp.getItemInput();
     const updatedItem = DataCtrl.updateItem('Cash', name, { pennies });
-    UICtrl.updateTrItem(updatedItem);
-    UICtrl.showTotalAmount(
+    CashComp.updateTrItem(updatedItem);
+    CashComp.showTotalAmount(
       DataCtrl.getTotalCents('Cash'),
       DataCtrl.getItemByName('Config', 'cash-onhand-need').obj.pennies,
       DataCtrl.getItemByName('Config', 'cash-onhand-okay').obj.pennies);
@@ -164,7 +165,7 @@ const App = (function(DataCtrl, UICtrl) {
       const id = parseInt(listIdArr[1]);
       const itemToEdit = DataCtrl.getItemById('Cash', id);
       DataCtrl.setCurrentItem('Cash', itemToEdit);
-      UICtrl.putItemToForm(itemToEdit);
+      CashComp.putItemToForm(itemToEdit);
       setAppState("display-mod-cash-editor");
     }
     e.preventDefault();
@@ -172,30 +173,30 @@ const App = (function(DataCtrl, UICtrl) {
 
   const clearAllItemsBtnClick = function() {
     DataCtrl.clearAllItems('Cash');
-    UICtrl.showTotalAmount(
+    CashComp.showTotalAmount(
       DataCtrl.getTotalCents('Cash'),
       DataCtrl.getItemByName('Config', 'cash-onhand-need').obj.pennies,
       DataCtrl.getItemByName('Config', 'cash-onhand-okay').obj.pennies);
-    UICtrl.emptyTableBody();
+    CashComp.emptyTableBody();
     setAppState("display-new-cash-editor");
   };
 
   const locationSelectChange = function() {
     document.querySelector('#cash-name').value =
-    document.querySelector('#location-select').value;
+    document.querySelector('#cash-location-select').value;
   };
 
   const setAppState = function(state) {
     switch (state) {
       case "hide-cash-editor":
-        UICtrl.editStateOff();
+        CashComp.editStateOff();
         DataCtrl.setCurrentItem('Cash', null);
         break;
       case "display-new-cash-editor":
-        UICtrl.editStateAddCash();
+        CashComp.editStateAddCash();
         break;
       case "display-mod-cash-editor":
-        UICtrl.editStateModCash();
+        CashComp.editStateModCash();
         break;
     }
   };
@@ -216,20 +217,22 @@ const App = (function(DataCtrl, UICtrl) {
         config = DataCtrl.getItems('Config');
       }
       const items = DataCtrl.getItems('Cash');
+      CashComp = new AcctUICtrl('cash');
+//      CashComp = CashComp.AcctUICtrl;
       if (items.length === 0) {
         setAppState("display-new-cash-editor");
       } else {
-        UICtrl.populateTrList(items);
+        CashComp.populateTrList(items);
         setAppState("hide-cash-editor");
       }
-      UICtrl.showTotalAmount(
+      CashComp.showTotalAmount(
         DataCtrl.getTotalCents('Cash'),
         DataCtrl.getItemByName('Config', 'cash-onhand-need').obj.pennies,
         DataCtrl.getItemByName('Config', 'cash-onhand-okay').obj.pennies);
       loadEventListeners();
     }
   }
-})(DataCtrl, UICtrl);
+})(DataCtrl, AcctUICtrl);
 
 // :: BEGIN EXECUTION ::
 App.init();
