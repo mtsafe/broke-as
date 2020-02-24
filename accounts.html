@@ -80,9 +80,11 @@
                     </div>
                     <!-- Form Selector -->
                     <footer id="cash-form-footer">
-                      <div id="cash-location-selector" class="form-group float-left">
-                        <select id="location-select" class="custom-select">
-                          <option value="" selected>Or Select A Location</option>
+                      <div id="cash-location-selector"
+                        class="form-group float-left">
+                        <select id="cash-location-select" class="custom-select">
+                          <option value="" selected
+                            >Or Select A Location</option>
                           <option>Wallet</option>
                           <option>Pocket</option>
                           <option>Stash Box</option>
@@ -94,14 +96,17 @@
                       </div>
                       <!-- Form Buttons -->
                       <div id="cash-submit-buttons" class="float-left">
-                        <button id="add-btn" class="btn btn-outline-info">
+                        <button id="cash-add-btn" class="btn btn-outline-info">
                           <i class="fa fa-plus"></i> Add Money Location</button>
-                        <button id="update-btn" class="btn btn-outline-warning">
+                        <button id="cash-update-btn"
+                          class="btn btn-outline-warning">
                           <i class="fa fa-pencil-square-o"></i> Update Money</button>
-                        <button id="delete-btn" class="btn btn-outline-danger">
+                        <button id="cash-delete-btn"
+                          class="btn btn-outline-danger">
                           <i class="fa fa-remove"></i> Delete Money Location</button>
                       </div>
-                      <button id="back-btn" class="btn btn-outline-secondary float-right">
+                      <button id="cash-back-btn"
+                        class="btn btn-outline-secondary float-right">
                         <i class="fa fa-chevron-circle-left"></i> Back</button>
                     </footer>
                   </div>
@@ -128,7 +133,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
                         </div>
-                        <input id="modal-okay" type="number" class="form-control"
+                        <input id="cash-modal-okay" type="number" class="form-control"
                           aria-label="Amount (to the nearest dollar)">
                         <div class="input-group-append">
                           <span class="input-group-text">.00</span>
@@ -143,7 +148,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
                         </div>
-                        <input id="modal-need" type="number" class="form-control"
+                        <input id="cash-modal-need" type="number" class="form-control"
                           aria-label="Amount (to the nearest dollar)">
                         <div class="input-group-append">
                           <span class="input-group-text">.00</span>
@@ -182,7 +187,7 @@
               checking and savings accounts?
             </span>
             <h3 class="center-align float-right">Cash on Hand:
-              $<span id="total-amount">0.00</span></h3>
+              $<span id="cash-total-amount">0.00</span></h3>
             <button id="cash-badge"
               data-toggle="modal" data-target="#cash-assessment-modal"
               class="badge badge-pill badge-primary float-right"><small>Set
@@ -201,9 +206,10 @@
             </tbody>
           </table>
           <footer id="cash-table-footer">
-            <button id="add-tr-btn" class="btn btn-outline-success float-left">
+            <button id="cash-add-tr-btn"
+              class="btn btn-outline-success float-left">
               <i class="fa fa-plus"></i> Add a Money Row to Table</button>
-            <button id="clear-all-btn" type="button"
+            <button id="cash-clear-all-btn" type="button"
               class="btn btn-outline-danger float-right"
                 >Purge Cash Accounts</button>
           </footer>
