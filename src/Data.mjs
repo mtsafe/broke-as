@@ -74,10 +74,11 @@ const DataCtrl = (function(StorageCtrl) {
       return data.currentItem[dataStore];
     },
     initItems: function(dataStore) {
+      data[dataStore] = StorageCtrl.getItemsFromStorage(dataStore);
       if (data[dataStore] === undefined) {
         this.clearAllItems(dataStore);
-        this.setCurrentItem(dataStore, null);
       }
+      this.setCurrentItem(dataStore, null);
     },
     getItems: function(dataStore) {
       this.initItems(dataStore);
