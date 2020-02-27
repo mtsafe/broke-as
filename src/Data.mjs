@@ -15,10 +15,13 @@ const DataCtrl = (function(StorageCtrl) {
 
   // Data Structure / State data in browser memory for the page
   const data = {
-    Config: StorageCtrl.getItemsFromStorage('Config'),
-    Cash: StorageCtrl.getItemsFromStorage('Cash'),
-    currentItem: { Cash: null, Config: null }
+    currentItem: {}
   };
+  // const data = {
+  //   Config: StorageCtrl.getItemsFromStorage('Config'),
+  //   Cash: StorageCtrl.getItemsFromStorage('Cash'),
+  //   currentItem: { Cash: null, Config: null }
+  // };
 
   function leadingZero(n) {
     return (n < 10 ? '0' : '') + n.toString();
@@ -70,7 +73,14 @@ const DataCtrl = (function(StorageCtrl) {
     getCurrentItem: function(dataStore) {
       return data.currentItem[dataStore];
     },
+    initItems: function(dataStore) {
+      if (data[dataStore] === undefined) {
+        this.clearAllItems(dataStore);
+        this.setCurrentItem(dataStore, null);
+      }
+    },
     getItems: function(dataStore) {
+      this.initItems(dataStore);
       return data[dataStore];
     },
     getItemById: function(dataStore, idNum) {
@@ -82,6 +92,7 @@ const DataCtrl = (function(StorageCtrl) {
       });
     },
     addItem: function(dataStore, name, obj) {
+      this.initItems(dataStore);
       let ID = 0, dateTime="", newItem=null;
       if (data[dataStore].length > 0) {
         ID = data[dataStore][data[dataStore].length - 1].id + 1;

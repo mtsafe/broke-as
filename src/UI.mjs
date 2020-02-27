@@ -1,4 +1,4 @@
-import { centsToDollars, dollarsToCents } from './UI-Formats.mjs';
+import { centsToDollars, centsToInputDollars, dollarsToCents } from './UI-Formats.mjs';
 
 // UI CONTROLLER //
 // controls the UI
@@ -10,7 +10,6 @@ class AcctUICtrl {
     }
   }
   UIIds = {
-    // Cash Accounts
     editor: 'form-container',
     trList: 'tbody',
     trItems: 'tbody tr',
@@ -29,25 +28,6 @@ class AcctUICtrl {
     modalAlert: 'modal-alert',
     modalOkay: 'modal-okay',
     modalNeed: 'modal-need'
-    // Receivable Accounts
-    // recvEditor: '#recv-form-container',
-    // recvTrList: '#recv-tbody',
-    // recvTrItems: '#recv-tbody tr',
-    // recvAddBtn: '#recv-add-btn',
-    // recvBackBtn: '#recv-back-btn',
-    // recvDeleteBtn: '#recv-delete-btn',
-    // recvUpdateBtn: '#recv-update-btn',
-    // recvAddTrBtn: '#recv-add-tr-btn',
-    // recvClearBtn: '#recv-clear-all-btn',
-    // recvLocationSelect: '#recv-location-select',
-    // recvBadge: '#recv-badge',
-    // recvNameInput: '#recv-name',
-    // recvAmountInput: '#recv-amount',
-    // recvTotalAmount: '#recv-total-amount',
-    // recvAssessmentModal: '#recv-assessment-modal',
-    // recvModalAlert: '#recv-modal-alert',
-    // recvModalOkay: '#recv-modal-okay',
-    // recvModalNeed: '#recv-modal-need'
   }
 
   // AcctUICtrl Public Methods
@@ -153,7 +133,7 @@ class AcctUICtrl {
   putItemToForm(item) {
     document.querySelector(this.UIIds.nameInput).value = item.name;
     document.querySelector(this.UIIds.amountInput).value =
-      centsToDollars(item.obj.pennies);
+      centsToInputDollars(item.obj.pennies);
   }
   emptyTableBody() {
     document.querySelector(this.UIIds.trList).innerHTML = "";

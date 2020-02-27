@@ -28,6 +28,13 @@ function centsToDollars(amt) {
   return x.formatNum(2, 3, ',', '.');
 };
 
+// Converts a number representation of int cents
+// to a string representation of float dollars.
+// Input field allows for a single period and no commas
+function centsToInputDollars(amt) {
+  return amt / 100;
+};
+
 // Converts a string representation of float dollars
 // to a string representation of int cents.
 function dollarsToCents(amt) {
@@ -35,4 +42,4 @@ function dollarsToCents(amt) {
   str = Number(str).toFixed(2);
   return str.match(/\d/g).join("");
 };
-export { centsToDollars, dollarsToCents } ;
+export { centsToDollars, centsToInputDollars, dollarsToCents } ;
