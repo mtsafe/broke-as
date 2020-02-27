@@ -117,6 +117,7 @@ class AcctUICtrl {
     const selectorOptions =
       Object.values(document.querySelector(this.UIIds.locationSelect).options);
 
+    selectorOptions.forEach(option => { option.selected = false; });
     selectorOptions.forEach(option => { option.disabled = false; });
 
     selectorOptions.forEach((option, index) => {
@@ -129,6 +130,7 @@ class AcctUICtrl {
         }
       });
     });
+    selectorOptions[0].selected = true;
   }
   putItemToForm(item) {
     document.querySelector(this.UIIds.nameInput).value = item.name;

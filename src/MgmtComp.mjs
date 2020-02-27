@@ -26,6 +26,7 @@ const MC = {};
 // Management COMPONENT //
 class MgmtComp {
   constructor (appName) {
+    console.log('constructor');
     AppStates.hideAEd = `hide-${appName}-editor`;
     AppStates.dispNewAEd = `display-new-${appName}-editor`;
     AppStates.dispModAEd = `display-mod-${appName}-editor`;
@@ -41,6 +42,7 @@ class MgmtComp {
     };
     MC[appName].dataName = appName[0].toUpperCase() + appName.substring(1);
     const items = DataCtrl.getItems(MC[appName].dataName);
+    console.log('items = ', items);
     if (items.length === 0) {
       MgmtComp.setAppState(appName, AppStates.dispNewAEd);
     } else {
