@@ -16,4 +16,10 @@ class App {
 }
 
 // :: BEGIN EXECUTION ::
+(function () {
+  const input = document.getElementById('recur-end-date-input');
+  const datepicker = new TheDatepicker.Datepicker(input);
+  datepicker.render();
+})();
+
 const AccountsPage = new App();
