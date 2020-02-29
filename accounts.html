@@ -23,7 +23,6 @@
     <link rel="modulepreload" href="./src/UI-Formats.mjs">  
     <link rel="modulepreload" href="./src/UI.mjs">  
     <link rel="modulepreload" href="./src/main.mjs">  
-    <script defer src="./src/thedatepicker.js"></script>
   </head>
   <body>
     <!-- Navbar -->
@@ -254,22 +253,12 @@
                         placeholder="Add Amount" id="recv-amount">
                       <label for="recv-amount">Amount</label>
                     </div>
-                    <div class="input-field col-sm-6">
-                      <input type="text"
-                        placeholder="Enter Frequency" id="recv-frequency">
-                      <label for="recv-frequency">Frequency</label>
-                    </div>
-                    <div class="input-field col-sm-6">
-                      $<input type="date"
-                        placeholder="Add Amount" id="recv-next-date">
-                      <label for="recv-next-date">Next Date</label>
-                    </div>
 
                     <!-- Form Selector -->
                     <footer id="recv-form-footer">
                       <div id="recv-location-selector" class="form-group float-left">
                         <select id="recv-location-select" class="custom-select">
-                          <option value="" selected>Or Select A Source</option>
+                          <option value="" selected>Or Select A Location</option>
                           <option>Salary</option>
                           <option>IOU</option>
                         </select>
@@ -292,106 +281,6 @@
             </div>
           </div>  <!-- End of recv-form-container -->
 
-          <div id="recv-recurrance-modal" class="modal fade">
-            <div class="modal-dialog">
-              <div id="recv-recur-modal-content" class="modal-content">
-                <div class="modal-header">
-                  <h1>Receivable Income Recurrance</h1>
-                  <p>Select the frequency of this income.</p>
-                </div>
-                <div id="recv-recur-modal-alert"></div>
-                
-                <div id="recv-recur-modal-body" class="modal-body">
-                  <div class="form-group">
-                    <label for="recv-recur-num">Repeat every: </label>
-                    <select class="form-control" id="recv-recur-num"
-                      style="display: inline; width: 40pt;">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                      <option>7</option>
-                      <option>8</option>
-                      <option>9</option>
-                      <option>10</option>
-                      <option>11</option>
-                    </select>
-                    <label for="recv-recur-time"></label>
-                    <select class="form-control" id="recv-recur-time"
-                      style="display: inline; width: 70pt;">
-                      <option>day</option>
-                      <option>week</option>
-                      <option>month</option>
-                      <option>year</option>
-                    </select>
-                  </div>
-                  <div class="recur-end-container">
-                    <div id="recur-end-header">Ending:</div>
-                    <div id="recur-end-grid" class="form-group">
-                    <div class="row">
-                      <div id="recur-end-never"
-                        class="custom-control custom-radio grid-l col-sm-3">
-                        <input type="radio" id="customRadio1"
-                          name="customRadio" class="custom-control-input"
-                          checked="">
-                        <label class="custom-control-label"
-                          for="customRadio1">Never</label>
-                      </div>
-                    </div><div class="row">
-                      <div id="recur-end-on"
-                        class="custom-control custom-radio grid-l col-sm-3">
-                        <input type="radio" id="customRadio2"
-                          name="customRadio" class="custom-control-input">
-                        <label class="custom-control-label"
-                          for="customRadio2">On  --></label>
-                      </div>
-                      <div id="recur-end-date" class="grid-r col-sm-5">
-                        <label class="col-form-label col-form-label-sm"
-                          for="recur-end-date-input"></label>
-                        <input id="recur-end-date-input"
-                          class="" type="text"
-                          placeholder="dd. mm. yyyy">
-                      </div>
-                    </div><div class="row">
-                      <div id="recur-end-after"
-                        class="custom-control custom-radio grid-l col-sm-3">
-                        <input type="radio" id="customRadio3"
-                          name="customRadio" class="custom-control-input">
-                        <label class="custom-control-label"
-                          for="customRadio3">After  --></label>
-                      </div>
-
-                      <div id="recur-end-occurances" class="grid-r col-sm-5">
-                        <label for="recv-recur-num"></label>
-                        <select class="form-control" id="recv-recur-num"
-                          style="display: inline; width: 40pt;">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                          <option>6</option>
-                          <option>7</option>
-                          <option>8</option>
-                          <option>9</option>
-                          <option>10</option>
-                          <option>11</option>
-                        </select>  
-                        occurances</div>
-                    </div>
-                    </div>
-                  </div>                
-                </div>
-                <div class="modal-footer">
-                  <button class="btn btn-default"
-                    data-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-          </div> <!-- End of recv-recurrance-modal -->
-
           <div id="recv-assessment-modal" class="modal fade">
             <div class="modal-dialog">
               <div id="recv-modal-content" class="modal-content">
@@ -410,8 +299,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
                         </div>
-                        <input id="recv-modal-okay" type="number"
-                          class="form-control"
+                        <input id="recv-modal-okay" type="number" class="form-control"
                           aria-label="Amount (to the nearest dollar)">
                         <div class="input-group-append">
                           <span class="input-group-text">.00</span>
@@ -426,8 +314,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text">$</span>
                         </div>
-                        <input id="recv-modal-need" type="number"
-                          class="form-control"
+                        <input id="recv-modal-need" type="number" class="form-control"
                           aria-label="Amount (to the nearest dollar)">
                         <div class="input-group-append">
                           <span class="input-group-text">.00</span>
@@ -464,14 +351,10 @@
             <span id="recv-form-instructions" class="lead">
               What money do you have coming?
             </span>
-            <h3 class="center-align float-right">Cash Incoming (4 wk):
+            <h3 class="center-align float-right">Cash on Hand:
               $<span id="recv-total-amount">0.00</span></h3>
             <button id="recv-badge"
-              data-toggle="modal" data-target="#recv-assessment-modal"
-              class="badge badge-pill badge-primary float-right"><small>Set
-              Warning Limits</small></button>
-            <button id="recv-recur-badge"
-              data-toggle="modal" data-target="#recv-recurrance-modal"
+              data-toggle="modal" data-target="#cash-assessment-modal"
               class="badge badge-pill badge-primary float-right"><small>Set
               Warning Limits</small></button>
           </header>
