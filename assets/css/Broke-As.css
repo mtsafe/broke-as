@@ -181,3 +181,17 @@ hr.style-15 {
     padding-bottom: 5rem;    /* double footer height */
   }
 }
+.custom-control-label {
+  /* border:  1px solid #f00; */
+}
+.grid-on {
+  /* border:  1px solid rgb(99, 99, 105); */
+}
+.grid-l {
+  /* border:  1px solid #0f0; */
+  padding-right: 0px;
+  padding-bottom: 8px;
+}
+.grid-r {
+  /* border:  1px solid #00f; */
+}
