@@ -254,9 +254,10 @@
                       <label for="recv-amount">Amount</label>
                     </div>
                     <div class="input-field col-sm-6">
-                      <input type="text"
-                        placeholder="Enter Frequency" id="recv-frequency">
-                      <label for="recv-frequency">Frequency</label>
+                      <button id="recv-frequency" type="button"
+                      class="btn btn-outline-primary"
+                      data-toggle="modal" data-target="#recv-recurrence-modal"
+                      >Click to set frequency</button>
                     </div>
                     <div class="input-field col-sm-6">
                       $<input type="date"
@@ -467,10 +468,6 @@
               $<span id="recv-total-amount">0.00</span></h3>
             <button id="recv-badge"
               data-toggle="modal" data-target="#recv-assessment-modal"
-              class="badge badge-pill badge-primary float-right"><small>Set
-              Warning Limits</small></button>
-            <button id="recv-recur-badge"
-              data-toggle="modal" data-target="#recv-recurrence-modal"
               class="badge badge-pill badge-primary float-right"><small>Set
               Warning Limits</small></button>
           </header>
