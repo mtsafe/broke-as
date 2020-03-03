@@ -54,6 +54,14 @@ p {
 .btn, .form-group {
   margin: 4px;
 }
+.ib-40 {
+  display: inline-block;
+  width: 40px;
+}
+.ib-70 {
+  display: inline-block;
+  width: 70px;
+}
 #logo {
   margin-right: 3em;
   padding: 0px;
