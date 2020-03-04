@@ -325,6 +325,27 @@
                       <option>year</option>
                     </select>
                   </div>
+                  <div id="recur-weekday-container">
+                    <div class="row">
+                      <div id="recur-weekdays" class="form-group">
+                        <span id="recur-weekday-header">Repeating on:</span>
+                        <button id="recur-mo"
+                        class="badge badge-pill badge-success">Mo</button>
+                        <button id="recur-tu"
+                        class="badge badge-pill badge-light">Tu</button>
+                        <button id="recur-we"
+                        class="badge badge-pill badge-light">We</button>
+                        <button id="recur-th"
+                        class="badge badge-pill badge-light">Th</button>
+                        <button id="recur-fr"
+                        class="badge badge-pill badge-light">Fr</button>
+                        <button id="recur-sa"
+                        class="badge badge-pill badge-light">Sa</button>
+                        <button id="recur-su"
+                        class="badge badge-pill badge-light">Su</button>
+                      </div>
+                    </div>
+                  </div>
                   <div class="recur-end-container">
                     <div id="recur-end-header">Ending:</div>
                     <div id="recur-end-grid" class="form-group">
@@ -332,7 +353,7 @@
                       <div id="recur-end-never"
                         class="custom-control custom-radio grid-l col-sm-3">
                         <input type="radio" id="customRadio1"
-                          name="customRadio" class="custom-control-input"
+                          name="endingRadio" class="custom-control-input"
                           checked="">
                         <label class="custom-control-label"
                           for="customRadio1">Never</label>
@@ -341,7 +362,7 @@
                       <div id="recur-end-on"
                         class="custom-control custom-radio grid-l col-sm-3">
                         <input type="radio" id="customRadio2"
-                          name="customRadio" class="custom-control-input">
+                          name="endingRadio" class="custom-control-input">
                         <label class="custom-control-label"
                           for="customRadio2">On  --></label>
                       </div>
@@ -356,7 +377,7 @@
                       <div id="recur-end-after"
                         class="custom-control custom-radio grid-l col-sm-3">
                         <input type="radio" id="customRadio3"
-                          name="customRadio" class="custom-control-input">
+                          name="endingRadio" class="custom-control-input">
                         <label class="custom-control-label"
                           for="customRadio3">After  --></label>
                       </div>
