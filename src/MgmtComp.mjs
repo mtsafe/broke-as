@@ -79,28 +79,30 @@ class MgmtComp {
       }
     });
     document.querySelector(MC[appName].UIIds.addBtn).addEventListener(
-      'click', this.addBtnClick);
+      'click', this.addBtnClick.bind(null, appName));
     document.querySelector(MC[appName].UIIds.addTrBtn).addEventListener(
-      'click', this.addTrBtnClick);
+      'click', this.addTrBtnClick.bind(null, appName));
     document.querySelector(MC[appName].UIIds.backBtn).addEventListener(
-      'click', this.backBtnClick);
+      'click', this.backBtnClick.bind(null, appName));
     document.querySelector(MC[appName].UIIds.clearBtn).addEventListener(
-      'click', this.clearAllItemsBtnClick);
+      'click', this.clearAllItemsBtnClick.bind(null, appName));
     document.querySelector(MC[appName].UIIds.deleteBtn).addEventListener(
-      'click', this.deleteBtnClick);
+      'click', this.deleteBtnClick.bind(null, appName));
     document.querySelector(MC[appName].UIIds.trList).addEventListener(
-      'click', this.editTrBtnClick);
+      'click', this.editTrBtnClick.bind(null, appName));
     document.querySelector(MC[appName].UIIds.updateBtn).addEventListener(
-      'click', this.updateBtnClick);
+      'click', this.updateBtnClick.bind(null, appName));
     document.querySelector(MC[appName].UIIds.locationSelect).addEventListener(
-      'change', this.locationSelectChange);
-    $(MC[appName].UIIds.assessmentModal).on('show.bs.modal', this.badgeModalOnDisplay);
-    $(MC[appName].UIIds.assessmentModal).on('hide.bs.modal', this.badgeModalOnHide);
-    $(MC[appName].UIIds.modalAlert).on('close.bs.alert', this.badgeModalOnClose);
+      'change', this.locationSelectChange.bind(null, appName));
+    $(MC[appName].UIIds.assessmentModal)
+      .on('show.bs.modal', this.badgeModalOnDisplay.bind(null, appName));
+    $(MC[appName].UIIds.assessmentModal)
+      .on('hide.bs.modal', this.badgeModalOnHide.bind(null, appName));
+    $(MC[appName].UIIds.modalAlert)
+      .on('close.bs.alert', this.badgeModalOnClose.bind(null, appName));
   }
 
-  badgeModalOnDisplay(e) {
-    const appName = this.id.replace(/-.+/,'');
+  badgeModalOnDisplay(appName, e) {
     let amt;
     amt = parseInt(DataCtrl.getItemByName(cfgData,
       MC[appName].UIIds.onHandNeed).obj.pennies / 100);
@@ -110,8 +112,7 @@ class MgmtComp {
     document.querySelector(MC[appName].UIIds.modalOkay).value = amt;
   }
 
-  badgeModalOnHide(e) {
-    const appName = this.id.replace(/-.+/,'');
+  badgeModalOnHide(appName, e) {
     let itemToEdit, amtNeed, amtOkay;
     const dataStore = cfgData;
     amtNeed = document.querySelector(MC[appName].UIIds.modalNeed).value;
@@ -144,16 +145,14 @@ class MgmtComp {
       DataCtrl.getItemByName(cfgData, MC[appName].UIIds.onHandOkay).obj.pennies);
   }
 
-  badgeModalOnClose(e) {
-    const appName = this.id.replace(/-.+/,'');
+  badgeModalOnClose(appName, e) {
     const modalAlert = document.querySelector(MC[appName].UIIds.modalAlert);
     modalAlert.classList = "";
     modalAlert.innerHTML = "";
     e.preventDefault();
   }
 
-  addBtnClick(e) {
-    const appName = this.id.replace(/-.+/,'');
+  addBtnClick(appName, e) {
     const { name, pennies } = MC[appName].UI.getItemInput();
     if (name !== '' && pennies !== '') {
       const newItem =
@@ -169,18 +168,15 @@ class MgmtComp {
     e.preventDefault();
   }
 
-  addTrBtnClick(e) {
-    const appName = this.id.replace(/-.+/,'');
+  addTrBtnClick(appName, e) {
     MgmtComp.setAppState(appName, AppStates.dispNewAEd);
   }
 
-  backBtnClick(e) {
-    const appName = this.id.replace(/-.+/,'');
+  backBtnClick(appName, e) {
     MgmtComp.setAppState(appName, AppStates.hideAEd);
   }
 
-  deleteBtnClick(e) {
-    const appName = this.id.replace(/-.+/,'');
+  deleteBtnClick(appName, e) {
     const currentItem = DataCtrl.getCurrentItem(MC[appName].dataName);
     DataCtrl.deleteItem(MC[appName].dataName, currentItem.id);
     MC[appName].UI.deleteTrItem(currentItem.id);
@@ -193,8 +189,7 @@ class MgmtComp {
     e.preventDefault();
   }
 
-  updateBtnClick(e) {
-    const appName = this.id.replace(/-.+/,'');
+  updateBtnClick(appName, e) {
     const { name, pennies } = MC[appName].UI.getItemInput();
     const updatedItem = DataCtrl.updateItem(MC[appName].dataName, name, { pennies });
     MC[appName].UI.updateTrItem(updatedItem);
@@ -206,9 +201,8 @@ class MgmtComp {
     e.preventDefault();
   }
 
-  editTrBtnClick(e) {
+  editTrBtnClick(appName, e) {
     if (e.target.classList.contains('edit-item')) {
-      const appName = this.id.replace(/-.+/,'');
       const listId = e.target.parentNode.parentNode.parentNode.id;
       const listIdArr = listId.split('-');
       const id = parseInt(listIdArr[1]);
@@ -220,8 +214,7 @@ class MgmtComp {
     e.preventDefault();
   }
 
-  clearAllItemsBtnClick() {
-    const appName = this.id.replace(/-.+/,'');
+  clearAllItemsBtnClick(appName) {
     DataCtrl.clearAllItems(MC[appName].dataName);
     MC[appName].UI.showTotalAmount(
       DataCtrl.getTotalCents(MC[appName].dataName),
@@ -231,8 +224,7 @@ class MgmtComp {
     MgmtComp.setAppState(appName, AppStates.dispNewAEd);
   }
 
-  locationSelectChange() {
-    const appName = this.id.replace(/-.+/,'');
+  locationSelectChange(appName) {
     document.querySelector(MC[appName].UIIds.nameInput).value =
     document.querySelector(MC[appName].UIIds.locationSelect).value;
   }
