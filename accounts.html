@@ -252,11 +252,12 @@
                         placeholder="Add Amount" id="recv-amount">
                       <label for="recv-amount">Amount</label>
                     </div>
-                    <div class="input-field col-sm-6">
-                      <button id="recv-frequency" type="button"
-                      class="btn btn-outline-primary"
-                      data-toggle="modal" data-target="#recv-recurrence-modal"
-                      >Click to set frequency</button>
+                    <div id="recv-location-selector" class="form-group">
+                      <select id="recv-location-select" class="custom-select">
+                        <option value="" selected>Or Select A Source</option>
+                        <option>Salary</option>
+                        <option>IOU</option>
+                      </select>
                     </div>
                     <div class="input-field col-sm-6">
                       $<input type="date"
@@ -266,12 +267,11 @@
 
                     <!-- Form Selector -->
                     <footer id="recv-form-footer">
-                      <div id="recv-location-selector" class="form-group float-left">
-                        <select id="recv-location-select" class="custom-select">
-                          <option value="" selected>Or Select A Source</option>
-                          <option>Salary</option>
-                          <option>IOU</option>
-                        </select>
+                      <div class="input-field col-sm-6 float-left">
+                        <button id="recv-frequency" type="button"
+                        class="btn btn-outline-primary"
+                        data-toggle="modal" data-target="#recv-recurrence-modal"
+                        >Click to set frequency</button>
                       </div>
                       <!-- Form Buttons -->
                       <div id="recv-submit-buttons" class="float-left">
@@ -345,7 +345,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="recur-end-container">
+                  <div id="recur-end-container">
                     <div id="recur-end-header">Ending:</div>
                     <div id="recur-end-grid" class="form-group">
                     <div class="row">

@@ -23,9 +23,8 @@ class AcctUICtrl {
     badge: 'badge',
     nameInput: 'name',
     amountInput: 'amount',
-    dateInput: 'when',
+    dateInput: 'next-date',
     freqInput: 'frequency',
-    endInput: 'ending',
     totalAmount: 'total-amount',
     assessmentModal: 'assessment-modal',
     modalAlert: 'modal-alert',
@@ -39,16 +38,22 @@ class AcctUICtrl {
   // // showTotalAmount, editStateOff, editStateAddCash, editStateModCash,
   // // getSelectors
   populateTrList(items, appType) {
-    let html = '', className='', id=0;
-    items.forEach(function(item) {
+    let html = '', className='', centerHTML = '', id=0;
+    items.forEach(item => {
       if (id % 2 == 0) {
         className = 'table-secondary';
       } else {
         className = '';
       }
+      if (appType === 'recur') {
+        centerHTML = `<td>${item.obj.date}</td>
+        <td>${item.obj.freq}</td>
+        <td>${item.obj.ending}</td>`;
+      }
       html += `<tr class="${className}" id="tr-${id}">
       <th class="tr-th-name" scope="row">${item.name}</th>
       <td>$<em>${centsToDollars(item.obj.pennies)}</em></td>
+      ${centerHTML}
       <td>${item.dateTime}
       <a href="#" class="secondary-content">
         <i class="edit-item fa fa-pencil"></i>
@@ -58,22 +63,20 @@ class AcctUICtrl {
     document.querySelector(this.UIIds.trList).innerHTML = html;
   }
   getItemInput(appType) {
-    const amt = document.querySelector(this.UIIds.amountInput).value
+    let date = '', freq = '', ending = '';
+    let name = document.querySelector(this.UIIds.nameInput).value;
+    const amt = document.querySelector(this.UIIds.amountInput).value;
+    let pennies = parseInt(dollarsToCents(amt));
     switch (appType) {
       case 'onHand':
-        return {
-          name: document.querySelector(this.UIIds.nameInput).value,
-          pennies: parseInt(dollarsToCents(amt))
-        }
-        case 'recur':
-          return {
-            name: document.querySelector(this.UIIds.nameInput).value,
-            pennies: parseInt(dollarsToCents(amt)),
-            date: document.querySelector(this.UIIds.dateInput).value,
-            freq: document.querySelector(this.UIIds.freqInput).value,
-            ending: document.querySelector(this.UIIds.endInput).value
-          }
+        break;
+      case 'recur':
+        date = document.querySelector(this.UIIds.dateInput).value;
+        freq = document.querySelector(this.UIIds.freqInput).innerHTML;
+        ending = 'Endless';
+        break;
     }
+    return { name, pennies, date, freq, ending }
   }
   addTrItem(item, appType) {
     let tr = document.querySelector(this.UIIds.trList).insertRow(0);
@@ -81,8 +84,15 @@ class AcctUICtrl {
       tr.classList.add("table-secondary");
     }
     tr.id = `tr-${item.id}`;
+    let centerHTML = '';
+    if (appType === 'recur') {
+      centerHTML = `<td>${item.obj.date}</td>
+      <td>${item.obj.freq}</td>
+      <td>${item.obj.ending}</td>`;
+    }
     tr.innerHTML = `<th class="tr-th-name" scope="row">${item.name}</th>
       <td>$<em>${centsToDollars(item.obj.pennies)}</em></td>
+      ${centerHTML}
       <td>${item.dateTime}
         <a href="#" class="secondary-content">
           <i class="edit-item fa fa-pencil"></i>
@@ -107,9 +117,16 @@ class AcctUICtrl {
     trItems.forEach(function(trItem) {
       const trID = trItem.getAttribute('id');
       if (trID === `tr-${item.id}`) {
+        let centerHTML = '';
+        if (appType === 'recur') {
+          centerHTML = `<td>${item.obj.date}</td>
+          <td>${item.obj.freq}</td>
+          <td>${item.obj.ending}</td>`;
+        }
         document.querySelector(`#${trID}`).innerHTML =
         `<th class="tr-th-name" scope="row">${item.name}</th>
         <td>$<em>${centsToDollars(item.obj.pennies)}</em></td>
+        ${centerHTML}
         <td>${item.dateTime}
           <a href="#" class="secondary-content">
             <i class="edit-item fa fa-pencil"></i>
@@ -127,7 +144,6 @@ class AcctUICtrl {
       case 'recur':
         document.querySelector(this.UIIds.dateInput).value = '';
         document.querySelector(this.UIIds.freqInput).value = '';
-        document.querySelector(this.UIIds.endInput).value = '';
         return;
     }
   }
@@ -164,8 +180,8 @@ class AcctUICtrl {
         return;
       case 'recur':
         document.querySelector(this.UIIds.dateInput).value = item.obj.date;
-        document.querySelector(this.UIIds.freqInput).value = item.obj.freq;
-        document.querySelector(this.UIIds.endInput).value = item.obj.ending;
+        document.querySelector(this.UIIds.freqInput).value =
+          `${item.obj.freq} + ${item.obj.ending}`;
         return;
     }
   }
