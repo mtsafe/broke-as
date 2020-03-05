@@ -23,6 +23,9 @@ class AcctUICtrl {
     badge: 'badge',
     nameInput: 'name',
     amountInput: 'amount',
+    dateInput: 'when',
+    freqInput: 'frequency',
+    endInput: 'ending',
     totalAmount: 'total-amount',
     assessmentModal: 'assessment-modal',
     modalAlert: 'modal-alert',
@@ -35,7 +38,7 @@ class AcctUICtrl {
   // // updateTrItem, clearInput, putCurrentItemToForm, emptyTableBody,
   // // showTotalAmount, editStateOff, editStateAddCash, editStateModCash,
   // // getSelectors
-  populateTrList(items) {
+  populateTrList(items, appType) {
     let html = '', className='', id=0;
     items.forEach(function(item) {
       if (id % 2 == 0) {
@@ -54,14 +57,25 @@ class AcctUICtrl {
     });
     document.querySelector(this.UIIds.trList).innerHTML = html;
   }
-  getItemInput() {
-    const amt = document.querySelector(this.UIIds.amountInput).value;
-    return {
-      name: document.querySelector(this.UIIds.nameInput).value,
-      pennies: parseInt(dollarsToCents(amt))
+  getItemInput(appType) {
+    const amt = document.querySelector(this.UIIds.amountInput).value
+    switch (appType) {
+      case 'onHand':
+        return {
+          name: document.querySelector(this.UIIds.nameInput).value,
+          pennies: parseInt(dollarsToCents(amt))
+        }
+        case 'recur':
+          return {
+            name: document.querySelector(this.UIIds.nameInput).value,
+            pennies: parseInt(dollarsToCents(amt)),
+            date: document.querySelector(this.UIIds.dateInput).value,
+            freq: document.querySelector(this.UIIds.freqInput).value,
+            ending: document.querySelector(this.UIIds.endInput).value
+          }
     }
   }
-  addTrItem(item) {
+  addTrItem(item, appType) {
     let tr = document.querySelector(this.UIIds.trList).insertRow(0);
     if (item.id % 2 == 0) {
       tr.classList.add("table-secondary");
@@ -87,7 +101,7 @@ class AcctUICtrl {
       }
     });
   }
-  updateTrItem(item) {
+  updateTrItem(item, appType) {
     let trItems = document.querySelectorAll(this.UIIds.trItems);
     trItems = Array.from(trItems);
     trItems.forEach(function(trItem) {
@@ -99,20 +113,29 @@ class AcctUICtrl {
         <td>${item.dateTime}
           <a href="#" class="secondary-content">
             <i class="edit-item fa fa-pencil"></i>
-          </a></td>`;  
+          </a></td>`;
         return;
       }
     });
   }
-  clearInput() {
+  clearInput(appType) {
     document.querySelector(this.UIIds.nameInput).value = '';
     document.querySelector(this.UIIds.amountInput).value = '';
+    switch (appType) {
+      case 'onHand':
+        return;
+      case 'recur':
+        document.querySelector(this.UIIds.dateInput).value = '';
+        document.querySelector(this.UIIds.freqInput).value = '';
+        document.querySelector(this.UIIds.endInput).value = '';
+        return;
+    }
   }
   setCashLocationSelector() {
   //  for each option in the selector,
   //  as it matches a tr in the table body,
   //  set the disable (true/false).
-    const thList = 
+    const thList =
       Object.values(document.getElementsByClassName("tr-th-name"));
     const selectorOptions =
       Object.values(document.querySelector(this.UIIds.locationSelect).options);
@@ -132,10 +155,19 @@ class AcctUICtrl {
     });
     selectorOptions[0].selected = true;
   }
-  putItemToForm(item) {
+  putItemToForm(item, appType) {
     document.querySelector(this.UIIds.nameInput).value = item.name;
     document.querySelector(this.UIIds.amountInput).value =
       centsToInputDollars(item.obj.pennies);
+    switch (appType) {
+      case 'onHand':
+        return;
+      case 'recur':
+        document.querySelector(this.UIIds.dateInput).value = item.obj.date;
+        document.querySelector(this.UIIds.freqInput).value = item.obj.freq;
+        document.querySelector(this.UIIds.endInput).value = item.obj.ending;
+        return;
+    }
   }
   emptyTableBody() {
     document.querySelector(this.UIIds.trList).innerHTML = "";
@@ -158,8 +190,8 @@ class AcctUICtrl {
       badge.textContent = 'Okay';
     }
   }
-  editStateOff() {
-    this.clearInput();
+  editStateOff(appType) {
+    this.clearInput(appType);
     document.querySelector(this.UIIds.addBtn).style.display = 'none';
     document.querySelector(this.UIIds.addTrBtn).style.display = 'inline-block';
     document.querySelector(this.UIIds.backBtn).style.display = 'none';

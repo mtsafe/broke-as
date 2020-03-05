@@ -1,17 +1,12 @@
-// This project uses the Module Pattern
-
 import { MgmtComp } from './MgmtComp.mjs';
-
 
 // App CONTROLLER //
 class App {
   CashComp = null;
 
-  // App Public Methods
-  // // init
   constructor() {
-    this.CashComponent = new MgmtComp('cash');
-    this.ReceivablesComponent = new MgmtComp('recv');
+    this.CashComponent = new MgmtComp('cash', 'onHand');
+    this.ReceivablesComponent = new MgmtComp('recv', 'recur');
   }
 }
 

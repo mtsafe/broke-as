@@ -1,31 +1,15 @@
 // The Management Component
 
-// This project uses the Module Pattern
-
 import { DataCtrl } from './Data.mjs';
 import { AcctUICtrl } from './UI.mjs';
 
-
-// :: CONTROLLERS ::
-// Item CONTROLLER :: const DataCtrl
-  // Public Methods
-  // // getItems, addItem, getItemById, updateItem, deleteItem,
-  // // clearAllItems, setCurrentItem, getCurrentItem, getTotalCents
-// UI CONTROLLER :: const UICtrl
-  // Public Methods
-  // // populateTrList, getItemInput, addTrItem, deleteTrItem,
-  // // updateTrItem, clearInput, putCurrentItemToForm, emptyTableBody,
-  // // showTotalAmount, editStateAddCash, editStateModCash, getSelectors
-// App CONTROLLER :: const App = (function(DataCtrl, StorageCtrl, UICtrl) {
-  // Public Methods
-  // // init
 const cfgData = 'Config';
 const AppStates = {};
 const MC = {};
 
 // Management COMPONENT //
 class MgmtComp {
-  constructor (appName) {
+  constructor (appName, appType) {
     console.log('constructor');
     AppStates.hideAEd = `hide-${appName}-editor`;
     AppStates.dispNewAEd = `display-new-${appName}-editor`;
@@ -44,22 +28,22 @@ class MgmtComp {
     const items = DataCtrl.getItems(MC[appName].dataName);
     console.log('items = ', items);
     if (items.length === 0) {
-      MgmtComp.setAppState(appName, AppStates.dispNewAEd);
+      MgmtComp.setAppState(appName, appType, AppStates.dispNewAEd);
     } else {
-      MC[appName].UI.populateTrList(items);
-      MgmtComp.setAppState(appName, AppStates.hideAEd);
+      MC[appName].UI.populateTrList(items, appType);
+      MgmtComp.setAppState(appName, appType, AppStates.hideAEd);
     }
     MC[appName].UI.showTotalAmount(
       DataCtrl.getTotalCents(MC[appName].dataName),
       DataCtrl.getItemByName(cfgData, MC[appName].UIIds.onHandNeed).obj.pennies,
       DataCtrl.getItemByName(cfgData, MC[appName].UIIds.onHandOkay).obj.pennies);
-    this.loadEventListeners(appName);
+    this.loadEventListeners(appName, appType);
   }
 
-  static setAppState(appName, state) {
+  static setAppState(appName, appType, state) {
     switch (state) {
       case AppStates.hideAEd:
-        MC[appName].UI.editStateOff();
+        MC[appName].UI.editStateOff(appType);
         DataCtrl.setCurrentItem(MC[appName].dataName, null);
         break;
       case AppStates.dispNewAEd:
@@ -71,7 +55,7 @@ class MgmtComp {
     }
   }
 
-  loadEventListeners(appName) {
+  loadEventListeners(appName, appType) {
     document.addEventListener('keypress', function(e) {
       if (e.keyCode === 13 || e.which === 13) {
         e.preventDefault();
@@ -79,7 +63,7 @@ class MgmtComp {
       }
     });
     document.querySelector(MC[appName].UIIds.addBtn).addEventListener(
-      'click', this.addBtnClick.bind(null, appName));
+      'click', this.addBtnClick.bind(null, appName, appType));
     document.querySelector(MC[appName].UIIds.addTrBtn).addEventListener(
       'click', this.addTrBtnClick.bind(null, appName));
     document.querySelector(MC[appName].UIIds.backBtn).addEventListener(
@@ -89,9 +73,9 @@ class MgmtComp {
     document.querySelector(MC[appName].UIIds.deleteBtn).addEventListener(
       'click', this.deleteBtnClick.bind(null, appName));
     document.querySelector(MC[appName].UIIds.trList).addEventListener(
-      'click', this.editTrBtnClick.bind(null, appName));
+      'click', this.editTrBtnClick.bind(null, appName, appType));
     document.querySelector(MC[appName].UIIds.updateBtn).addEventListener(
-      'click', this.updateBtnClick.bind(null, appName));
+      'click', this.updateBtnClick.bind(null, appName, appType));
     document.querySelector(MC[appName].UIIds.locationSelect).addEventListener(
       'change', this.locationSelectChange.bind(null, appName));
     $(MC[appName].UIIds.assessmentModal)
@@ -152,52 +136,52 @@ class MgmtComp {
     e.preventDefault();
   }
 
-  addBtnClick(appName, e) {
-    const { name, pennies } = MC[appName].UI.getItemInput();
+  addBtnClick(appName, appType, e) {
+    const { name, pennies } = MC[appName].UI.getItemInput(appType);
     if (name !== '' && pennies !== '') {
       const newItem =
         DataCtrl.addItem(MC[appName].dataName, name, { pennies } );
-      MC[appName].UI.addTrItem(newItem);
-      MC[appName].UI.populateTrList(DataCtrl.getItems(MC[appName].dataName));
+      MC[appName].UI.addTrItem(newItem, appType);
+      MC[appName].UI.populateTrList(DataCtrl.getItems(MC[appName].dataName, appType));
       MC[appName].UI.showTotalAmount(
         DataCtrl.getTotalCents(MC[appName].dataName),
         DataCtrl.getItemByName(cfgData, MC[appName].UIIds.onHandNeed).obj.pennies,
         DataCtrl.getItemByName(cfgData, MC[appName].UIIds.onHandOkay).obj.pennies);
-      MgmtComp.setAppState(appName, AppStates.hideAEd);
+      MgmtComp.setAppState(appName, appType, AppStates.hideAEd);
     }
     e.preventDefault();
   }
 
   addTrBtnClick(appName, e) {
-    MgmtComp.setAppState(appName, AppStates.dispNewAEd);
+    MgmtComp.setAppState(appName, appType, AppStates.dispNewAEd);
   }
 
   backBtnClick(appName, e) {
-    MgmtComp.setAppState(appName, AppStates.hideAEd);
+    MgmtComp.setAppState(appName, appType, AppStates.hideAEd);
   }
 
-  deleteBtnClick(appName, e) {
+  deleteBtnClick(appName, appType, e) {
     const currentItem = DataCtrl.getCurrentItem(MC[appName].dataName);
     DataCtrl.deleteItem(MC[appName].dataName, currentItem.id);
     MC[appName].UI.deleteTrItem(currentItem.id);
-    MC[appName].UI.populateTrList(DataCtrl.getItems(MC[appName].dataName));
+    MC[appName].UI.populateTrList(DataCtrl.getItems(MC[appName].dataName, appType));
     MC[appName].UI.showTotalAmount(
       DataCtrl.getTotalCents(MC[appName].dataName),
       DataCtrl.getItemByName(cfgData, MC[appName].UIIds.onHandNeed).obj.pennies,
       DataCtrl.getItemByName(cfgData, MC[appName].UIIds.onHandOkay).obj.pennies);
-    MgmtComp.setAppState(appName, AppStates.hideAEd);
+    MgmtComp.setAppState(appName, appType, AppStates.hideAEd);
     e.preventDefault();
   }
 
-  updateBtnClick(appName, e) {
-    const { name, pennies } = MC[appName].UI.getItemInput();
+  updateBtnClick(appName, appType, e) {
+    const { name, pennies } = MC[appName].UI.getItemInput(appType);
     const updatedItem = DataCtrl.updateItem(MC[appName].dataName, name, { pennies });
-    MC[appName].UI.updateTrItem(updatedItem);
+    MC[appName].UI.updateTrItem(updatedItem, appType);
     MC[appName].UI.showTotalAmount(
       DataCtrl.getTotalCents(MC[appName].dataName),
       DataCtrl.getItemByName(cfgData, MC[appName].UIIds.onHandNeed).obj.pennies,
       DataCtrl.getItemByName(cfgData, MC[appName].UIIds.onHandOkay).obj.pennies);
-    MgmtComp.setAppState(appName, AppStates.hideAEd);
+    MgmtComp.setAppState(appName, appType, AppStates.hideAEd);
     e.preventDefault();
   }
 
@@ -208,8 +192,8 @@ class MgmtComp {
       const id = parseInt(listIdArr[1]);
       const itemToEdit = DataCtrl.getItemById(MC[appName].dataName, id);
       DataCtrl.setCurrentItem(MC[appName].dataName, itemToEdit);
-      MC[appName].UI.putItemToForm(itemToEdit);
-      MgmtComp.setAppState(appName, AppStates.dispModAEd);
+      MC[appName].UI.putItemToForm(itemToEdit, appType);
+      MgmtComp.setAppState(appName, appType, AppStates.dispModAEd);
     }
     e.preventDefault();
   }
@@ -221,7 +205,7 @@ class MgmtComp {
       DataCtrl.getItemByName(cfgData, MC[appName].UIIds.onHandNeed).obj.pennies,
       DataCtrl.getItemByName(cfgData, MC[appName].UIIds.onHandOkay).obj.pennies);
     MC[appName].UI.emptyTableBody();
-    MgmtComp.setAppState(appName, AppStates.dispNewAEd);
+    MgmtComp.setAppState(appName, appType, AppStates.dispNewAEd);
   }
 
   locationSelectChange(appName) {
