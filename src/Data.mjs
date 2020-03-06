@@ -50,10 +50,31 @@ const DataCtrl = (function(StorageCtrl) {
     return `${fullDate} ${hr}:${mn}:${sc} ${am_pm}`;
   }
   
-  // Public Methods
-  // // getItems, enumerateItems, addItem, getItemById, getItemByName,
-  // // updateItem, deleteItem, clearAllItems,
-  // // setCurrentItem, getCurrentItem, getTotalCents
+  // DataCtrl Public Methods ::
+  //    Note: all these functions work on a specific dataStore
+  // enumerateItems() - enumerates the ids for items items in the data global,
+  //    then updates local storage
+  // clearAllItems() - empties the data global, then updates local storage
+  // setCurrentItem() - sets the currentItem global to a given item
+  // getCurrentItem() - gets the currentItem global item
+  // initItems() - gets the full item list from local storage,
+  //    then syncs the global data the retrieved data,
+  //    then the currentItem global is set to null
+  // getItems() - returns the full item list from local storage
+  // getItemById() - returns an item from global data by id
+  // getItemByName() - returns the first matching item from global data by name
+  // addItem() - sets the id number to be appended,
+  //    then sets dateTime to now,
+  //    then creates an object for the item,
+  //    then pushes it to data global and local storage
+  //    then it returns the new item
+  // updateItem() - gets the currentItem global item,
+  //    then modifies that item in the data global,
+  //    then updates the item in local storage,
+  //    then returns the item
+  // deleteItem() - removes the item from the data global that matches the id,
+  //    then enumerates the items into local storage
+  // getTotalCents() - returns the summation of obj.pennies
   return {
     enumerateItems: function(dataStore) {
       let id = 0;

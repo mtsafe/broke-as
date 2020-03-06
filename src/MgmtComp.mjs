@@ -10,21 +10,27 @@ const MC = {};
 // Management COMPONENT //
 class MgmtComp {
   constructor (appName, appType) {
+    // declare the AppStates
     AppStates.hideAEd = `hide-${appName}-editor`;
     AppStates.dispNewAEd = `display-new-${appName}-editor`;
     AppStates.dispModAEd = `display-mod-${appName}-editor`;
+    // have an object for the management component per appName
     if (MC[appName] === undefined) {
       MC[appName] = {};
     }
-    MC[appName].UI = new AcctUICtrl(appName);
-    if (MC[appName].UIIds === undefined) {
-      MC[appName].UIIds = MC[appName].UI.getSelectors();
-      MC[appName].UIIds.onHandNeed = `${appName}-onhand-need`;
-      MC[appName].UIIds.onHandOkay = `${appName}-onhand-okay`;
-      this.initConfig(appName);
-    };
+    // declare the name to be used for the corresponding data
     MC[appName].dataName = appName[0].toUpperCase() + appName.substring(1);
+    // get the data from local storage
     const items = DataCtrl.getItems(MC[appName].dataName);
+    // create the UI object
+    MC[appName].UI = new AcctUICtrl(appName);
+    // declare the UIIds
+    MC[appName].UIIds = MC[appName].UI.getSelectors();
+    MC[appName].UIIds.onHandNeed = `${appName}-onhand-need`;
+    MC[appName].UIIds.onHandOkay = `${appName}-onhand-okay`;
+    // apply configuration data
+    this.initConfig(appName);
+    // fill in the UI
     if (items.length === 0) {
       MgmtComp.setAppState(appName, appType, AppStates.dispNewAEd);
     } else {
@@ -35,6 +41,7 @@ class MgmtComp {
       DataCtrl.getTotalCents(MC[appName].dataName),
       DataCtrl.getItemByName(cfgData, MC[appName].UIIds.onHandNeed).obj.pennies,
       DataCtrl.getItemByName(cfgData, MC[appName].UIIds.onHandOkay).obj.pennies);
+    // load the event listeners
     this.loadEventListeners(appName, appType);
   }
 
@@ -147,7 +154,6 @@ class MgmtComp {
           { pennies });
         break;
       case 'recur':
-        console.log({ pennies, date, freq, ending });
         if (date === "" || freq === "Click to set frequency"
           || ending === "Endless") {
           e.preventDefault();
@@ -239,8 +245,13 @@ class MgmtComp {
   }
 
   initConfig(appName) {
-    DataCtrl.addItem(cfgData, MC[appName].UIIds.onHandNeed, { pennies: 1000 });
-    DataCtrl.addItem(cfgData, MC[appName].UIIds.onHandOkay, { pennies: 2500 });
+    DataCtrl.getItems(cfgData);   // prep local storage for configuration data
+    if (DataCtrl.getItemByName(cfgData, MC[appName].UIIds.onHandNeed) === undefined) {
+      DataCtrl.addItem(cfgData, MC[appName].UIIds.onHandNeed, { pennies: 1000 });
+    }
+    if (DataCtrl.getItemByName(cfgData, MC[appName].UIIds.onHandOkay) === undefined) {
+      DataCtrl.addItem(cfgData, MC[appName].UIIds.onHandOkay, { pennies: 2500 });
+    }
   }
 }
 

@@ -1,8 +1,13 @@
 // Storage CONTROLLER //
 // controls localStorage in the browser
 const LocalStorageCtrl = (function() {
-  // StorageCtrl Public Methods
-  // // flush, storeItem, getItemsFromStorage, updateItemStorage
+  // StorageCtrl Public Methods ::
+  // flush() - overwrites itemListName with itemList in local storage
+  // storeItem() - appends itemListName with item in local storage
+  // getItemsFromStorage() - reads full itemListName from local storage
+  //     and returns the list
+  // updateItemStorage() - replaces an item in itemListName
+  //     that matches the id
   return {
     flush: function(itemListName, itemList){
       localStorage.setItem(itemListName, JSON.stringify(itemList));
