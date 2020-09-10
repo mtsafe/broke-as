@@ -1,5 +1,6 @@
 # Broke-As
 Cash Poor Cash Management
+Go to the "Accounts" page to see the core functionality
 
 ## Features so far:
 1. Landing Page
