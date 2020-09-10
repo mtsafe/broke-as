@@ -12,7 +12,7 @@ Cash Poor Cash Management
 - [x] Accounts cash on hand badge is configurable and gives a quick assessment.
 
 ## Technical Challenge
-Use vanilla Javascript to create components in an integrated site of single page applications.
+Use Vanilla Javascript to create modules in an integrated site of single page applications.
 
 ## Tech Stack:
 HTML 5, CSS 3, Javascript ES6, Bootstrap 4.4
