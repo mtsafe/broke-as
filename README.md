@@ -1,4 +1,4 @@
-# Broke-As
+# broke-as
 Cash Poor Cash Management
 
 **_Go to the "Accounts" page to see the core functionality_**
