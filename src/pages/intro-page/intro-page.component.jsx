@@ -2,7 +2,7 @@ import React from "react";
 
 import "./intro-page.styles.scss";
 
-import masks2 from '../../img/masks2.jpg';
+import masks2 from '../../assets/img/masks2.jpg';
 
 const IntroPage = (props) => (
   <div id="IntroPage">

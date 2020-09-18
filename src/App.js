@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.scss";
+import "./assets/App.scss";
 
 import IntroPage from './pages/intro-page/intro-page.component';
 
@@ -10,7 +10,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <NavBar />
+        <NavBar currentPage='Intro' />
         <IntroPage />
         <footer>
           <Copyright />

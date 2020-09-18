@@ -1,15 +1,25 @@
-.nav-link {
-  border-radius: 12px;
+.btn:hover {
+  box-shadow: 10px 15px 25px #ccc;
 }
-.nav-link:hover {
-  background-color: #eee;
-}
-.navbar, .jumbotron {
+.jumbotron {
   margin: 8px;
   padding: 2rem;
 }
-.navbar:hover, .navbar-toggler:hover, .btn:hover {
-  box-shadow: 10px 15px 25px #ccc;
+.navbar {
+  margin: 8px;
+  padding: 2rem;
+
+  &:hover {
+    box-shadow: 10px 15px 25px #ccc;
+  }
+}
+.navbar-toggler {
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    box-shadow: 10px 15px 25px #ccc;
+  }
 }
 .post-it {
   border: 1px solid black;
