@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./intro-page.styles.scss";
+import "./accounts-page.styles.scss";
 import masks2 from "../../assets/img/masks2.jpg";
 
 import NavBar from "../../components/nav-bar/nav-bar.component";
