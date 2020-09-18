@@ -216,7 +216,7 @@ const UICtrl = (function() {
     populateTrList: function(items) {
       let html = '', className='', id=0;
       items.forEach(function(item) {
-        if (id % 2 == 0) {
+        if (id % 2 === 0) {
           className = 'table-secondary';
         } else {
           className = '';
@@ -241,7 +241,7 @@ const UICtrl = (function() {
     },
     addTrItem: function(item) {
       let tr = document.querySelector(UISelectors.trList).insertRow(0);
-      if (item.id % 2 == 0) {
+      if (item.id % 2 === 0) {
         tr.classList.add("table-secondary");
       }
       tr.id = `tr-${item.id}`;
@@ -258,7 +258,7 @@ const UICtrl = (function() {
       let trItems = document.querySelectorAll(UISelectors.trItems);
       trItems = Array.from(trItems);
       trItems.forEach(function(trItem) {
-        if (trItem.id % 2 == 0) {
+        if (trItem.id % 2 === 0) {
           trItem.classList.add("table-secondary");
         } else {
           trItem.classList.remove("table-secondary");
@@ -538,6 +538,8 @@ const App = (function(DataCtrl, UICtrl) {
       case "display-mod-cash-editor":
         UICtrl.editStateModCash();
         break;
+      default :
+        break;
     }
   };
 
@@ -610,12 +612,12 @@ function timeConverter(timestamp){
   const a = new Date(timestamp);
   const months = ['Jan','Feb','Mar','Apr','May','Jun',
     'Jul','Aug','Sep','Oct','Nov','Dec'];
-  fullDate = `${a.getDate()} ${months[a.getMonth()]} ${a.getFullYear()}`;
+  let fullDate = `${a.getDate()} ${months[a.getMonth()]} ${a.getFullYear()}`;
   let hr = a.getHours(), am_pm = "";
   if (hr > 12) {
     hr -= 12;
     am_pm = "pm";
-  } else if (hr == 12) {
+  } else if (hr === 12) {
     am_pm = "pm";
   } else if (hr > 0) {
     am_pm = "am";
