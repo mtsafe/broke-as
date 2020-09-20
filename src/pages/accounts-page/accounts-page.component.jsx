@@ -3,6 +3,7 @@ import React from "react";
 import "./accounts-page.styles.scss";
 import masks2 from "../../assets/img/masks2.jpg";
 
+import BtnLearnMore from '../../components/btn-learn-more/btn-learn-more.component';
 import NavBar from "../../components/nav-bar/nav-bar.component";
 
 const AccountsPage = (props) => (
@@ -478,10 +479,7 @@ const AccountsPage = (props) => (
             <hr className="style-2" />
     
             <footer id="jumbotron-footer">
-            <p className="lead">
-              <a className="btn btn-primary btn-lg"
-                href="#AccountsPage" role="button">Learn more</a>
-            </p>
+              <BtnLearnMore />
             </footer>
           </div>      {/* <!-- End of jumbotron --> */}
         </main>

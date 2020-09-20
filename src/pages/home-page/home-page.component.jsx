@@ -3,6 +3,7 @@ import React from "react";
 import "./home-page.style.scss";
 import masks2 from "../../assets/img/masks2.jpg";
 
+import BtnLearnMore from '../../components/btn-learn-more/btn-learn-more.component';
 import NavBar from "../../components/nav-bar/nav-bar.component";
 
 const HomePage = (props) => (
@@ -34,9 +35,7 @@ const HomePage = (props) => (
         <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
         <hr className="my-4" />
         <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-        <p className="lead">
-          <a className="btn btn-primary btn-lg" href="#HomePage" role="button">Learn more</a>
-        </p>
+        <BtnLearnMore />
       </div>
     </main>
   </div>
