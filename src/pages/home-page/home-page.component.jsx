@@ -1,14 +1,14 @@
 import React from "react";
 
-import "./dashboard-page.style.scss";
+import "./home-page.style.scss";
 import masks2 from "../../assets/img/masks2.jpg";
 
 import NavBar from "../../components/nav-bar/nav-bar.component";
 
-const DashboardPage = (props) => (
-  <div id="DashboardPage">
+const HomePage = (props) => (
+  <div id="HomePage">
     {/* <!-- NavBar --> */}
-    <NavBar currentPage="Dashboard" />
+    <NavBar currentPage="Home" />
     {/* <!-- Header --> */}
     <header>
       <blockquote className="blockquote">
@@ -30,16 +30,16 @@ const DashboardPage = (props) => (
     {/* <!-- Main --> */}
     <main>
       <div className="jumbotron">
-        <h1 className="display-3">My Financial Dashboard</h1>
+        <h1 className="display-3">My Financial Home</h1>
         <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
         <hr className="my-4" />
         <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
         <p className="lead">
-          <a className="btn btn-primary btn-lg" href="#DashboardPage" role="button">Learn more</a>
+          <a className="btn btn-primary btn-lg" href="#HomePage" role="button">Learn more</a>
         </p>
       </div>
     </main>
   </div>
 );
 
-export default DashboardPage;
+export default HomePage;

@@ -13,7 +13,7 @@ class NavBar extends React.Component {
   render() {
     const active = this.state.thisPage === "Intro" ? false : true;
     const pages = [
-      { key: 1, title: "Home", url: "/" },
+      { key: 1, title: "Home", url: "/home" },
       { key: 2, title: "Dashboard", url: "/dashboard" },
       { key: 3, title: "Accounts", url: "/accounts" },
       { key: 4, title: "WTF", url: "/wtf" },
