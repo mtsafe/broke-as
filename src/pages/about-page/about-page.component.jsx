@@ -3,7 +3,7 @@ import React from "react";
 import "./about-page.style.scss";
 import masks2 from "../../assets/img/masks2.jpg";
 
-import BtnLearnMore from '../../components/btn-learn-more/btn-learn-more.component';
+import Jumbotron from "../../components/jumbotron/jumbotron.component";
 import NavBar from "../../components/nav-bar/nav-bar.component";
 
 const AboutPage = (props) => (
@@ -30,13 +30,11 @@ const AboutPage = (props) => (
     </header>
     {/* <!-- Main --> */}
     <main>
-      <div className="jumbotron">
-        <h1 className="display-3">My Financial About</h1>
-        <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-        <hr className="my-4" />
-        <p>This app is not for complex financial management like investments.</p>
-        <BtnLearnMore />
-      </div>
+      <Jumbotron
+        title="My Financial About"
+        lead="This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information."
+        content="This app is not for complex financial management like investments."
+      />
     </main>
   </div>
 );
