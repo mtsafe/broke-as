@@ -5,6 +5,7 @@ import masks2 from "../../assets/img/masks2.jpg";
 
 import Jumbotron from "../../components/jumbotron/jumbotron.component";
 import NavBar from "../../components/nav-bar/nav-bar.component";
+import Quotation from "../../components/quotation/quotation.component";
 
 const AboutPage = (props) => (
   <div id="AboutPage">
@@ -12,21 +13,12 @@ const AboutPage = (props) => (
     <NavBar currentPage="About" />
     {/* <!-- Header --> */}
     <header>
-      <blockquote className="blockquote">
-        <img
-          id="header-image"
-          className="tight"
-          src={masks2}
-          alt="Laughing/crying theater masks"
-        />{" "}
-        <div id="header-text" className="tight">
-          <p className="mb-0">"It's a tragedy."</p>
-          <footer className="blockquote-footer">
-            William Shakespeare,{" "}
-            <cite title="Source Title">Once Upon A Time</cite>
-          </footer>
-        </div>
-      </blockquote>
+      <Quotation
+        imgSrc={masks2}
+        quote="It's a tragedy."
+        author="William Shakespeare"
+        citation="Once Upon A Time"
+      />
     </header>
     {/* <!-- Main --> */}
     <main>
