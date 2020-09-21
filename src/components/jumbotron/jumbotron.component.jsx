@@ -16,12 +16,12 @@ const JumbotronContent = ({ content }) => {
   return null;
 };
 
-const Jumbotron = (props) => {
+const Jumbotron = ({ title, lead, content }) => {
   return (
     <div className="jumbotron">
-      <h1 className="display-3">{props.title}</h1>
-      <p className="lead">{props.lead}</p>
-      <JumbotronContent content={props.content} />
+      <h1 className="display-3">{title}</h1>
+      <p className="lead">{lead}</p>
+      <JumbotronContent content={content} />
       <BtnLearnMore />
     </div>
   );
