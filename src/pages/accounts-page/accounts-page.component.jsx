@@ -4,6 +4,7 @@ import "./accounts-page.styles.scss";
 import masks2 from "../../assets/img/masks2.jpg";
 
 import BtnLearnMore from "../../components/btn-learn-more/btn-learn-more.component";
+import BtnOutline from "../../components/btn-outline/btn-outine.component";
 import NavBar from "../../components/nav-bar/nav-bar.component";
 import Quotation from "../../components/quotation/quotation.component";
 
@@ -78,24 +79,24 @@ const AccountsPage = (props) => (
                       </div>
                       {/* <!-- Form Buttons --> */}
                       <div id="cash-submit-buttons" className="float-left">
-                        <button
+                        <BtnOutline
                           id="cash-add-btn"
-                          className="btn btn-outline-info"
-                        >
-                          <i className="fa fa-plus"></i> Add Money Location
-                        </button>
-                        <button
+                          type="info"
+                          faIcon="fa fa-plus"
+                          label="Add Money Location"
+                        />
+                        <BtnOutline
                           id="cash-update-btn"
-                          className="btn btn-outline-warning"
-                        >
-                          <i className="fa fa-pencil-square-o"></i> Update Money
-                        </button>
-                        <button
+                          type="warning"
+                          faIcon="fa fa-pencil-square-o"
+                          label="Update Money"
+                        />
+                        <BtnOutline
                           id="cash-delete-btn"
-                          className="btn btn-outline-danger"
-                        >
-                          <i className="fa fa-remove"></i> Delete Money Location
-                        </button>
+                          type="danger"
+                          faIcon="fa fa-remove"
+                          label="Delete Money Location"
+                        />
                       </div>
                       <button
                         id="cash-back-btn"
@@ -309,24 +310,24 @@ const AccountsPage = (props) => (
                       </div>
                       {/* <!-- Form Buttons --> */}
                       <div id="recv-submit-buttons" className="float-left">
-                        <button
+                        <BtnOutline
                           id="recv-add-btn"
-                          className="btn btn-outline-info"
-                        >
-                          <i className="fa fa-plus"></i> Add Money Location
-                        </button>
-                        <button
+                          type="info"
+                          faIcon="fa fa-plus"
+                          label="Add Money Location"
+                        />
+                        <BtnOutline
                           id="recv-update-btn"
-                          className="btn btn-outline-warning"
-                        >
-                          <i className="fa fa-pencil-square-o"></i> Update Money
-                        </button>
-                        <button
+                          type="warning"
+                          faIcon="fa fa-pencil-square-o"
+                          label="Update Money"
+                        />
+                        <BtnOutline
                           id="recv-delete-btn"
-                          className="btn btn-outline-danger"
-                        >
-                          <i className="fa fa-remove"></i> Delete Money Location
-                        </button>
+                          type="danger"
+                          faIcon="fa fa-remove"
+                          label="Delete Money Location"
+                        />
                       </div>
                       <button
                         id="recv-back-btn"
