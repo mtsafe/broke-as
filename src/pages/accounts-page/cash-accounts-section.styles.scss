@@ -1,0 +1,76 @@
+h2 {
+  display: block;
+}
+p {
+  margin: 8px;
+  padding: 4px;
+}
+.blockquote {
+  padding: 0px 30px;
+}
+.btn {
+  margin: 4px;
+}
+.tight {
+  margin: 0px;
+  padding: 0px;
+  width: fit-content;
+  height: fit-content;
+}
+#header-image {
+  display: inline-block;
+  width: auto;
+  height: 70px;
+}
+#header-text {
+  display: inline-block;
+}
+#intro {
+  margin: 0px 30px;
+}
+
+/*
+* Strong Warning Flash Effect
+*/
+#caveat {
+  margin: 8px 30px;
+  text-align: center;
+}
+#caveat h2 {
+  color: red;
+}
+#caveat h2:hover {
+  animation: animate 0.2s linear infinite;
+}
+@keyframes animate {
+  0% {
+    color: red;
+  }
+  10% {
+    color: red;
+  }
+  20% {
+    color: black;
+  }
+  30% {
+    color: red;
+  }
+  40% {
+    color: purple;
+  }
+  50% {
+    color: red;
+  }
+  60% {
+    color: black;
+  }
+  70% {
+    color: purple;
+  }
+  80% {
+    color: red;
+  }
+  100% {
+    color: red;
+  }
+}
