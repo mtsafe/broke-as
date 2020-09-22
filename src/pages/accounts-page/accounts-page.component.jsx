@@ -7,6 +7,7 @@ import BtnLearnMore from "../../components/btn-learn-more/btn-learn-more.compone
 import BtnOutline from "../../components/btn-outline/btn-outine.component";
 import NavBar from "../../components/nav-bar/nav-bar.component";
 import Quotation from "../../components/quotation/quotation.component";
+import Selector from "../../components/selector/selector.component";
 
 const AccountsPage = (props) => (
   <div id="AccountsPage">
@@ -45,7 +46,7 @@ const AccountsPage = (props) => (
                         placeholder="Enter Location"
                         id="cash-name"
                       />
-                      <label for="cash-name">Location</label>
+                      <label htmlFor="cash-name">Location</label>
                     </div>
                     <div className="input-field col-sm-6">
                       $
@@ -54,7 +55,7 @@ const AccountsPage = (props) => (
                         placeholder="Add Amount"
                         id="cash-amount"
                       />
-                      <label for="cash-amount">Amount</label>
+                      <label htmlFor="cash-amount">Amount</label>
                     </div>
                     {/* <!-- Form Selector --> */}
                     <footer id="cash-form-footer">
@@ -62,20 +63,20 @@ const AccountsPage = (props) => (
                         id="cash-location-selector"
                         className="form-group float-left"
                       >
-                        <select
+                        <Selector
                           id="cash-location-select"
                           className="custom-select"
-                        >
-                          <option value="" selected>
-                            Or Select A Location
-                          </option>
-                          <option>Wallet</option>
-                          <option>Pocket</option>
-                          <option>Stash Box</option>
-                          <option>Sock Drawer</option>
-                          <option>Mattress</option>
-                          <option>Checking Acct</option>
-                        </select>
+                          defaultValue="Or Select A Location"
+                          options={[
+                            "Or Select A Location",
+                            "Wallet",
+                            "Pocket",
+                            "Stash Box",
+                            "Sock Drawer",
+                            "Mattress",
+                            "Checking Acct",
+                          ]}
+                        />
                       </div>
                       {/* <!-- Form Buttons --> */}
                       <div id="cash-submit-buttons" className="float-left">
@@ -262,7 +263,7 @@ const AccountsPage = (props) => (
                         placeholder="Enter Source"
                         id="recv-name"
                       />
-                      <label for="recv-name">From</label>
+                      <label htmlFor="recv-name">From</label>
                     </div>
                     <div className="input-field col-sm-6">
                       $
@@ -271,19 +272,15 @@ const AccountsPage = (props) => (
                         placeholder="Add Amount"
                         id="recv-amount"
                       />
-                      <label for="recv-amount">Amount</label>
+                      <label htmlFor="recv-amount">Amount</label>
                     </div>
                     <div id="recv-location-selector" className="form-group">
-                      <select
+                      <Selector
                         id="recv-location-select"
                         className="custom-select"
-                      >
-                        <option value="" selected>
-                          Or Select A Source
-                        </option>
-                        <option>Salary</option>
-                        <option>IOU</option>
-                      </select>
+                        defaultValue="Or Select A Source"
+                        options={["Or Select A Source", "Salary", "IOU"]}
+                      />
                     </div>
                     <div className="input-field col-sm-6">
                       $
@@ -292,7 +289,7 @@ const AccountsPage = (props) => (
                         placeholder="Add Amount"
                         id="recv-next-date"
                       />
-                      <label for="recv-next-date">Next Date</label>
+                      <label htmlFor="recv-next-date">Next Date</label>
                     </div>
 
                     {/* <!-- Form Selector --> */}
@@ -353,27 +350,32 @@ const AccountsPage = (props) => (
 
                 <div id="recv-recur-modal-body" className="modal-body">
                   <div className="form-group">
-                    <label for="recv-recur-num">Repeat every: </label>
-                    <select className="form-control ib-40" id="recv-recur-num">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                      <option>7</option>
-                      <option>8</option>
-                      <option>9</option>
-                      <option>10</option>
-                      <option>11</option>
-                    </select>
-                    <label for="recv-recur-time"></label>
-                    <select className="form-control ib-70" id="recv-recur-time">
-                      <option>day</option>
-                      <option>week</option>
-                      <option>month</option>
-                      <option>year</option>
-                    </select>
+                    <label htmlFor="recv-recur-every">Repeat every: </label>
+                    <Selector
+                      id="recv-recur-every"
+                      className="form-control ib-40"
+                      defaultValue="1"
+                      options={[
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "6",
+                        "7",
+                        "8",
+                        "9",
+                        "10",
+                        "11",
+                      ]}
+                    />
+                    <label htmlFor="recv-recur-time"></label>
+                    <Selector
+                      id="recv-recur-time"
+                      className="form-control ib-70"
+                      defaultValue=""
+                      options={["day", "week", "month", "year"]}
+                    />
                   </div>
                   <div id="recur-weekday-container">
                     <div className="row">
@@ -437,11 +439,11 @@ const AccountsPage = (props) => (
                             id="customRadio1"
                             name="endingRadio"
                             className="custom-control-input"
-                            checked=""
+                            defaultChecked=""
                           />
                           <label
                             className="custom-control-label"
-                            for="customRadio1"
+                            htmlFor="customRadio1"
                           >
                             Never
                           </label>
@@ -460,7 +462,7 @@ const AccountsPage = (props) => (
                           />
                           <label
                             className="custom-control-label"
-                            for="customRadio2"
+                            htmlFor="customRadio2"
                           >
                             On --&gt;
                           </label>
@@ -468,7 +470,7 @@ const AccountsPage = (props) => (
                         <div id="recur-end-date" className="grid-r col-sm-5">
                           <label
                             className="col-form-label col-form-label-sm"
-                            for="recur-end-date-input"
+                            htmlFor="recur-end-date-input"
                           ></label>
                           <input
                             id="recur-end-date-input"
@@ -491,7 +493,7 @@ const AccountsPage = (props) => (
                           />
                           <label
                             className="custom-control-label"
-                            for="customRadio3"
+                            htmlFor="customRadio3"
                           >
                             After --&gt;
                           </label>
@@ -501,23 +503,25 @@ const AccountsPage = (props) => (
                           id="recur-end-occurances"
                           className="grid-r col-sm-5"
                         >
-                          <label for="recv-recur-num"></label>
-                          <select
+                          <label htmlFor="recv-recur-occurances"></label>
+                          <Selector
+                            id="recv-recur-occurances"
                             className="form-control ib-40"
-                            id="recv-recur-num"
-                          >
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10</option>
-                            <option>11</option>
-                          </select>
+                            defaultValue="1"
+                            options={[
+                              "1",
+                              "2",
+                              "3",
+                              "4",
+                              "5",
+                              "6",
+                              "7",
+                              "8",
+                              "9",
+                              "10",
+                              "11",
+                            ]}
+                          />
                           occurances
                         </div>
                       </div>
