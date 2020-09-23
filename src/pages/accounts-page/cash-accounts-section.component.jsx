@@ -2,8 +2,9 @@ import React from "react";
 
 import "./cash-accounts-section.styles.scss";
 
-import FormContainer from "./form-container.component";
 import AssessmentModal from "./assessment-modal.component";
+import FormContainer from "./form-container.component";
+import Table from "../../components/table/table.component";
 
 const CashAccountsSection = (props) => (
   <section id="cash-accounts">
@@ -27,22 +28,7 @@ const CashAccountsSection = (props) => (
         <small>Set Warning Limits</small>
       </button>
     </header>
-    <table id="cash-table" className="table table-hover">
-      <thead>
-        <tr>
-          <th className="lead" scope="col">
-            Where
-          </th>
-          <th className="lead" scope="col">
-            Amount
-          </th>
-          <th className="lead" scope="col">
-            Recorded
-          </th>
-        </tr>
-      </thead>
-      <tbody id="cash-tbody"></tbody>
-    </table>
+    <Table headings={("cash", ["Where", "Amount", "Recorded"])} />
     <footer id="cash-table-footer">
       <button
         id="cash-add-tr-btn"
