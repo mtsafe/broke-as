@@ -23,7 +23,7 @@ const AboutPage = (props) => (
     {/* <!-- Main --> */}
     <main>
       <Jumbotron
-        title="My Financial About"
+        title="About Broke-As"
         lead="This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information."
         content="This app is not for complex financial management like investments."
       />
