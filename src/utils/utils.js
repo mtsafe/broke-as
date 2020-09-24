@@ -1,6 +1,5 @@
 function isNonEmptyString(str) {
-  if (typeof str === "string" && str !== "") return true;
-  return false;
+  return typeof str === "string" && str !== "";
 }
 
 export default isNonEmptyString;
