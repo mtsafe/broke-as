@@ -20,5 +20,6 @@ The original branch (VanillaJS) uses Vanilla Javascript to create modules in an 
 There is no "master" branch.
 
 ## Tech Stack:
-HTML 5, CSS 3, Javascript ES6, Bootstrap 4.4
+HTML 5, CSS 3, Javascript ES6, Bootstrap 4.4 .
+React branch uses ReactJS spun up from Create React App.
 Currently runs in browser. Uses local storage for data persistence.
