@@ -1,2 +1,2 @@
 ignore:
- "*.{cy,test,spec}.{js,ts,jsx,tsx}"
+  - "*.{cy,test,spec}.{js,ts,jsx,tsx}"
