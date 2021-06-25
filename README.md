@@ -23,3 +23,12 @@ There is no "master" branch.
 HTML 5, CSS 3, Javascript ES6, Bootstrap 4.4 .
 React branch uses ReactJS spun up from Create React App.
 Currently runs in browser. Uses local storage for data persistence.
+
+## QA Testing
+Cypress and Jest are setup for testing.
+Tests have been written for component testing with Cypress.
+
+Cypress component testing can be started using this command:
+```bash
+$ npx cypress open-ct
+```
