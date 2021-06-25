@@ -6,7 +6,7 @@ Cash Poor Cash Management
 ## Purpose
 The purpose of this app is for money management when you have little money.
 
-## Features so far:
+## Features So Far
 1. Landing Page
 - [x] Landing page establishes expectations.
 2. Accounts Page [ Cash Management ]
@@ -19,7 +19,7 @@ This branch (React) is to implement the app as an SPA (Single Page Application) 
 The original branch (VanillaJS) uses Vanilla Javascript to create modules in an integrated site of single page applications.
 There is no "master" branch.
 
-## Tech Stack:
+## Tech Stack
 HTML 5, CSS 3, Javascript ES6, Bootstrap 4.4 .
 React branch uses ReactJS spun up from Create React App.
 Currently runs in browser. Uses local storage for data persistence.
