@@ -1,14 +1,14 @@
 import * as React from 'react'
 import { mount } from '@cypress/react'
 import { BrowserRouter } from 'react-router-dom'
-import AccountsPage from './accounts-page.component'
+import FormContainer from './form-container.component'
 import '../../assets/sketchy/bootstrap.min.css'
 
-it('accounts-page', () => {
+it('form-container', () => {
   mount(
     <BrowserRouter>
-      <AccountsPage />
+      <FormContainer />
     </BrowserRouter>,
   )
-  cy.get('.jumbotron')
+  cy.get('.container')
 })
