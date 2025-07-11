@@ -56,6 +56,9 @@
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
     "cypress": "^14.5.1",
+    "eslint": "^7.29.0",
+    "eslint-plugin-chai-friendly": "^0.7.1",
+    "eslint-plugin-cypress": "^2.11.3",
     "html-webpack-plugin": "^4.5.0",
     "webpack-dev-server": "^5.2.1"
   }
