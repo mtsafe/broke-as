@@ -60,6 +60,6 @@
     "eslint-plugin-chai-friendly": "^0.7.1",
     "eslint-plugin-cypress": "^2.11.3",
     "html-webpack-plugin": "^4.5.0",
-    "webpack-dev-server": "^3.11.1"
+    "webpack-dev-server": "^5.2.2"
   }
 }
