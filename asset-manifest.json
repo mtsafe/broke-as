@@ -1,21 +1,14 @@
 {
   "files": {
-    "main.css": "/broke-as/static/css/main.d31c1c4a.chunk.css",
-    "main.js": "/broke-as/static/js/main.e372a867.chunk.js",
-    "main.js.map": "/broke-as/static/js/main.e372a867.chunk.js.map",
-    "runtime-main.js": "/broke-as/static/js/runtime-main.c747646c.js",
-    "runtime-main.js.map": "/broke-as/static/js/runtime-main.c747646c.js.map",
-    "static/js/2.cc3a628f.chunk.js": "/broke-as/static/js/2.cc3a628f.chunk.js",
-    "static/js/2.cc3a628f.chunk.js.map": "/broke-as/static/js/2.cc3a628f.chunk.js.map",
+    "main.css": "/broke-as/static/css/main.177faa3b.css",
+    "main.js": "/broke-as/static/js/main.3ef50b01.js",
+    "static/media/masks2.jpg": "/broke-as/static/media/masks2.ed2be912ca65f91e5b3b.jpg",
     "index.html": "/broke-as/index.html",
-    "static/css/main.d31c1c4a.chunk.css.map": "/broke-as/static/css/main.d31c1c4a.chunk.css.map",
-    "static/js/2.cc3a628f.chunk.js.LICENSE.txt": "/broke-as/static/js/2.cc3a628f.chunk.js.LICENSE.txt",
-    "static/media/masks2.ed2be912.jpg": "/broke-as/static/media/masks2.ed2be912.jpg"
+    "main.177faa3b.css.map": "/broke-as/static/css/main.177faa3b.css.map",
+    "main.3ef50b01.js.map": "/broke-as/static/js/main.3ef50b01.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.c747646c.js",
-    "static/js/2.cc3a628f.chunk.js",
-    "static/css/main.d31c1c4a.chunk.css",
-    "static/js/main.e372a867.chunk.js"
+    "static/css/main.177faa3b.css",
+    "static/js/main.3ef50b01.js"
   ]
 }
