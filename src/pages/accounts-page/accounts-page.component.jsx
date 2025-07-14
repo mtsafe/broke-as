@@ -1,16 +1,16 @@
-import React from "react";
+import React from "react"
 
-import "./accounts-page.styles.scss";
-import masks2 from "../../assets/img/masks2.jpg";
+import "./accounts-page.styles.scss"
+import masks2 from "../../assets/img/masks2.jpg"
 
-import BtnLearnMore from "../../components/btn-learn-more/btn-learn-more.component";
-import BtnOutline from "../../components/btn-outline/btn-outine.component";
-import CashAccountsSection from "./cash-accounts-section.component";
-import NavBar from "../../components/nav-bar/nav-bar.component";
-import Quotation from "../../components/quotation/quotation.component";
-import Selector from "../../components/selector/selector.component";
+import BtnLearnMore from "../../components/btn-learn-more/btn-learn-more.component"
+import BtnOutline from "../../components/btn-outline/btn-outine.component"
+import CashAccountsSection from "./cash-accounts-section.component"
+import NavBar from "../../components/nav-bar/nav-bar.component"
+import Quotation from "../../components/quotation/quotation.component"
+import Selector from "../../components/selector/selector.component"
 
-const AccountsPage = (props) => (
+const AccountsPage = props => (
   <div id="AccountsPage">
     {/* <!-- NavBar --> */}
     <NavBar currentPage="Accounts" />
@@ -26,7 +26,7 @@ const AccountsPage = (props) => (
     {/* <!-- Main --> */}
     <main>
       <div id="jumbotron" className="jumbotron">
-        <header>
+        <header id="jumbotron-header">
           <h1 className="display-3">Cash Accounts</h1>
         </header>
         <hr className="style-2" />
@@ -475,6 +475,6 @@ const AccountsPage = (props) => (
     </main>
     <script type="module" src="./src/main.mjs"></script>
   </div>
-);
+)
 
-export default AccountsPage;
+export default AccountsPage

@@ -9,15 +9,20 @@ const Jumbotron = ({ title, lead, content }) => {
 
   return (
     <div className="jumbotron">
-      <h1 className="display-3">{title}</h1>
+      <header id="jumbotron-header">
+        <h1 className="display-3">{title}</h1>
+      </header>
       <p className="lead">{lead}</p>
       {isGoodContent && (
         <React.Fragment>
-          <hr className="my-4" />
+          <hr className="style-2" />
           <p>{content}</p>
         </React.Fragment>
       )}
-      <BtnLearnMore />
+      <hr className="my-4" />
+      <footer id="jumbotron-footer">
+        <BtnLearnMore />
+      </footer>
     </div>
   )
 }
