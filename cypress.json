@@ -1,5 +1,0 @@
-{
-  "testFiles": "**/*.cy.{js,ts,jsx,tsx}",
-  "ignoreTestFiles": "**/examples/*.spec.{js,ts,jsx,tsx}",
-  "componentFolder": "src"
-}
