@@ -1,7 +1,0 @@
-ignore:
-  - "**/*.cy.js"
-  - "**/*.cy.jsx"
-  - "**/*.test.js"
-  - "**/*.test.jsx"
-  - "**/*.spec.js"
-  - "**/*.spec.jsx"
