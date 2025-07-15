@@ -1,0 +1,44 @@
+.btn:hover {
+  box-shadow: 10px 15px 25px #ccc;
+}
+.jumbotron {
+  margin: 8px;
+  padding: 2rem;
+}
+.navbar {
+  margin: 8px;
+  padding: 2rem;
+
+  &:hover {
+    box-shadow: 10px 15px 25px #ccc;
+  }
+}
+.navbar-toggler {
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    box-shadow: 10px 15px 25px #ccc;
+  }
+}
+.post-it {
+  border: 1px solid black;
+  background-color: yellow;
+}
+.tight {
+  margin: 0px;
+  padding: 0px;
+  width: fit-content;
+  height: fit-content;
+}
+#logo {
+  margin-right: 3em;
+  padding: 0px;
+  width: fit-content;
+  height: fit-content;
+  border: solid;
+}
+#hanging {
+  position: absolute;
+  transform: translateX(-3px) translateY(12px) rotate(50deg);
+}
