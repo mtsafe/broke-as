@@ -1,12 +1,12 @@
-import React from "react";
+import React from "react"
 
-import "./intro-page.styles.scss";
-import masks2 from "../../assets/img/masks2.jpg";
+import "./intro-page.styles.scss"
+import masks2 from "../../assets/img/masks2.jpg"
 
-import NavBar from "../../components/nav-bar/nav-bar.component";
-import Quotation from "../../components/quotation/quotation.component";
+import NavBar from "../../components/nav-bar/nav-bar.component"
+import Quotation from "../../components/quotation/quotation.component"
 
-const IntroPage = (props) => (
+const IntroPage = props => (
   <div id="IntroPage">
     {/* <!-- NavBar --> */}
     <NavBar currentPage="Intro" />
@@ -48,10 +48,10 @@ const IntroPage = (props) => (
         </p>
       </div>
       <button type="button" className="btn btn-link btn-lg btn-outline-success">
-        <a href="./home.html">Click to Next Page</a>
+        <a href="./home">Click to Next Page</a>
       </button>
     </main>
   </div>
-);
+)
 
-export default IntroPage;
+export default IntroPage
