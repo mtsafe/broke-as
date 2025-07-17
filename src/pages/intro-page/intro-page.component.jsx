@@ -48,7 +48,7 @@ const IntroPage = props => (
         </p>
       </div>
       <button type="button" className="btn btn-link btn-lg btn-outline-success">
-        <a href="./home">Click to Next Page</a>
+        <a href="/home">Click to Next Page</a>
       </button>
     </main>
   </div>
