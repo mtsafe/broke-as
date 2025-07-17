@@ -61,7 +61,6 @@ const AccountsPage = props => (
                       />
                     </div>
                     <div className="input-field col-sm-6">
-                      $
                       <input
                         type="date"
                         placeholder="Add Amount"
