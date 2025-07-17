@@ -1,5 +1,6 @@
 import React from "react"
-import { Link, NavLink } from "react-router-dom"
+// import { Link, NavLink } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import "./intro-page.styles.scss"
 import masks2 from "../../assets/img/masks2.jpg"
