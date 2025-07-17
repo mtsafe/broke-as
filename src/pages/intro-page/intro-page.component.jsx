@@ -1,5 +1,4 @@
 import React from "react"
-// import { Link, NavLink } from "react-router-dom"
 import { Link } from "react-router-dom"
 
 import "./intro-page.styles.scss"
@@ -10,9 +9,7 @@ import Quotation from "../../components/quotation/quotation.component"
 
 const IntroPage = props => (
   <div id="IntroPage">
-    {/* <!-- NavBar --> */}
     <NavBar currentPage="Intro" />
-    {/* <!-- Header --> */}
     <header>
       <Quotation
         imgSrc={masks2}
@@ -21,7 +18,6 @@ const IntroPage = props => (
         source="Once Upon A Time"
       />
     </header>
-    {/* <!-- Main --> */}
     <main>
       <div id="intro">
         <p className="">

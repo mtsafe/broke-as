@@ -9,9 +9,7 @@ import Quotation from "../../components/quotation/quotation.component"
 
 const HomePage = props => (
   <div id="HomePage">
-    {/* <!-- NavBar --> */}
     <NavBar currentPage="Home" />
-    {/* <!-- Header --> */}
     <header>
       <Quotation
         imgSrc={masks2}
@@ -20,7 +18,6 @@ const HomePage = props => (
         source="Once Upon A Time"
       />
     </header>
-    {/* <!-- Main --> */}
     <main>
       <div className="jumbotron">
         <h1 className="display-3">My Financial Home</h1>

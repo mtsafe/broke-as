@@ -9,9 +9,7 @@ import Quotation from "../../components/quotation/quotation.component"
 
 const WTFPage = props => (
   <div id="WTFPage">
-    {/* <!-- NavBar --> */}
     <NavBar currentPage="WTF" />
-    {/* <!-- Header --> */}
     <header>
       <Quotation
         id="impression"
@@ -22,7 +20,6 @@ const WTFPage = props => (
         source="Once Upon A Time"
       />
     </header>
-    {/* <!-- Main --> */}
     <main>
       <Jumbotron
         title="My Financial WTF"

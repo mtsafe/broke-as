@@ -12,9 +12,7 @@ import Selector from "../../components/selector/selector.component"
 
 const AccountsPage = props => (
   <div id="AccountsPage">
-    {/* <!-- NavBar --> */}
     <NavBar currentPage="Accounts" />
-    {/* <!-- Header --> */}
     <header>
       <Quotation
         imgSrc={masks2}
@@ -23,7 +21,6 @@ const AccountsPage = props => (
         source="Once Upon A Time"
       />
     </header>
-    {/* <!-- Main --> */}
     <main>
       <div id="jumbotron" className="jumbotron">
         <header id="jumbotron-header">
