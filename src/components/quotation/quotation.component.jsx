@@ -1,22 +1,20 @@
-import React from "react";
+import React from "react"
+import "./quotation.styles.scss"
 
-function Quotation({ imgSrc, quote, author, citation }) {
+function Quotation({ id, imgSrc, imgAlt, quote, author, source }) {
+  let imgId = id + "-quotation-image"
+  let divId = id + "-quotation-text"
   return (
-    <blockquote className="blockquote">
-      <img
-        id="header-image"
-        className="tight"
-        src={imgSrc}
-        alt="Laughing/crying theater masks"
-      />{" "}
-      <div id="header-text" className="tight">
+    <blockquote id={id} className="quotation">
+      <img id={imgId} className="quotation-image" src={imgSrc} alt={imgAlt} />{" "}
+      <div id={divId} className="quotation-text">
         <p className="mb-0">&quot;{quote}&quot;</p>
         <footer className="blockquote-footer">
-          {author}, <cite title="Source Title">{citation}</cite>
+          {author}, <cite title="Source Title">{source}</cite>
         </footer>
       </div>
     </blockquote>
-  );
+  )
 }
 
-export default Quotation;
+export default Quotation

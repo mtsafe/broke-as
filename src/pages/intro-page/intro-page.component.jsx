@@ -16,7 +16,7 @@ const IntroPage = props => (
         imgSrc={masks2}
         quote="It's a tragedy."
         author="William Shakespeare"
-        citation="Once Upon A Time"
+        source="Once Upon A Time"
       />
     </header>
     {/* <!-- Main --> */}

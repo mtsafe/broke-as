@@ -1,13 +1,13 @@
-import React from "react";
+import React from "react"
 
-import "./about-page.style.scss";
-import masks2 from "../../assets/img/masks2.jpg";
+import "./about-page.style.scss"
+import masks2 from "../../assets/img/masks2.jpg"
 
-import Jumbotron from "../../components/jumbotron/jumbotron.component";
-import NavBar from "../../components/nav-bar/nav-bar.component";
-import Quotation from "../../components/quotation/quotation.component";
+import Jumbotron from "../../components/jumbotron/jumbotron.component"
+import NavBar from "../../components/nav-bar/nav-bar.component"
+import Quotation from "../../components/quotation/quotation.component"
 
-const AboutPage = (props) => (
+const AboutPage = props => (
   <div id="AboutPage">
     {/* <!-- NavBar --> */}
     <NavBar currentPage="About" />
@@ -17,7 +17,7 @@ const AboutPage = (props) => (
         imgSrc={masks2}
         quote="It's a tragedy."
         author="William Shakespeare"
-        citation="Once Upon A Time"
+        source="Once Upon A Time"
       />
     </header>
     {/* <!-- Main --> */}
@@ -29,6 +29,6 @@ const AboutPage = (props) => (
       />
     </main>
   </div>
-);
+)
 
-export default AboutPage;
+export default AboutPage

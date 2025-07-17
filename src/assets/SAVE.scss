@@ -40,37 +40,37 @@ p {
   color: red;
 }
 #caveat h2:hover {
-	animation: animate .2s linear infinite;
+  animation: animate 0.2s linear infinite;
 }
 @keyframes animate {
-	0% {
+  0% {
     color: red;
-	}
-	10% {
+  }
+  10% {
     color: red;
-	}
-	20% {
+  }
+  20% {
     color: black;
-	}
-	30% {
+  }
+  30% {
     color: red;
-	}
-	40% {
+  }
+  40% {
     color: purple;
-	}
-	50% {
+  }
+  50% {
     color: red;
-	}
-	60% {
+  }
+  60% {
     color: black;
-	}
-	70% {
+  }
+  70% {
     color: purple;
-	}
-	80% {
+  }
+  80% {
     color: red;
-	}
-	100% {
+  }
+  100% {
     color: red;
-	}
+  }
 }

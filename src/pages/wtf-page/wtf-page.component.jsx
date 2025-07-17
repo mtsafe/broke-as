@@ -1,23 +1,25 @@
-import React from "react";
+import React from "react"
 
-import "./wtf-page.style.scss";
-import masks2 from "../../assets/img/masks2.jpg";
+import "./wtf-page.style.scss"
+import masks2 from "../../assets/img/masks2.jpg"
 
-import Jumbotron from "../../components/jumbotron/jumbotron.component";
-import NavBar from "../../components/nav-bar/nav-bar.component";
-import Quotation from "../../components/quotation/quotation.component";
+import Jumbotron from "../../components/jumbotron/jumbotron.component"
+import NavBar from "../../components/nav-bar/nav-bar.component"
+import Quotation from "../../components/quotation/quotation.component"
 
-const WTFPage = (props) => (
+const WTFPage = props => (
   <div id="WTFPage">
     {/* <!-- NavBar --> */}
     <NavBar currentPage="WTF" />
     {/* <!-- Header --> */}
     <header>
       <Quotation
+        id="impression"
         imgSrc={masks2}
+        imgAlt="Laughing/crying theater masks"
         quote="It's a tragedy."
         author="William Shakespeare"
-        citation="Once Upon A Time"
+        source="Once Upon A Time"
       />
     </header>
     {/* <!-- Main --> */}
@@ -29,6 +31,6 @@ const WTFPage = (props) => (
       />
     </main>
   </div>
-);
+)
 
-export default WTFPage;
+export default WTFPage
