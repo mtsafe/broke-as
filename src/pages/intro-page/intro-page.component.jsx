@@ -1,4 +1,5 @@
 import React from "react"
+import { Link, NavLink } from "react-router-dom"
 
 import "./intro-page.styles.scss"
 import masks2 from "../../assets/img/masks2.jpg"
@@ -47,9 +48,19 @@ const IntroPage = props => (
           Nonetheless, you have turned here for help...
         </p>
       </div>
-      <button type="button" className="btn btn-link btn-lg btn-outline-success">
+      {/* <button type="button" className="btn btn-link btn-lg btn-outline-success">
         <a href="/home">Click to Next Page</a>
+      </button> */}
+      <button type="button" className="btn btn-link btn-lg btn-outline-success">
+        <Link to="/home">Click to Next Page</Link>
       </button>
+      {/* <NavLink
+        className="nav-link"
+        activeClassName={props.active ? "disabled" : null}
+        to="/home"
+      >
+        Click to Next Page
+      </NavLink> */}
     </main>
   </div>
 )
