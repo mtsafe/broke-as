@@ -49,12 +49,6 @@ const IntroPage = props => (
           Nonetheless, you have turned here for help...
         </p>
       </div>
-      {/* <button type="button" className="btn btn-link btn-lg btn-outline-success">
-        <a href="/home">Click to Next Page</a>
-      </button> */}
-      <button type="button" className="btn btn-link btn-lg btn-outline-success">
-        <Link to="/home">Click to Next Page</Link>
-      </button>
       <Link to="/home">
         <button
           type="button"
@@ -63,13 +57,6 @@ const IntroPage = props => (
           Click to Next Page
         </button>
       </Link>
-      {/* <NavLink
-        className="nav-link"
-        activeClassName={props.active ? "disabled" : null}
-        to="/home"
-      >
-        Click to Next Page
-      </NavLink> */}
     </main>
   </div>
 )
