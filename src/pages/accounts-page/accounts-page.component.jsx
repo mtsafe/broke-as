@@ -1,25 +1,19 @@
 import React from "react"
 
 import "./accounts-page.styles.scss"
-import masks2 from "../../assets/img/masks2.jpg"
 
 import BtnLearnMore from "../../components/btn-learn-more/btn-learn-more.component"
 import BtnOutline from "../../components/btn-outline/btn-outine.component"
 import CashAccountsSection from "./cash-accounts-section.component"
 import NavBar from "../../components/nav-bar/nav-bar.component"
-import Quotation from "../../components/quotation/quotation.component"
+import Impression from "../../components/impression/impression.component"
 import Selector from "../../components/selector/selector.component"
 
 const AccountsPage = props => (
   <div id="AccountsPage">
     <NavBar currentPage="Accounts" />
     <header>
-      <Quotation
-        imgSrc={masks2}
-        quote="It's a tragedy."
-        author="William Shakespeare"
-        source="Once Upon A Time"
-      />
+      <Impression id="tragedy" />
     </header>
     <main>
       <div id="jumbotron" className="jumbotron">

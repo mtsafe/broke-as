@@ -1,22 +1,16 @@
 import React from "react"
 
 import "./about-page.style.scss"
-import masks2 from "../../assets/img/masks2.jpg"
 
 import Jumbotron from "../../components/jumbotron/jumbotron.component"
 import NavBar from "../../components/nav-bar/nav-bar.component"
-import Quotation from "../../components/quotation/quotation.component"
+import Impression from "../../components/impression/impression.component"
 
 const AboutPage = props => (
   <div id="AboutPage">
     <NavBar currentPage="About" />
     <header>
-      <Quotation
-        imgSrc={masks2}
-        quote="It's a tragedy."
-        author="William Shakespeare"
-        source="Once Upon A Time"
-      />
+      <Impression id="comedy" />
     </header>
     <main>
       <Jumbotron

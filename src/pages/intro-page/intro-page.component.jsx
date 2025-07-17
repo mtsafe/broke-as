@@ -2,21 +2,15 @@ import React from "react"
 import { Link } from "react-router-dom"
 
 import "./intro-page.styles.scss"
-import masks2 from "../../assets/img/masks2.jpg"
 
 import NavBar from "../../components/nav-bar/nav-bar.component"
-import Quotation from "../../components/quotation/quotation.component"
+import Impression from "../../components/impression/impression.component"
 
 const IntroPage = props => (
   <div id="IntroPage">
     <NavBar currentPage="Intro" />
     <header>
-      <Quotation
-        imgSrc={masks2}
-        quote="It's a tragedy."
-        author="William Shakespeare"
-        source="Once Upon A Time"
-      />
+      <Impression id="tragedy" />
     </header>
     <main>
       <div id="intro">
