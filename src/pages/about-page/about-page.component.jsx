@@ -1,4 +1,5 @@
 import React from "react"
+import packageInfo from "../../../package.json"
 
 import "./about-page.style.scss"
 
@@ -16,7 +17,18 @@ const AboutPage = props => (
       <Jumbotron
         title="About Broke-As"
         lead="This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information."
-        content="This app is not for complex financial management like investments."
+        content={[
+          <React.Fragment>
+            <p>version = {packageInfo.version}</p>
+            <p>license = {packageInfo.license}</p>
+            <p>description = {packageInfo.description}</p>
+          </React.Fragment>,
+          <React.Fragment>
+            <p>
+              This app is not for complex financial management like investments.
+            </p>
+          </React.Fragment>,
+        ]}
       />
     </main>
   </div>

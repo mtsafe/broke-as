@@ -46,4 +46,32 @@ describe("Test Jumbotrom", () => {
     cy.get(".jumbotron hr.my-4")
     cy.get(".jumbotron p.lead a")
   })
+
+  it("Jumbotron: content is array of elements", () => {
+    let content = [
+      <React.Fragment>
+        <p>my content part 1</p>
+      </React.Fragment>,
+      <React.Fragment>
+        <p>my content part 2</p>
+      </React.Fragment>,
+      <React.Fragment>
+        <p>my content part 3</p>
+      </React.Fragment>,
+    ]
+
+    cy.mount(
+      <Jumbotron
+        title="Jumbotron Title"
+        lead="This is the Jumbotron lead text."
+        content={content}
+      />
+    )
+    cy.get(".jumbotron")
+    cy.get(".jumbotron h1.display-3")
+    cy.get(".jumbotron p.lead")
+    cy.get(".jumbotron hr.style-2")
+    cy.get(".jumbotron hr.my-4")
+    cy.get(".jumbotron p.lead a")
+  })
 })
