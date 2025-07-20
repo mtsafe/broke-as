@@ -16,16 +16,37 @@ const AboutPage = props => (
     <main>
       <Jumbotron
         title="About Broke-As"
-        lead="This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information."
+        lead={packageInfo.description}
         content={[
           <React.Fragment>
             <p>version = {packageInfo.version}</p>
             <p>license = {packageInfo.license}</p>
-            <p>description = {packageInfo.description}</p>
+            <p>developer = https://github.com/mtsafe</p>
+            <p>support = {packageInfo.bugs.url}</p>
+          </React.Fragment>,
+          <React.Fragment>
+            <p>Privacy Policy & Terms of Service: None yet.</p>
           </React.Fragment>,
           <React.Fragment>
             <p>
-              This app is not for complex financial management like investments.
+              Legal Disclaimers: As described in the introduction page. This app
+              is not any giving legal or financial advice. This is for
+              entertainment purposes only. No financial professionals were
+              consulted in the creation of the app. Please seek out real
+              professional help for your legal or financial problems.
+            </p>
+          </React.Fragment>,
+          <React.Fragment>
+            <p>
+              Credits/Acknowledgments: This app was made using open source code,
+              including but not limited to: React, NodeJS, Cypress, Jester, and
+              SASS sources.
+            </p>
+          </React.Fragment>,
+          <React.Fragment>
+            <p>
+              Brief Synopsis: This app is not for complex financial management
+              like investments.
             </p>
           </React.Fragment>,
         ]}
