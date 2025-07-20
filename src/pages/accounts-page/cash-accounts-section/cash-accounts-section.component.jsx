@@ -1,15 +1,15 @@
-import React from "react";
+import React from "react"
 
-import "./cash-accounts-section.styles.scss";
+import "./cash-accounts-section.styles.scss"
 
-import AssessmentModal from "./assessment-modal.component";
-import FormContainer from "./form-container.component";
-import Table from "../../components/table/table.component";
+import AssessmentModal from "../assessment-modal/assessment-modal.component"
+import FormContainer from "../form-container/form-container.component"
+import Table from "../../../components/table/table.component"
 
 class CashAccountsSection extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = { edit: "addCash" };
+    super(props)
+    this.state = { edit: "addCash" }
     // edit states are: "off", "addCash", "modifyCash"
     // this.handleClick = this.handleClick.bind(this);
   }
@@ -55,8 +55,8 @@ class CashAccountsSection extends React.Component {
         </footer>
         {/* <!-- End of Cash Accounts Section --> */}
       </section>
-    );
+    )
   }
 }
 
-export default CashAccountsSection;
+export default CashAccountsSection

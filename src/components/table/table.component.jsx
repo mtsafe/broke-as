@@ -1,13 +1,12 @@
-import React from "react";
+import React from "react"
 
 const Table = ({ type, headings }) => {
-  let indexNum = 0;
   return (
     <table id={type + "-table"} className="table table-hover">
       <thead>
         <tr>
           {headings.map((value, index) => (
-            <th id={`${(indexNum += 1)}`} className="lead" scope="col">
+            <th key={`${value}`} className="lead" scope="col">
               {value}
             </th>
           ))}
@@ -15,7 +14,7 @@ const Table = ({ type, headings }) => {
       </thead>
       <tbody id={type + "-tbody"}></tbody>
     </table>
-  );
-};
+  )
+}
 
-export default Table;
+export default Table

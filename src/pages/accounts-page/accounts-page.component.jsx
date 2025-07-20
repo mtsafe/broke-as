@@ -4,7 +4,7 @@ import "./accounts-page.styles.scss"
 
 import BtnLearnMore from "../../components/btn-learn-more/btn-learn-more.component"
 import BtnOutline from "../../components/btn-outline/btn-outine.component"
-import CashAccountsSection from "./cash-accounts-section.component"
+import CashAccountsSection from "./cash-accounts-section/cash-accounts-section.component"
 import NavBar from "../../components/nav-bar/nav-bar.component"
 import Impression from "../../components/impression/impression.component"
 import Selector from "../../components/selector/selector.component"
@@ -20,7 +20,9 @@ const AccountsPage = props => (
         <header id="jumbotron-header">
           <h1 className="display-3">Cash Accounts</h1>
         </header>
-        <p class="lead">Enter and maintain your cash account information.</p>
+        <p className="lead">
+          Enter and maintain your cash account information.
+        </p>
         <hr className="style-2" />
         <CashAccountsSection />
         <hr className="style-2" />

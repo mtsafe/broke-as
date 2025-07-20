@@ -1,7 +1,7 @@
-import React from "react";
+import React from "react"
 
-import Selector from "../../components/selector/selector.component";
-import SubmitBtnContainer from "../../components/submit-btn-container/submit-btn-container.component";
+import Selector from "../../../components/selector/selector.component"
+import SubmitBtnContainer from "../../../components/submit-btn-container/submit-btn-container.component"
 
 const FormContainer = ({ type }) => {
   return (
@@ -65,7 +65,7 @@ const FormContainer = ({ type }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default FormContainer;
+export default FormContainer
