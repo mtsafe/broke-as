@@ -15,8 +15,8 @@ const WTFPage = props => (
     <main>
       <Jumbotron
         title="My Financial WTF"
-        lead="This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information."
-        content="It uses utility classes for typography and spacing to space content out within the larger container."
+        lead="This page will give suggestions based upon the data."
+        content="Do something good for someone."
       />
     </main>
   </div>

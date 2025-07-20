@@ -20,6 +20,7 @@ const AccountsPage = props => (
         <header id="jumbotron-header">
           <h1 className="display-3">Cash Accounts</h1>
         </header>
+        <p class="lead">Enter and maintain your cash account information.</p>
         <hr className="style-2" />
         <CashAccountsSection />
         <hr className="style-2" />
