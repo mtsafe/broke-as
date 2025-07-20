@@ -20,7 +20,7 @@ const AboutPage = props => (
         content={[
           <React.Fragment>
             <p>version = {packageInfo.version}</p>
-            <p>license = {packageInfo.license}</p>
+            <p>license = currently {packageInfo.license}</p>
             <p>developer = https://github.com/mtsafe</p>
             <p>support = {packageInfo.bugs.url}</p>
           </React.Fragment>,
