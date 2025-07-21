@@ -1,7 +1,6 @@
 import React from "react"
-import Quotation from "../quotation/quotation.component"
-
 import "./impression.styles.scss"
+import Quotation from "../quotation/quotation.component"
 import masks2 from "../../assets/img/masks2.jpg"
 
 function Impression({ id }) {

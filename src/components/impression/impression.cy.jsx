@@ -1,16 +1,23 @@
 // import * as React from 'react'
 import { mount } from "@cypress/react"
-import Quotation from "./quotation.component"
 import "../../assets/sketchy/bootstrap.min.css"
+import Impression from "./impression.component"
 
-it("quotation", () => {
-  mount(
-    Quotation({
-      imgSrc: "../../assets/img/masks2.jpg",
-      quote: "Component Testing is for super Reactors.",
-      author: "React Dude",
-      source: "React Proverbs",
-    })
-  )
-  cy.get("blockquote")
+describe("Test Impression", () => {
+  it("impression: default", () => {
+    mount(
+      Impression({
+        id: "tragedy",
+      })
+    )
+    cy.get("blockquote")
+  })
+  it("impression: comedy", () => {
+    mount(
+      Impression({
+        id: "comedy",
+      })
+    )
+    cy.get("blockquote")
+  })
 })

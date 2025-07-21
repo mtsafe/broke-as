@@ -1,6 +1,6 @@
 import * as React from "react"
-import Jumbotron from "./jumbotron.component"
 import "../../assets/sketchy/bootstrap.min.css"
+import Jumbotron from "./jumbotron.component"
 
 describe("Test Jumbotrom", () => {
   it("Jumbotron: empty", () => {

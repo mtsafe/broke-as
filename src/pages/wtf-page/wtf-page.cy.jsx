@@ -1,14 +1,14 @@
-import * as React from 'react'
-import { mount } from '@cypress/react'
-import { BrowserRouter } from 'react-router-dom'
-import WTFPage from './wtf-page.component'
-import '../../assets/sketchy/bootstrap.min.css'
+import * as React from "react"
+import { mount } from "@cypress/react"
+import { BrowserRouter } from "react-router-dom"
+import "../../assets/sketchy/bootstrap.min.css"
+import WTFPage from "./wtf-page.component"
 
-it('wtf-page', () => {
+it("wtf-page", () => {
   mount(
     <BrowserRouter>
       <WTFPage />
-    </BrowserRouter>,
+    </BrowserRouter>
   )
-  cy.get('.jumbotron')
+  cy.get(".jumbotron")
 })

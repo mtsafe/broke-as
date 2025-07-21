@@ -1,14 +1,14 @@
-import * as React from 'react'
-import { mount } from '@cypress/react'
-import { BrowserRouter } from 'react-router-dom'
-import AssessmentModal from './assessment-modal.component'
-import '../../assets/sketchy/bootstrap.min.css'
+import * as React from "react"
+import { mount } from "@cypress/react"
+import { BrowserRouter } from "react-router-dom"
+import "../../../assets/sketchy/bootstrap.min.css"
+import AssessmentModal from "./assessment-modal.component"
 
-it('assessment-modal', () => {
+it("assessment-modal", () => {
   mount(
     <BrowserRouter>
       <AssessmentModal />
-    </BrowserRouter>,
+    </BrowserRouter>
   )
-  cy.get('.modal-dialog')
+  cy.get(".modal-dialog")
 })

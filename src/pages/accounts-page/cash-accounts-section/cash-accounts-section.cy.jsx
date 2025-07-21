@@ -1,14 +1,14 @@
-import * as React from 'react'
-import { mount } from '@cypress/react'
-import { BrowserRouter } from 'react-router-dom'
-import CashAccountsSection from './cash-accounts-section.component'
-import '../../assets/sketchy/bootstrap.min.css'
+import * as React from "react"
+import { mount } from "@cypress/react"
+import { MemoryRouter } from "react-router-dom"
+import "../../../assets/sketchy/bootstrap.min.css"
+import CashAccountsSection from "./cash-accounts-section.component"
 
-it('cash-accounts-section', () => {
+it("cash-accounts-section", () => {
   mount(
-    <BrowserRouter>
+    <MemoryRouter>
       <CashAccountsSection />
-    </BrowserRouter>,
+    </MemoryRouter>
   )
-  cy.get('#cash-accounts')
+  cy.get("#cash-accounts")
 })
