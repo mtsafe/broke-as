@@ -1,8 +1,8 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import './nav-links.styles.scss';
+import React from "react"
+import { NavLink } from "react-router-dom"
+import "./nav-links.styles.scss"
 
-export const NavLinks = (props) => {
+export const NavLinks = props => {
   return (
     <ul className="navbar-nav mr-auto">
       {props.pages.map((value, index) => (
@@ -17,7 +17,7 @@ export const NavLinks = (props) => {
         </li>
       ))}
     </ul>
-  );
-};
+  )
+}
 
-export default NavLinks;
+export default NavLinks

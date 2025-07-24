@@ -18,13 +18,4 @@ describe("Test Quotation", () => {
     cy.get("blockquote")
     cy.get("blockquote img")
   })
-
-  // it("quotation within BrowserRouter", () => {
-  //   mount(
-  //     <BrowserRouter>
-  //       <Quotation />
-  //     </BrowserRouter>
-  //   )
-  //   cy.get("blockquote")
-  // })
 })

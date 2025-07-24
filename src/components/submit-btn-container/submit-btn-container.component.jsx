@@ -1,6 +1,6 @@
-import React from "react";
+import React from "react"
 
-import BtnOutline from "../../components/btn-outline/btn-outine.component";
+import BtnOutline from "../../components/btn-outline/btn-outine.component"
 
 const SubmitBtnContainer = ({ type }) => {
   return (
@@ -24,7 +24,7 @@ const SubmitBtnContainer = ({ type }) => {
         label="Delete Money Location"
       />
     </div>
-  );
-};
+  )
+}
 
-export default SubmitBtnContainer;
+export default SubmitBtnContainer

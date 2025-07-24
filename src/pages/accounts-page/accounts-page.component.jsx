@@ -136,7 +136,7 @@ const AccountsPage = props => (
                   <h1>Receivable Income Recurrence</h1>
                   <p>Select the frequency of this income.</p>
                 </div>
-                <div id="recv-recur-modal-alert"></div>
+                <div id="recv-recur-modal-alert" />
 
                 <div id="recv-recur-modal-body" className="modal-body">
                   <div className="form-group">
@@ -337,7 +337,7 @@ const AccountsPage = props => (
                     you.
                   </p>
                 </div>
-                <div id="recv-modal-alert"></div>
+                <div id="recv-modal-alert" />
                 <div id="recv-modal-body" className="modal-body">
                   <div className="form-group">
                     <label className="control-label text-success">

@@ -1,24 +1,24 @@
-import React from "react";
-import "./nav-bar.styles.scss";
-import { NavLinks } from "../nav-links/nav-links.component";
+import React from "react"
+import "./nav-bar.styles.scss"
+import { NavLinks } from "../nav-links/nav-links.component"
 
 class NavBar extends React.Component {
   constructor({ currentPage, ...otherProps }) {
-    super();
+    super()
     this.state = {
       thisPage: currentPage,
-    };
+    }
   }
 
   render() {
-    const active = this.state.thisPage === "Intro" ? false : true;
+    const active = this.state.thisPage === "Intro" ? false : true
     const pages = [
       { key: 1, title: "Home", url: "/home" },
       { key: 2, title: "Dashboard", url: "/dashboard" },
       { key: 3, title: "Accounts", url: "/accounts" },
       { key: 4, title: "WTF", url: "/wtf" },
       { key: 5, title: "About", url: "/about" },
-    ];
+    ]
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <a className="navbar-brand" href="/">
@@ -44,8 +44,8 @@ class NavBar extends React.Component {
         </button>
 
         <div className="collapse navbar-collapse" id="navbarColor03">
-        <NavLinks pages={pages} active={active}/>
-        <form className="form-inline my-2 my-lg-0">
+          <NavLinks pages={pages} active={active} />
+          <form className="form-inline my-2 my-lg-0">
             <input
               className="form-control mr-sm-2"
               type="text"
@@ -57,8 +57,8 @@ class NavBar extends React.Component {
           </form>
         </div>
       </nav>
-    );
+    )
   }
 }
 
-export default NavBar;
+export default NavBar

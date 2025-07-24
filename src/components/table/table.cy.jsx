@@ -1,11 +1,11 @@
-import * as React from 'react'
-import { mount } from '@cypress/react'
-import Table from './table.component'
-import '../../assets/sketchy/bootstrap.min.css'
+import * as React from "react"
+import { mount } from "@cypress/react"
+import Table from "./table.component"
+import "../../assets/sketchy/bootstrap.min.css"
 
-it('table', () => {
+it("table", () => {
   mount(
-    <Table type={'ct'} headings={('cash', ['Where', 'Amount', 'Recorded'])} />,
+    <Table type={"ct"} headings={("cash", ["Where", "Amount", "Recorded"])} />
   )
-  cy.get('table')
+  cy.get("table")
 })

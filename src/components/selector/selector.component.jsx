@@ -1,11 +1,11 @@
-import React from "react";
+import React from "react"
 
 function Selector({ id, className, defaultValue, options }) {
   function changeHandler(params) {
-    return null;
+    return null
   }
 
-  let keyNum = 0;
+  let keyNum = 0
   return (
     <select
       id={id}
@@ -13,13 +13,13 @@ function Selector({ id, className, defaultValue, options }) {
       defaultValue={defaultValue}
       onChange={changeHandler}
     >
-      {options.map((option) => (
+      {options.map(option => (
         <option key={(keyNum += 1)} value={option}>
           {option}
         </option>
       ))}
     </select>
-  );
+  )
 }
 
-export default Selector;
+export default Selector

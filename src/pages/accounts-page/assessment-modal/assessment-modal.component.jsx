@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 const AssessmentModal = ({ type }) => {
   return (
@@ -11,7 +11,7 @@ const AssessmentModal = ({ type }) => {
               Select the ranges for cash on hand that are comfortable for you.
             </p>
           </div>
-          <div id={type + "-modal-alert"}></div>
+          <div id={type + "-modal-alert"} />
           <div id={type + "-modal-body"} className="modal-body">
             <div className="form-group">
               <label className="control-label text-success">
@@ -82,7 +82,7 @@ const AssessmentModal = ({ type }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AssessmentModal;
+export default AssessmentModal

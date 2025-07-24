@@ -1,8 +1,8 @@
-import React from "react";
-import isNonEmptyString from "../../utils/utils";
+import React from "react"
+import isNonEmptyString from "../../utils/utils"
 
-import "./jumbotron.styles.scss";
-import BtnLearnMore from "../../components/btn-learn-more/btn-learn-more.component";
+import "./jumbotron.styles.scss"
+import BtnLearnMore from "../../components/btn-learn-more/btn-learn-more.component"
 
 const JumbotronContent = ({ content }) => {
   if (isNonEmptyString(content)) {
@@ -11,10 +11,10 @@ const JumbotronContent = ({ content }) => {
         <hr className="my-4" />
         <p>{content}</p>
       </React.Fragment>
-    );
+    )
   }
-  return null;
-};
+  return null
+}
 
 const Jumbotron = ({ title, lead, content }) => {
   return (
@@ -24,7 +24,7 @@ const Jumbotron = ({ title, lead, content }) => {
       <JumbotronContent content={content} />
       <BtnLearnMore />
     </div>
-  );
-};
+  )
+}
 
-export default Jumbotron;
+export default Jumbotron
