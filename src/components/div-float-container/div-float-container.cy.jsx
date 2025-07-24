@@ -1,30 +1,17 @@
-// import * as React from 'react'
+import * as React from "react"
 import { mount } from "@cypress/react"
 import "../../assets/sketchy/bootstrap.min.css"
-import Quotation from "./quotation.component"
+import DivFloatContainer from "./div-float-container.component"
 import masks2 from "../../assets/img/masks2.jpg"
 
-describe("Test Quotation", () => {
+describe("Test DivFloatContainer", () => {
   it("quotation", () => {
     mount(
-      Quotation({
-        imgSrc: masks2,
-        imgAlt: "Laughing/crying theater masks",
-        quote: "Component Testing is for super Reactors.",
-        author: "React Dude",
-        source: "React Proverbs",
+      DivFloatContainer({
+        id: "Test DivFloatContainer",
+        content: <img id={"testImgId"} className="test-image" src={masks2} />,
       })
     )
-    cy.get("blockquote")
-    cy.get("blockquote img")
+    cy.get("img")
   })
-
-  // it("quotation within BrowserRouter", () => {
-  //   mount(
-  //     <BrowserRouter>
-  //       <Quotation />
-  //     </BrowserRouter>
-  //   )
-  //   cy.get("blockquote")
-  // })
 })
