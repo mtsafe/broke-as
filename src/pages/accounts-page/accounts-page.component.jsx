@@ -8,6 +8,7 @@ import CashAccountsSection from "./cash-accounts-section/cash-accounts-section.c
 import NavBar from "../../components/nav-bar/nav-bar.component"
 import Impression from "../../components/impression/impression.component"
 import Selector from "../../components/selector/selector.component"
+import DivFloatContainer from "../../components/div-float-container/div-float-container.component"
 
 const AccountsPage = props => (
   <div id="AccountsPage">
@@ -74,44 +75,53 @@ const AccountsPage = props => (
 
                     {/* <!-- Form Selector --> */}
                     <footer id="recv-form-footer">
-                      <div className="input-field col-sm-6 float-left">
-                        <button
-                          id="recv-frequency"
-                          type="button"
-                          className="btn btn-outline-primary"
-                          data-toggle="modal"
-                          data-target="#recv-recurrence-modal"
-                        >
-                          Click to set frequency
-                        </button>
-                      </div>
-                      {/* <!-- Form Buttons --> */}
-                      <div id="recv-submit-buttons" className="float-left">
-                        <BtnOutline
-                          id="recv-add-btn"
-                          type="info"
-                          faIcon="fa fa-plus"
-                          label="Add Money Location"
-                        />
-                        <BtnOutline
-                          id="recv-update-btn"
-                          type="warning"
-                          faIcon="fa fa-pencil-square-o"
-                          label="Update Money"
-                        />
-                        <BtnOutline
-                          id="recv-delete-btn"
-                          type="danger"
-                          faIcon="fa fa-remove"
-                          label="Delete Money Location"
-                        />
-                      </div>
-                      <button
-                        id="recv-back-btn"
-                        className="btn btn-outline-secondary float-right"
-                      >
-                        <i className="fa fa-chevron-circle-left"></i> Back
-                      </button>
+                      <DivFloatContainer
+                        content={
+                          <>
+                            <div className="input-field col-sm-6 float-left">
+                              <button
+                                id="recv-frequency"
+                                type="button"
+                                className="btn btn-outline-primary"
+                                data-toggle="modal"
+                                data-target="#recv-recurrence-modal"
+                              >
+                                Click to set frequency
+                              </button>
+                            </div>
+                            {/* <!-- Form Buttons --> */}
+                            <div
+                              id="recv-submit-buttons"
+                              className="float-left"
+                            >
+                              <BtnOutline
+                                id="recv-add-btn"
+                                type="info"
+                                faIcon="fa fa-plus"
+                                label="Add Money Location"
+                              />
+                              <BtnOutline
+                                id="recv-update-btn"
+                                type="warning"
+                                faIcon="fa fa-pencil-square-o"
+                                label="Update Money"
+                              />
+                              <BtnOutline
+                                id="recv-delete-btn"
+                                type="danger"
+                                faIcon="fa fa-remove"
+                                label="Delete Money Location"
+                              />
+                            </div>
+                            <button
+                              id="recv-back-btn"
+                              className="btn btn-outline-secondary float-right"
+                            >
+                              <i className="fa fa-chevron-circle-left"></i> Back
+                            </button>
+                          </>
+                        }
+                      />
                     </footer>
                   </div>
                 </form>
@@ -441,19 +451,25 @@ const AccountsPage = props => (
             <tbody id="recv-tbody"></tbody>
           </table>
           <footer id="recv-table-footer">
-            <button
-              id="recv-add-tr-btn"
-              className="btn btn-outline-success float-left"
-            >
-              <i className="fa fa-plus"></i> Add a Receivable Row to Table
-            </button>
-            <button
-              id="recv-clear-all-btn"
-              type="button"
-              className="btn btn-outline-danger float-right"
-            >
-              Purge Receivable Accounts
-            </button>
+            <DivFloatContainer
+              content={
+                <>
+                  <button
+                    id="recv-add-tr-btn"
+                    className="btn btn-outline-success float-left"
+                  >
+                    <i className="fa fa-plus"></i> Add a Receivable Row to Table
+                  </button>
+                  <button
+                    id="recv-clear-all-btn"
+                    type="button"
+                    className="btn btn-outline-danger float-right"
+                  >
+                    Purge Receivable Accounts
+                  </button>
+                </>
+              }
+            />
           </footer>
         </section>
         {/* <!-- End of Receivable Accounts Section --> */}

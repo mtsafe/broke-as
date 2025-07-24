@@ -5,6 +5,7 @@ import "./cash-accounts-section.styles.scss"
 import AssessmentModal from "../assessment-modal/assessment-modal.component"
 import FormContainer from "../form-container/form-container.component"
 import Table from "../../../components/table/table.component"
+import DivFloatContainer from "../../../components/div-float-container/div-float-container.component"
 
 class CashAccountsSection extends React.Component {
   constructor(props) {
@@ -38,20 +39,26 @@ class CashAccountsSection extends React.Component {
           </button>
         </header>
         <Table headings={("cash", ["Where", "Amount", "Recorded"])} />
-        <footer id="cash-table-footer">
-          <button
-            id="cash-add-tr-btn"
-            className="btn btn-outline-success float-left"
-          >
-            <i className="fa fa-plus"></i> Add a Money Row to Table
-          </button>
-          <button
-            id="cash-clear-all-btn"
-            type="button"
-            className="btn btn-outline-danger float-right"
-          >
-            Purge Cash Accounts
-          </button>
+        <footer id="cash-table-footer" className="div-float-container">
+          <DivFloatContainer
+            content={
+              <>
+                <button
+                  id="cash-add-tr-btn"
+                  className="btn btn-outline-success float-left"
+                >
+                  <i className="fa fa-plus"></i> Add a Money Row to Table
+                </button>
+                <button
+                  id="cash-clear-all-btn"
+                  type="button"
+                  className="btn btn-outline-danger float-right"
+                >
+                  Purge Cash Accounts
+                </button>
+              </>
+            }
+          />
         </footer>
         {/* <!-- End of Cash Accounts Section --> */}
       </section>

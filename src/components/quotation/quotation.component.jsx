@@ -1,7 +1,7 @@
 import React from "react"
 import "./quotation.styles.scss"
 
-function Quotation({ id, imgSrc, imgAlt, quote, author, source }) {
+export const Quotation = ({ id, imgSrc, imgAlt, quote, author, source }) => {
   let imgId = id + "-quotation-image"
   let divId = id + "-quotation-text"
   return (
