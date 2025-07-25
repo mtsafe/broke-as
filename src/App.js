@@ -11,24 +11,25 @@ import WTFPage from "./pages/wtf-page/wtf-page.component"
 
 import Copyright from "./components/copyright/copyright.component"
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Switch>
-          <Route path="/accounts" component={AccountsPage} />
-          <Route path="/about" component={AboutPage} />
-          <Route path="/dashboard" component={DashboardPage} />
-          <Route path="/home" component={HomePage} />
-          <Route path="/wtf" component={WTFPage} />
-          <Route path="/" component={IntroPage} />
-        </Switch>
-        <footer>
-          <Copyright />
-        </footer>
-      </div>
-    )
-  }
+const App = props => {
+  // class App extends Component {
+  //   render() {
+  return (
+    <div className="App">
+      <Switch>
+        <Route path="/accounts" component={AccountsPage} />
+        <Route path="/about" component={AboutPage} />
+        <Route path="/dashboard" component={DashboardPage} />
+        <Route path="/home" component={HomePage} />
+        <Route path="/wtf" component={WTFPage} />
+        <Route path="/" component={IntroPage} />
+      </Switch>
+      <footer>
+        <Copyright />
+      </footer>
+    </div>
+  )
 }
+// }
 
 export default App
