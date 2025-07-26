@@ -4,23 +4,23 @@ import Selector from "../../../components/selector/selector.component"
 import FormButtons from "./form-buttons/form-buttons.component"
 import DivFloatContainer from "../../../components/div-float-container/div-float-container.component"
 
-const formInputFields = ({ type }) => {
+const formInputFields = type => {
   return (
     <>
       <div className="input-field col-sm-6">
         <input type="text" placeholder="Enter Location" id={type + "-name"} />
-        <label htmlFor="cash-name">Location</label>
+        <label htmlFor={type + "-name"}>Location</label>
       </div>
       <div className="input-field col-sm-6">
         $
         <input type="number" placeholder="Add Amount" id={type + "-amount"} />
-        <label htmlFor="cash-amount">Amount</label>
+        <label htmlFor={type + "-amount"}>Amount</label>
       </div>
     </>
   )
 }
 
-const formLowerHalfContent = ({ type }) => {
+const formLowerHalfContent = type => {
   return (
     <>
       <div id={type + "-location-selector"} className="form-group float-left">
