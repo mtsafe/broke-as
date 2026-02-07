@@ -60,7 +60,7 @@
     "react-dom": "^19.1.0",
     "sass": "^1.89.2",
     "sass-loader": "^16.0.5",
-    "webpack": "^5.100.1",
+    "webpack": "^5.105.0",
     "webpack-dev-server": "^5.2.1"
   }
 }
